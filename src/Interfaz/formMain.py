@@ -13,8 +13,10 @@ import modulos.unidadtres as unidad_tres
 import modulos.unidadcuatro as unidad_cuatro
 import modulos.unidadcinco as unidad_cinco
 
-
+#Declaramos Variables Globales con valores preestablecidos
 Numero_Filas_Columnas = 3
+etiquetaHermite = "y'"
+Numero_filas_Hermite = 2
 
 class Ui_Analisis_Numerico(object):
     def setupUi(self, Analisis_Numerico):
@@ -851,147 +853,23 @@ class Ui_Analisis_Numerico(object):
                 self.Tabla_Unidad_2(MainWindow, metodo, self.txtfuncion.text(), 0, 0, 0)
             elif metodo == 9:  # Muller
                 self.Tabla_Unidad_2(MainWindow, metodo, self.txtfuncion.text(), 0, 0, 0)
-            elif metodo == 10:  # Bairstown
+            elif metodo == 10:  # Baristow
                 self.Tabla_Unidad_2(MainWindow, metodo, self.txtfuncion.text(), 0, 0, 0)
 
-        elif unidad == 2:  # Parte unidad 3
-            global Numero_Filas_Columnas
-            listaX = []
-            listaY = []
-            puntos = []
-            listaXapoyo = []
-            listaYapoyo = []
-            enXoY = 0
+        elif unidad == 2: #Metodos de la unidad 3
 
-            # Buscamos el valor donde falta X ó Y,  que sera donde vamos a interpolar
-            for x in range(0, 2):
-                for y in range(0, Numero_Filas_Columnas+1):
-                    if x == 0:
-                        if y != 0:
-                            listaX.append(self.tableWidget_2.item(x, y).text())
-                    elif x == 1:
-                        if y != 0:
-                            try:
-                                listaY.append(
-                                    self.tableWidget_2.item(x, y).text())
-                            except:
-                                listaY.append('?')
-
-            for i in range(0, len(listaY)):
-                if listaY[i] == '?':
-                    macht = i
-
-            if metodo == 1:  # Llamamos al metodo de interpolación lineal
-
-                puntos_2 = []
-                puntos_2.append(listaX[macht-1])  # X0
-                puntos_2.append(listaY[macht-1])  # Y0
-                puntos_2.append(listaX[macht+1])  # X1
-                puntos_2.append(listaY[macht+1])  # Y1
-
-                puntos = []
-                puntos.append(puntos_2)
-
-                self.Tabla_Unidad_3(1, puntos, float(listaX[macht]))
-
-                
-            elif metodo == 2:  # Llamamos al metodo de interpolacion cuadrática
-
-                for i in range(0, len(listaY)):
-                    if listaY[i] != '?':
-                        listaXapoyo.append(float(listaX[i]))
-                        listaYapoyo.append(float(listaY[i]))
-                puntos = []
-                puntos.append(listaXapoyo)
-                puntos.append(listaYapoyo)
-                self.Tabla_Unidad_3(2, puntos, listaX[macht])
-            elif metodo == 3:  # Llamamos al metodo de interpolacion de la lagrange
-                for i in range(0, len(listaY)):
-                    if listaY[i] != '?':
-                        listaXapoyo.append(float(listaX[i]))
-                        listaYapoyo.append(float(listaY[i]))
-                puntos = []
-                puntos.append(listaXapoyo)
-                puntos.append(listaYapoyo)
-                self.Tabla_Unidad_3(3, puntos, float(listaX[macht]))
-            elif metodo == 4:  # Llamamos al metodo de interpolacion de la newton
-                for i in range(0, len(listaY)):
-                    if listaY[i] != '?':
-                        listaXapoyo.append(float(listaX[i]))
-                        listaYapoyo.append(float(listaY[i]))
-                puntos = []
-                puntos.append(listaXapoyo)
-                puntos.append(listaYapoyo)
-                self.Tabla_Unidad_3(4, puntos, float(listaX[macht]))
-
-    def Validar_Datos_en_Formulario(self, MainWindow, queMetodo, funcionTXT, X1, X2,X3, cifTXT):
-        # <---- Validamos que sean numeros ------->
-        x1 = funciones.Validar_Valores_Iniciales(X1)
-        x2 = funciones.Validar_Valores_Iniciales(X2)
-        x3 = funciones.Validar_Valores_Iniciales(X3)
-        control_acceso = False
-
-        cuantasVariables = 0
-
-        if queMetodo == 1 or queMetodo == 2 or queMetodo == 6:
-            cuantasVariables = 2
-        elif queMetodo == 3 or queMetodo == 4 or queMetodo == 5:
-            cuantasVariables = 1
-        elif queMetodo == 7:
-            self.Tabla_Unidad_2(MainWindow, 7, 0, 0, 0, 0)
-
-        if cuantasVariables == 2:
-            if x1 == False or x2 == False:
-                print("Los valores iniciales son incorrectos")
-            else:
-                try:
-                    funcion = funciones.Sustituir_y_Evaluar_Funcion(funcionTXT, 1, 0, 0)
-                    control_acceso = True
-                except:
-                    control_acceso = False
-                if control_acceso == False:
-                    print("La funcion no es valida")
-                else:
-                    control_cifras = funciones.Validar_Cifras_Significativas(cifTXT)
-                    if control_cifras == False:
-                        print("Ingreso un dato no incorrecto en cifras")
-                    else:
-                        if queMetodo == 1:  # Biseccion
-                            self.Tabla_Unidad_2(MainWindow, 1, x1,
-                                            x2, funcionTXT, control_cifras)
-                        elif queMetodo == 2:  # Falsa Posicion
-                            self.Tabla_Unidad_2(MainWindow, 2, x1,
-                                            x2, funcionTXT, control_cifras)
-                        elif queMetodo == 6:  # secante
-                            self.Tabla_Unidad_2(MainWindow, 6, x1,
-                                            x2, funcionTXT, control_cifras)
-        if cuantasVariables == 1:
-            if x1 == False :
-                print("Los valores iniciales son incorrectos")
-            else:
-                try:
-                    funcion = funciones.Sustituir_y_Evaluar_Funcion(funcionTXT, 1, 0, 0)
-                    control_acceso = True
-                except:
-                    control_acceso = False
-                if control_acceso == False:
-                    print("La funcion no es valida")
-                else:
-                    control_cifras = funciones.Validar_Cifras_Significativas(cifTXT)
-                    if control_cifras == False:
-                        print("Ingreso un dato no incorrecto en cifras")
-                    else:
-                        if queMetodo == 3:
-                            # Falsa posicion
-                            self.Tabla_Unidad_2(MainWindow, 3, x1,
-                                            x2, funcionTXT, control_cifras)
-                        elif queMetodo == 4:
-                            self.Tabla_Unidad_2(MainWindow, 4, x1,
-                                            x2, funcionTXT, control_cifras)  # newton
-                        elif queMetodo == 5:
-                            # newton mejorado
-                            self.Tabla_Unidad_2(MainWindow, 5, x1,
-                                            x2, funcionTXT, control_cifras)
+            if metodo == 1:# lineal
+                self.Validar_Puntos_Tabla_Unidad_3(1)
+            elif metodo == 2:# cuadratica
+                self.Validar_Puntos_Tabla_Unidad_3(2)
+            elif metodo == 3:# lagrange
+                self.Validar_Puntos_Tabla_Unidad_3(3)
+            elif metodo == 4:# newton
+                self.Validar_Puntos_Tabla_Unidad_3(4)
+            elif metodo == 5:# hermite
+                self.Validar_Puntos_Tabla_Unidad_3(5)
+            elif metodo == 6:# Trazadores Cubicos
+                self.Validar_Puntos_Tabla_Unidad_3(6)
 
     def Tabla_Unidad_2(self, MainWindow, metodo, x1, x2, x3, funcion, control_cifras):
         
@@ -1238,7 +1116,159 @@ class Ui_Analisis_Numerico(object):
                                 self.tableWidget.setColumnWidth(
                                     column, tamanioColumnas)
 
-    def Tabla_Unidad_3(self, metodo, puntos, valor):
+    def Validar_Puntos_Tabla_Unidad_3(self,metodo):
+        global Numero_Filas_Columnas, Numero_filas_Hermite
+        listaX = []
+        listaY = []
+        Puntos_Validados = []
+        Sub_listaX = []
+        Sub_listaY = []
+        Lista_Hermite = []
+        
+        if metodo == 5:
+
+            print(Numero_Filas_Columnas,Numero_filas_Hermite)
+            #Agregamos los puntos a listas separadas 
+            for x in range(0,Numero_Filas_Columnas+1):
+                listaX = []
+                Sub_listaX = []
+                for j in range(1,Numero_filas_Hermite+1):
+                    try:
+                        listaX.append(self.tableWidget_2.item(j,x).text())
+                    except:
+                        listaX.append('')
+                for x in listaX:
+                    if x == '':
+                        Sub_listaX.append(x)
+                    else:
+                        Sub_listaX.append(float(x))
+                
+                Lista_Hermite.append(Sub_listaX)
+
+            self.Tabla_Unidad_3(5,Lista_Hermite,self.lineEdit_6.text()) 
+
+        elif metodo == 6:
+             #Agregamos los puntos a listas separadas 
+            for x in range(0,2):
+                for y in range(1,Numero_Filas_Columnas+1):
+                    if x == 0:
+                        listaX.append(self.tableWidget_2.item(x,y).text())
+                    elif x == 1:
+                        listaY.append(self.tableWidget_2.item(x,y).text())
+                
+            for i in listaX:
+                Sub_listaX.append(float(i))
+            
+            for i in listaY:
+                Sub_listaY.append(float(i))
+
+            Puntos_Validados = [Sub_listaX,Sub_listaY]
+            self.Tabla_Unidad_3(6,Puntos_Validados,self.lineEdit_6.text())
+          
+        else:
+            #Agregamos los puntos a listas separadas 
+            for x in range(0,2):
+                for y in range(0,Numero_Filas_Columnas+1):
+                    if x == 0:
+                        if y != 0:
+                            listaX.append(self.tableWidget_2.item(x,y).text())
+                    elif x == 1:
+                        if y != 0:
+                            try:
+                                listaY.append(self.tableWidget_2.item(x,y).text())
+                            except:
+                                listaY.append('?')
+            
+            #Buscamos la posicion donde se desea interpolar
+            for i in range(0,len(listaY)):
+                    if listaY[i] == '?':
+                        macht = i
+
+            #Lineal
+            if metodo == 1: 
+
+                lienal_Punto = []
+                lienal_Punto.append(listaX[macht-1])#X0
+                lienal_Punto.append(listaY[macht-1])#Y0
+                lienal_Punto.append(listaX[macht+1])#X1
+                lienal_Punto.append(listaY[macht+1])#Y1
+
+                Puntos_Validados = []
+                Puntos_Validados.append(lienal_Punto)
+
+                self.Tabla_Unidad_3(1,Puntos_Validados,float(listaX[macht]))
+
+            #Cuadratica
+            elif metodo == 2:
+
+                #Creamos las listas que serian los pares x,y
+                for i in range(0,len(listaY)):
+                    if listaY[i] != '?':
+                        try:
+                            esNumero = float(listaY[i])
+                            if esNumero<=0 or esNumero>=0:
+                                Sub_listaX.append(float(listaX[i]))
+                                Sub_listaY.append(float(listaY[i]))
+                        except:
+                            funcion = "1*"+str(listaY[i])
+                            valor = metodos.evaluarFuncion(funcion,1,0,0)
+                            Sub_listaX.append(float(listaX[i]))
+                            Sub_listaY.append(float(valor))
+                
+                Puntos_Validados = []
+                Puntos_Validados.append(Sub_listaX)
+                Puntos_Validados.append(Sub_listaY)
+
+                self.Tabla_Unidad_3(2,Puntos_Validados,listaX[macht])
+
+            #lagrange
+            elif metodo == 3:
+
+                #Encontramos los puntos x,y
+                for i in range(0,len(listaY)):
+                    if listaY[i] != '?':
+                        try:
+                            esNumero = float(listaY[i])
+                            if esNumero<=0 or esNumero>=0:
+                                Sub_listaX.append(float(listaX[i]))
+                                Sub_listaY.append(float(listaY[i]))
+                        except:
+                            funcion = "1*"+str(listaY[i])
+                            valor = metodos.evaluarFuncion(funcion,1,0,0)
+                            Sub_listaX.append(float(listaX[i]))
+                            Sub_listaY.append(float(valor))
+
+                Puntos_Validados = []
+                Puntos_Validados.append(Sub_listaX)
+                Puntos_Validados.append(Sub_listaY)
+
+                self.Tabla_Unidad_3(3,Puntos_Validados,float(listaX[macht]))
+
+            #Newton
+            elif metodo == 4:
+
+                #Encontramos los pares x,y
+                for i in range(0,len(listaY)):
+                    if listaY[i] != '?':
+                        try:
+                            esNumero = float(listaY[i])
+                            if esNumero<=0 or esNumero>=0:
+                                Sub_listaX.append(float(listaX[i]))
+                                Sub_listaY.append(float(listaY[i]))
+                        except:
+                            funcion = "1*"+str(listaY[i])
+                            valor = metodos.evaluarFuncion(funcion,1,0,0)
+                            Sub_listaX.append(float(listaX[i]))
+                            Sub_listaY.append(float(valor))
+                    
+
+                Puntos_Validados = []
+                Puntos_Validados.append(Sub_listaX)
+                Puntos_Validados.append(Sub_listaY)
+
+                self.Tabla_Unidad_3(4,Puntos_Validados,float(listaX[macht]))
+
+    def Tabla_Unidad_3(self, metodo, Puntos_Validados, valor):
 
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
@@ -1246,7 +1276,7 @@ class Ui_Analisis_Numerico(object):
 
         if metodo == 1:  # Interpolacion Lineal
 
-            Listado_Resultante = unidad_tres.interpolacionLineal(puntos[0], valor)
+            Listado_Resultante = unidad_tres.interpolacionLineal(Puntos_Validados[0], valor)
 
             self.tableWidget.verticalHeader().setVisible(False)
             self.tableWidget.horizontalHeader().setVisible(False)
@@ -1287,7 +1317,7 @@ class Ui_Analisis_Numerico(object):
 
         elif metodo == 2:  # Interpolacion Cuadratica
 
-            Listado_Resultante = unidad_tres.interpolacionCuadratica(puntos[0], puntos[1], valor)
+            Listado_Resultante = unidad_tres.interpolacionCuadratica(Puntos_Validados[0], Puntos_Validados[1], valor)
 
             self.tableWidget.verticalHeader().setVisible(False)
             self.tableWidget.horizontalHeader().setVisible(False)
@@ -1327,7 +1357,7 @@ class Ui_Analisis_Numerico(object):
 
         elif metodo == 3:  # Interpolacion de lagrange
 
-            Listado_Resultante = unidad_tres.interpolacionLagrange(puntos[0], puntos[1], valor)
+            Listado_Resultante = unidad_tres.interpolacionLagrange(Puntos_Validados[0], Puntos_Validados[1], valor)
 
             self.tableWidget.verticalHeader().setVisible(False)
             self.tableWidget.horizontalHeader().setVisible(False)
@@ -1368,7 +1398,7 @@ class Ui_Analisis_Numerico(object):
 
         elif metodo == 4:  # Interpolacion de newton
 
-            Listado_Resultante = unidad_tres.interpolacionNewton(puntos[0], puntos[1], valor)
+            Listado_Resultante = unidad_tres.interpolacionNewton(Puntos_Validados[0], Puntos_Validados[1], valor)
 
             self.tableWidget.verticalHeader().setVisible(False)
             self.tableWidget.horizontalHeader().setVisible(False)
@@ -1409,7 +1439,7 @@ class Ui_Analisis_Numerico(object):
 
         elif metodo == 5:# polinomio de hermite
 
-            Listado_Resultante = unidad_tres.interpolacionHermite(puntos, valor)
+            Listado_Resultante = unidad_tres.interpolacionHermite(Puntos_Validados, valor)
 
             if self.radioButton.isChecked():
 
