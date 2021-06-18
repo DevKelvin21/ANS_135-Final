@@ -3,6 +3,9 @@ import sys
 sys.path.append("..")
 import modulos.images_rc
 import matplotlib.pyplot as plt
+from sympy.plotting import plot
+from sympy.core.evalf import pure_complex
+from sympy.core.symbol import symbols
 import math as mt
 import cmath
 import platform
@@ -15,7 +18,7 @@ import modulos.unidadcinco as unidad_cinco
 
 #Declaramos Variables Globales con valores preestablecidos
 Numero_Filas_Columnas = 3
-etiquetaHermite = "y'"
+lbl_Hermite_tabla = "y'"
 Numero_filas_Hermite = 2
 
 class Ui_Analisis_Numerico(object):
@@ -524,6 +527,8 @@ class Ui_Analisis_Numerico(object):
         self.btnAgregarCol.clicked.connect(self.agregarColumna)
         self.btnEliminarCol.clicked.connect(self.eliminarColumna)
         self.pushButton.clicked.connect(self.graficar)
+        self.btnEliminarFila.clicked.connect(self.eliminarFila)
+        self.btnAgregarFila.clicked.connect(self.agregarFila)
         #Botones unidades.
         self.btnUnidad1.clicked.connect(lambda: self.unidades(0))
         self.btnUnidad1.clicked.connect(self.Filtrar_llenado_cmbMetodos)
@@ -533,6 +538,7 @@ class Ui_Analisis_Numerico(object):
         self.btnUnidad3.clicked.connect(self.Filtrar_llenado_cmbMetodos)
         self.btnUnidad4.clicked.connect(lambda: self.unidades(3))
         self.btnUnidad4.clicked.connect(self.Filtrar_llenado_cmbMetodos)
+        self.btnUnidad5.clicked.connect(lambda: self.unidades(4))
         #self.btnUnidad5.clicked.connect(self.Filtrar_llenado_cmbMetodos)
 
         #Ocultamos todos los componetes para filtrarlos con los btn de las unidades.
@@ -675,15 +681,17 @@ class Ui_Analisis_Numerico(object):
             self.cmbMetodos.addItem("")
             self.cmbMetodos.addItem("")
             self.cmbMetodos.addItem("")
+            self.cmbMetodos.addItem("")
+            self.cmbMetodos.addItem("")
 
             self.cmbMetodos.setItemText(0,  "> Seleccione un metodo <")
             self.cmbMetodos.setItemText(1,  "Interpolación Lineal")
             self.cmbMetodos.setItemText(2,  "Interpolación cuadratica")
             self.cmbMetodos.setItemText(3,  "Interpolación de lagrange")
             self.cmbMetodos.setItemText(4,  "Interpolación de Newton")
-            self.cmbMetodos.setItemText(5,  "Diferencias Divididas")
+            self.cmbMetodos.setItemText(5,  "Interpolación de Hermite")
             self.cmbMetodos.setItemText(6,  "Trazadores cubicos")
-            self.cmbMetodos.setItemText(7,  "Interpolación de Hermite")
+            
 
             # Mostramos el comboBox
             self.cmbMetodos.setVisible(True)
@@ -757,36 +765,63 @@ class Ui_Analisis_Numerico(object):
             self.frame_hermite.setVisible(False)
             self.frame_trazadores.setVisible(False)
 
-    def Aplicar_Ajustes_Tabla_Unidad_3(self, columnas):
+    def Aplicar_Ajustes_Tabla_Unidad_3(self, control ,columnas):
         self.frame_6.setVisible(True)
         self.tableWidget_2.setRowCount(0)
         self.tableWidget_2.setColumnCount(0)
         self.tableWidget_2.verticalHeader().setVisible(False)
         self.tableWidget_2.horizontalHeader().setVisible(False)
-        self.tableWidget_2.verticalHeader().setDefaultSectionSize(55)
-        self.tableWidget_2.horizontalHeader().setDefaultSectionSize(70)
-        self.tableWidget_2.setColumnCount(columnas)
-        self.tableWidget_2.setRowCount(2)
-        self.radioButton.setVisible(True)
-        self.radioButton_2.setVisible(True)
+        self.tableWidget_2.verticalHeader().setDefaultSectionSize(60)
+        self.tableWidget_2.horizontalHeader().setDefaultSectionSize(75)
+       
 
 
-        for x in range(0, 2):
-            for y in range(0, 3):
-                if y == 0 and x == 0:
-                    salida = "    X"
-                    self.tableWidget_2.setItem(
-                        x, y, QtWidgets.QTableWidgetItem(salida))
-                    self.tableWidget_2.setColumnWidth(y, 8)
-                elif y == 0 and x == 1:
-                    salida = "    Y"
-                    self.tableWidget_2.setItem(
-                        x, y, QtWidgets.QTableWidgetItem(salida))
-                    self.tableWidget_2.setColumnWidth(y, 8)
-                else:
-                    salida = ""
-                    self.tableWidget_2.setItem(
-                        x, y, QtWidgets.QTableWidgetItem(salida))
+        if control == 0:#configuracion normal, no es hermite
+            self.tableWidget_2.setColumnCount(columnas)
+            self.tableWidget_2.setRowCount(2)
+            self.radioButton.setVisible(True)
+            self.radioButton_2.setVisible(True)
+
+            for x in range(0, 2):
+                for y in range(0, 3):
+                    if y == 0 and x == 0:
+                        salida = "    X"
+                        self.tableWidget_2.setItem(
+                            x, y, QtWidgets.QTableWidgetItem(salida))
+                        self.tableWidget_2.setColumnWidth(y, 8)
+                    elif y == 0 and x == 1:
+                        salida = "    Y"
+                        self.tableWidget_2.setItem(
+                            x, y, QtWidgets.QTableWidgetItem(salida))
+                        self.tableWidget_2.setColumnWidth(y, 8)
+                    else:
+                        salida = ""
+                        self.tableWidget_2.setItem(
+                            x, y, QtWidgets.QTableWidgetItem(salida))
+        else:
+            self.tableWidget_2.setColumnCount(columnas)
+            self.tableWidget_2.setRowCount(3)
+            self.tableWidget_2.verticalHeader().setDefaultSectionSize(40)
+            self.tableWidget_2.horizontalHeader().setDefaultSectionSize(100)
+
+            for x in range(0, 2):
+                for y in range(0, 3):
+                    if y == 0 and x == 0:
+                        salida = "    X"
+                        self.tableWidget_2.setItem(
+                            x, y, QtWidgets.QTableWidgetItem(salida))
+                    elif y == 1 and x == 0:
+                        salida = "    Y"
+                        self.tableWidget_2.setItem(
+                            x, y, QtWidgets.QTableWidgetItem(salida))
+                    elif y == 2 and x == 0:
+                        salida = "    Y'"
+                        self.tableWidget_2.setItem(
+                            x, y, QtWidgets.QTableWidgetItem(salida))
+                    else:
+                        salida = ""
+                        self.tableWidget_2.setItem(
+                            x, y, QtWidgets.QTableWidgetItem(salida))
 
         self.tableWidget_2.setVisible(True)
 
@@ -796,7 +831,7 @@ class Ui_Analisis_Numerico(object):
         queUnidad = int(self.lblunidad.text())
         
 
-        if queUnidad == 0: #Se refiere a la unidad 1
+        if queUnidad == 0: #unidad 1
 
             self.frame_6.setVisible(False)
             self.radioButton.setVisible(False)
@@ -821,9 +856,8 @@ class Ui_Analisis_Numerico(object):
             self.txtX2_2.setVisible(False)
 
 
-        elif queUnidad == 1:
-            
-            
+        elif queUnidad == 1: #unidad 2
+                      
             self.frame_6.setVisible(False)
             self.radioButton.setVisible(False)
             self.radioButton_2.setVisible(False)
@@ -832,17 +866,14 @@ class Ui_Analisis_Numerico(object):
 
             if queMetodo >= 1 and queMetodo <= 2:
 
-                # <---- dejamos solo los componentes que usa metodo biseccion, falsa posicion y secante -->
-                
+                # <---- dejamos solo los componentes que usa metodo biseccion, falsa posicion y secante -->     
                 self.frame_3.setVisible(True)
                 self.frame_4.setVisible(True)
                 self.frame_5.setVisible(True)
                 self.label_4.setVisible(True)
                 self.txtX2.setVisible(True)
                 self.btnResolverlo.setVisible(True)
-                self.btnLimpiar.setVisible(True)
-                
-
+                self.btnLimpiar.setVisible(True)            
                 # <-------- Ocultamos lo demas ------------->
                 self.txtX2_2.setVisible(False)
                 self.label_7.setVisible(False)
@@ -873,7 +904,6 @@ class Ui_Analisis_Numerico(object):
                 self.frame_5.setVisible(False)
 
             elif queMetodo == 9:
-
                 # <---- dejamos solo los componentes que usa metodo muller -->
                 self.frame_3.setVisible(True)
                 self.frame_4.setVisible(True)
@@ -884,27 +914,22 @@ class Ui_Analisis_Numerico(object):
                 self.txtX2_2.setVisible(True)
 
             elif queMetodo == 10:
-
                 # <---- dejamos solo los componentes que usa metodo baristonw -->
                 self.frame_3.setVisible(True)
                 self.frame_4.setVisible(True)
                 
-
                 # <-------- ocultamos lo demas ---------->
-
                 self.frame_5.setVisible(False)
                 self.txtX2_2.setVisible(False)
                 self.label_7.setVisible(False)
 
-        elif queUnidad == 2:  # Configuramos la tabla para unidad 3.
+        elif queUnidad == 2:  # unidad 3.
 
             self.frame_hermite.setVisible(False)
             self.frame_trazadores.setVisible(False)
-
+            self.tableWidget_2.setGeometry(QtCore.QRect(200, 10, 741, 141))
             global Numero_Filas_Columnas
-
             # Deseleccionamos los radio button
-
             self.radioButton.setAutoExclusive(False)
             self.radioButton.setChecked(False)
             self.radioButton.setAutoExclusive(True)
@@ -914,26 +939,31 @@ class Ui_Analisis_Numerico(object):
 
             if queMetodo == 1:#Lineal
                 Numero_Filas_Columnas = 3
-                self.Aplicar_Ajustes_Tabla_Unidad_3(4)
+                self.Aplicar_Ajustes_Tabla_Unidad_3(0,4)
             elif queMetodo == 2:#Cuadratica
                 Numero_Filas_Columnas = 4
-                self.Aplicar_Ajustes_Tabla_Unidad_3(5)
+                self.Aplicar_Ajustes_Tabla_Unidad_3(0,5)
             elif queMetodo == 3:#Lagrange
                 Numero_Filas_Columnas = 3
-                self.Aplicar_Ajustes_Tabla_Unidad_3(4)
+                self.Aplicar_Ajustes_Tabla_Unidad_3(0,4)
             elif queMetodo == 4:#Newton
                 Numero_Filas_Columnas = 3
-                self.Aplicar_Ajustes_Tabla_Unidad_3(4)
-            elif queMetodo == 5:#Dif dividida
+                self.Aplicar_Ajustes_Tabla_Unidad_3(0,4)
+            elif queMetodo == 5:#Hermite
+                self.tableWidget_2.setGeometry(QtCore.QRect(320, 10, 621, 141))
+                self.frame_hermite.setVisible(True)
+                Numero_Filas_Columnas = 2
+                self.Aplicar_Ajustes_Tabla_Unidad_3(1,3)
+            elif queMetodo == 6:#Trazadores Cubicos
+                self.frame_trazadores.setVisible(True)
+                self.cbmSplineGrado.setCurrentIndex(0)
+                self.frame_hermite.setVisible(True)
+                self.radioButton_2.setVisible(False)
+                self.radioButton.setVisible(False)
+                self.lbl_radiobuttons.setVisible(False)
                 Numero_Filas_Columnas = 3
-                self.Aplicar_Ajustes_Tabla_Unidad_3(4)
-            elif queMetodo == 6:#Spline
-                Numero_Filas_Columnas = 4
-                self.Aplicar_Ajustes_Tabla_Unidad_3(5)
-            elif queMetodo == 7:#Hermite
-                Numero_Filas_Columnas = 3
-                self.Aplicar_Ajustes_Tabla_Unidad_3(4)
-
+                self.Aplicar_Ajustes_Tabla_Unidad_3(0,4)
+            
     def Limpiar_Objects(self, MainWindow):
         
         self.txtfuncion.setText("")
@@ -956,50 +986,85 @@ class Ui_Analisis_Numerico(object):
         self.radioButton_2.setAutoExclusive(True)
 
     def graficar(self, MainWindow):
-        Es_Unidad_dos = self.cmbMetodos.currentIndex()
+        x , y= symbols('x y')
+        Es_Unidad_dos = int(self.lblunidad.text())
         if Es_Unidad_dos==1: #Si puede graficar.Es_Unidad_dos
             try:
                 funcion = str(self.txtfuncion.text())
-                Graficar = ''
-                title = 'Funcion: '+str(self.txtfuncion.text())
-
-                for i in range(0, len(funcion)):
-                    if funcion[i] == 'e':
-                        if funcion[i+1] == '^':
-                            Graficar += str(cmath.e)
+                if len(funcion) <1:
+                    print("entro if")
+                    self.lbl_grafico_mensaje.setText("*Digita una funcion")
+                    self.lbl_grafico_mensaje.setVisible(True)
+                else:
+                    self.lbl_grafico_mensaje.setVisible(False)
+                    Graficar = ''
+                    title = 'Funcion: '+str(self.txtfuncion.text())
+                    for i in range(0, len(funcion)):
+                        if funcion[i] == 'e':
+                            if funcion[i+1] == '^':
+                                Graficar += str(cmath.e)
+                            else:
+                                Graficar += funcion[i]
                         else:
                             Graficar += funcion[i]
-                    else:
-                        Graficar += funcion[i]
-                grafica = plot((Graficar, (x, -100, 100)), box_background='blue', show=False, line_color='#96ADEA',ylabel='Y', xlabel='X', title=title, size=(6, 5), xlim=(-25, 25), ylim=(-25, 25))
-                grafica.show()
+                    grafica = plot((Graficar, (x, -100, 100)), box_background='blue', show=False, line_color='#96ADEA',ylabel='Y', xlabel='X', title=title, size=(6, 5), xlim=(-25, 25), ylim=(-25, 25))
+                    grafica.show()
             except:
                 self.lbl_grafico_mensaje.setText("*Ocurrio un problema :c")
                 self.lbl_grafico_mensaje.setVisible(True)
-            finally:
-                self.lbl_grafico_mensaje.setVisible(False) 
-
+            
         else:
-            self.lbl_grafico_mensaje.setText("*disponible en unidad 2")
+            self.lbl_grafico_mensaje.setText("*Disponible en unidad 2")
             self.lbl_grafico_mensaje.setVisible(True)
 
     def agregarColumna(self):
-        global Numero_Filas_Columnas
+        global Numero_Filas_Columnas, lbl_Hermite_tabla
         metodo = self.cmbMetodos.currentIndex()
 
         if metodo == 0:
-            mesaje=("Seleccione un metodo primero ")
+            mesaje=("Error, no ha seleccionado")
             self.lbl_puntos_unidad3.setText(mesaje)
             self.lbl_puntos_unidad3.setVisible(True)
         elif metodo == 1:
-            mesaje=("Solamente se puede trabajar con 2 puntos")
+            mesaje=("Error, el limite es 2 puntos")
             self.lbl_puntos_unidad3.setText(mesaje)
-            self.lbl_puntos_unidad3.setVisible(True)
-        else:
-            if Numero_Filas_Columnas == 13:
-                mesaje=("Maximo numero de columnas alcanzado")
-                self.lbl_puntos_unidad3.setText(mesaje)
-                self.lbl_puntos_unidad3.setVisible(True)
+            self.lbl_puntos_unidad3.setVisible(True)       
+        else:                          
+            if metodo >= 1 and metodo <= 4:
+                if Numero_Filas_Columnas == 11:
+                    mesaje=("maximo alcanzado")
+                    self.lbl_puntos_unidad3.setText(mesaje)
+                    self.lbl_puntos_unidad3.setVisible(True)
+                else:
+                    self.lbl_puntos_unidad3.setVisible(False)
+                    self.tableWidget_2.insertColumn(Numero_Filas_Columnas+1)
+                    Numero_Filas_Columnas += 1
+
+            if metodo == 5:
+                if Numero_Filas_Columnas == 6:
+                    mesaje=("maximo alcanzado")
+                    self.lbl_puntos_unidad3.setText(mesaje)
+                    self.lbl_puntos_unidad3.setVisible(True)
+                else:
+                    self.lbl_puntos_unidad3.setVisible(False)
+                    if lbl_Hermite_tabla == "y'":
+                        lbl_Hermite_tabla += "'"
+                        salida = lbl_Hermite_tabla
+                    else:
+                        lbl_Hermite_tabla += "'"
+                        salida = lbl_Hermite_tabla
+
+                    self.tableWidget_2.insertColumn(Numero_Filas_Columnas+1)
+                    self.tableWidget_2.setItem(
+                        0, Numero_Filas_Columnas+1, QtWidgets.QTableWidgetItem(salida))
+                    Numero_Filas_Columnas += 1
+            if metodo == 6:
+                if Numero_Filas_Columnas == 10:
+                    mesaje=("maximo alcanzado")
+                    self.lbl_puntos_unidad3.setText(mesaje)
+                    self.lbl_puntos_unidad3.setVisible(True)
+
+                self.lbl_puntos_unidad3.setVisible(False)   
             else:
                 self.tableWidget_2.insertColumn(Numero_Filas_Columnas+1)
                 Numero_Filas_Columnas += 1
@@ -1011,7 +1076,7 @@ class Ui_Analisis_Numerico(object):
 
         if metodo == 1:  # lineal
             if Numero_Filas_Columnas == 3:
-                mesaje=("Se necesitan al menos 2 puntos")
+                mesaje=("No se puede eliminar mas")
                 self.lbl_puntos_unidad3.setText(mesaje)
                 self.lbl_puntos_unidad3.setVisible(True)
             else:
@@ -1021,7 +1086,7 @@ class Ui_Analisis_Numerico(object):
 
         elif metodo == 2:  # Cuadratica
             if Numero_Filas_Columnas == 4:
-                mesaje=("Se necesitan al menos 3 puntos")
+                mesaje=("No se puede eliminar mas")
                 self.lbl_puntos_unidad3.setText(mesaje)
                 self.lbl_puntos_unidad3.setVisible(True)
             else:
@@ -1031,7 +1096,7 @@ class Ui_Analisis_Numerico(object):
 
         elif metodo == 3:  # Lagrange
             if Numero_Filas_Columnas == 3:
-                mesaje=("Se necesitan al menos 2 puntos")
+                mesaje=("No se puede eliminar mas")
                 self.lbl_puntos_unidad3.setText(mesaje)
                 self.lbl_puntos_unidad3.setVisible(True)
             else:
@@ -1041,7 +1106,16 @@ class Ui_Analisis_Numerico(object):
 
         elif metodo == 4:  # Newton
             if Numero_Filas_Columnas == 3:
-                mesaje=("Se necesitan al menos 2 puntos")
+                mesaje=("No se puede eliminar mas")
+                self.lbl_puntos_unidad3.setText(mesaje)
+                self.lbl_puntos_unidad3.setVisible(True)
+            else:
+                self.tableWidget_2.removeColumn(Numero_Filas_Columnas)
+                Numero_Filas_Columnas = Numero_Filas_Columnas-1
+                self.lbl_puntos_unidad3.setVisible(False)
+        elif metodo == 5:  # hermite
+            if Numero_Filas_Columnas == 2:
+                mesaje=("No se puede eliminar mas")
                 self.lbl_puntos_unidad3.setText(mesaje)
                 self.lbl_puntos_unidad3.setVisible(True)
             else:
@@ -1049,7 +1123,17 @@ class Ui_Analisis_Numerico(object):
                 Numero_Filas_Columnas = Numero_Filas_Columnas-1
                 self.lbl_puntos_unidad3.setVisible(False)
 
-    def Validar_Datos_en_Formulario(self, MainWindow, queMetodo, funcionTXT, X1, X2,X3, cifTXT):
+        elif metodo == 6:  # trazadores cubicos
+            if Numero_Filas_Columnas == 3:
+                mesaje=("No se puede eliminar mas")
+                self.lbl_puntos_unidad3.setText(mesaje)
+                self.lbl_puntos_unidad3.setVisible(True)
+            else:
+                self.tableWidget_2.removeColumn(Numero_Filas_Columnas)
+                Numero_Filas_Columnas = Numero_Filas_Columnas-1
+                self.lbl_puntos_unidad3.setVisible(False)
+
+    def Validar_Datos_en_Formulario(self, MainWindow, queMetodo, funcion_txt, X1, X2,X3, cifras_txt):
         # <---- Validamos que sean numeros ------->
         x1 = funciones.Validar_Valores_Iniciales(X1)
         x2 = funciones.Validar_Valores_Iniciales(X2)
@@ -1073,7 +1157,7 @@ class Ui_Analisis_Numerico(object):
             else:
                 self.lbl_mensaje_puntos.setVisible(False)
                 try:
-                    funcion = funciones.Sustituir_y_Evaluar_Funcion(funcionTXT, 1, 0, 0)
+                    funcion = funciones.Sustituir_y_Evaluar_Funcion(funcion_txt, 1, 0, 0)
                     control_acceso = True
                 except:
                     control_acceso = False
@@ -1083,7 +1167,7 @@ class Ui_Analisis_Numerico(object):
                     self.lbl_mensaje_funcion.setVisible(True)
                 else:
                     self.lbl_mensaje_funcion.setVisible(False)
-                    control_cifras = funciones.Validar_Cifras_Significativas(cifTXT)
+                    control_cifras = funciones.Validar_Cifras_Significativas(cifras_txt)
                     if control_cifras == False:
                        mesaje=("Cifras incorrectas")
                        self.lbl_mensaje_cifras_h.setText(mesaje)
@@ -1092,13 +1176,13 @@ class Ui_Analisis_Numerico(object):
                         self.lbl_mensaje_cifras_h.setVisible(False)
                         if queMetodo == 1:  # Biseccion
                             self.Tabla_Unidad_2(MainWindow, 1, x1,
-                                            x2, funcionTXT, control_cifras)
+                                            x2, funcion_txt, control_cifras)
                         elif queMetodo == 2:  # Falsa Posicion
                             self.Tabla_Unidad_2(MainWindow, 2, x1,
-                                            x2, funcionTXT, control_cifras)
+                                            x2, funcion_txt, control_cifras)
                         elif queMetodo == 6:  # secante
                             self.Tabla_Unidad_2(MainWindow, 6, x1,
-                                            x2, funcionTXT, control_cifras)
+                                            x2, funcion_txt, control_cifras)
         if cuantasVariables == 1:
             if x1 == False :
                 mesaje=("Los valores iniciales son incorrectos")
@@ -1107,7 +1191,7 @@ class Ui_Analisis_Numerico(object):
             else:
                 self.lbl_mensaje_puntos.setVisible(False)
                 try:
-                    funcion = funciones.Sustituir_y_Evaluar_Funcion(funcionTXT, 1, 0, 0)
+                    funcion = funciones.Sustituir_y_Evaluar_Funcion(funcion_txt, 1, 0, 0)
                     control_acceso = True
                 except:
                     control_acceso = False
@@ -1117,7 +1201,7 @@ class Ui_Analisis_Numerico(object):
                     self.lbl_mensaje_funcion.setVisible(True)
                 else:
                     self.lbl_mensaje_funcion.setVisible(False)    
-                    control_cifras = funciones.Validar_Cifras_Significativas(cifTXT)
+                    control_cifras = funciones.Validar_Cifras_Significativas(cifras_txt)
                     if control_cifras == False:
                         mesaje=("Cifras incorrectas")
                         self.lbl_mensaje_cifras_h.setText(mesaje)
@@ -1127,14 +1211,33 @@ class Ui_Analisis_Numerico(object):
                         if queMetodo == 3:
                             # Falsa posicion
                             self.Tabla_Unidad_2(MainWindow, 3, x1,
-                                            x2, funcionTXT, control_cifras)
+                                            x2, funcion_txt, control_cifras)
                         elif queMetodo == 4:
                             self.Tabla_Unidad_2(MainWindow, 4, x1,
-                                            x2, funcionTXT, control_cifras)  # newton
+                                            x2, funcion_txt, control_cifras)  # newton
                         elif queMetodo == 5:
                             # newton mejorado
                             self.Tabla_Unidad_2(MainWindow, 5, x1,
-                                            x2, funcionTXT, control_cifras)
+                                            x2, funcion_txt, control_cifras)
+
+    def agregarFila(self):
+        global Numero_filas_Hermite
+        metodo = self.cmbMetodos.currentIndex()
+
+        if metodo == 5:
+            self.tableWidget_2.insertRow(Numero_filas_Hermite+1)
+            Numero_filas_Hermite += 1
+
+    def eliminarFila(self):
+        global Numero_filas_Hermite
+        if Numero_filas_Hermite == 2:
+            mesaje=("No se puede eliminar mas")
+            self.lbl_puntos_unidad3.setText(mesaje)
+            self.lbl_puntos_unidad3.setVisible(True)
+        else:
+            self.lbl_puntos_unidad3.setVisible(False)
+            self.tableWidget_2.removeRow(Numero_filas_Hermite)
+            Numero_filas_Hermite = Numero_filas_Hermite - 1
 
     def Resolverlo(self, MainWindow):
 
@@ -1313,17 +1416,13 @@ class Ui_Analisis_Numerico(object):
                                     column, tamanioColumnas)
 
             elif metodo == 9:  # Metodo para crear tabla de müller
-                # Creamos la lista completa con todas las iteraciones
+                
                 # Metodo muller me devuelve todas las iteraciones
                 Listado_Resultante = unidad_dos.metodoMuller(self.txtfuncion.text(), self.txtX1.text(
                 ), self.txtX2.text(), self.txtX2_2.text(), self.txtcifras.text())
 
                 rows = len(Listado_Resultante)  # Capturamos cuantas filas hay
-                columns = len(Listado_Resultante[0])  # Capturamos cuantas columnas hay
-
-                # dividimos el ancho de la tabla entre las columnas
-
-                
+                columns = len(Listado_Resultante[0])  # Capturamos cuantas columnas hay           
 
                 for row in range(rows):
                     for column in range(columns):
@@ -1448,8 +1547,8 @@ class Ui_Analisis_Numerico(object):
         
         if metodo == 5:
 
-            print(Numero_Filas_Columnas,Numero_filas_Hermite)
-            #Agregamos los puntos a listas separadas 
+            
+            
             for x in range(0,Numero_Filas_Columnas+1):
                 listaX = []
                 Sub_listaX = []
@@ -1466,7 +1565,7 @@ class Ui_Analisis_Numerico(object):
                 
                 Lista_Hermite.append(Sub_listaX)
 
-            self.Tabla_Unidad_3(5,Lista_Hermite,self.lineEdit_6.text()) 
+            self.Tabla_Unidad_3(5,Lista_Hermite,self.txtHermitePunto.text()) 
 
         elif metodo == 6:
              #Agregamos los puntos a listas separadas 
@@ -1484,7 +1583,7 @@ class Ui_Analisis_Numerico(object):
                 Sub_listaY.append(float(i))
 
             Puntos_Validados = [Sub_listaX,Sub_listaY]
-            self.Tabla_Unidad_3(6,Puntos_Validados,self.lineEdit_6.text())
+            self.Tabla_Unidad_3(6,Puntos_Validados,self.txtHermitePunto.text())
           
         else:
             #Agregamos los puntos a listas separadas 
@@ -1792,3 +1891,48 @@ class Ui_Analisis_Numerico(object):
 
             else:
                 self.lbl_radiobuttons.setVisible(True)
+        elif metodo == 6: #trazadores cubicos
+            grado=self.cbmSplineGrado.currentIndex()
+            if grado == 0:
+                Listado_Resultante = unidad_tres.trazadoresCubicos(puntos[0], puntos[1], 0, valor)
+                rows = len(Listado_Resultante)
+
+                self.tableWidget.setColumnCount(1)
+                self.tableWidget.setRowCount(rows)
+                for row in range(0, rows):
+                    self.tableWidget.setItem(
+                        row, 0, QtWidgets.QTableWidgetItem(str(Listado_Resultante[row])))
+                    self.tableWidget.setColumnWidth(0, 830)
+            elif grado == 1:
+                Listado_Resultante = unidad_tres.trazadoresCubicos(puntos[0], puntos[1], 1, valor)
+                rows = len(Listado_Resultante)
+
+                self.tableWidget.setColumnCount(1)
+                self.tableWidget.setRowCount(rows)
+
+                for row in range(0, rows):
+                    self.tableWidget.setItem(
+                        row, 0, QtWidgets.QTableWidgetItem(str(Listado_Resultante[row])))
+                    self.tableWidget.setColumnWidth(0, 830)
+            elif grado == 2:
+                Listado_Resultante = unidad_tres.trazadoresCubicos(puntos[0], puntos[1], 2, valor)
+                rows = len(Listado_Resultante)
+
+                self.tableWidget.setColumnCount(1)
+                self.tableWidget.setRowCount(rows)
+
+                for row in range(0, rows):
+                    self.tableWidget.setItem(
+                        row, 0, QtWidgets.QTableWidgetItem(str(Listado_Resultante[row])))
+                    self.tableWidget.setColumnWidth(0, 830)
+            elif grado == 3:
+                Listado_Resultante = unidad_tres.trazadoresCubicos(puntos[0], puntos[1], 3, valor)
+                rows = len(Listado_Resultante)
+
+                self.tableWidget.setColumnCount(1)
+                self.tableWidget.setRowCount(rows)
+
+                for row in range(0, rows):
+                    self.tableWidget.setItem(
+                        row, 0, QtWidgets.QTableWidgetItem(str(Listado_Resultante[row])))
+                    self.tableWidget.setColumnWidth(0, 830)

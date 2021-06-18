@@ -745,7 +745,6 @@ color: rgb(0, 0, 0);</string>
       </property>
      </widget>
     </widget>
-    <zorder>frame_6</zorder>
     <zorder>btnResolverlo</zorder>
     <zorder>btnLimpiar</zorder>
     <zorder>frame_2</zorder>
@@ -754,6 +753,7 @@ color: rgb(0, 0, 0);</string>
     <zorder>frame_5</zorder>
     <zorder>frame_hermite</zorder>
     <zorder>frame_trazadores</zorder>
+    <zorder>frame_6</zorder>
    </widget>
    <widget class="QComboBox" name="cmbMetodos">
     <property name="geometry">
