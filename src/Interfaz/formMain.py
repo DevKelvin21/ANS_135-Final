@@ -974,7 +974,7 @@ class Ui_Analisis_Numerico(object):
                 grafica = plot((Graficar, (x, -100, 100)), box_background='blue', show=False, line_color='#96ADEA',ylabel='Y', xlabel='X', title=title, size=(6, 5), xlim=(-25, 25), ylim=(-25, 25))
                 grafica.show()
             except:
-                self.lbl_grafico_mensaje.setText("*Ocurrio un problema :c)
+                self.lbl_grafico_mensaje.setText("*Ocurrio un problema :c")
                 self.lbl_grafico_mensaje.setVisible(True)
             finally:
                 self.lbl_grafico_mensaje.setVisible(False) 
@@ -1048,7 +1048,6 @@ class Ui_Analisis_Numerico(object):
                 self.tableWidget_2.removeColumn(Numero_Filas_Columnas)
                 Numero_Filas_Columnas = Numero_Filas_Columnas-1
                 self.lbl_puntos_unidad3.setVisible(False)
-
 
     def Validar_Datos_en_Formulario(self, MainWindow, queMetodo, funcionTXT, X1, X2,X3, cifTXT):
         # <---- Validamos que sean numeros ------->
