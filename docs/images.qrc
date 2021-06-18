@@ -1,29 +1,20 @@
 <RCC>
   <qresource prefix="images">
-    <file>images/Limpiar_bn.png</file>
+    <file>images/parabola.png</file>
+    <file>images/Eliminarr.png</file>
     <file>images/unidad1_bn.png</file>
     <file>images/unidad2_bn.png</file>
     <file>images/unidad3_bn.png</file>
     <file>images/unidad4_bn.png</file>
     <file>images/unidad5_bn.png</file>
-    <file>images/Calcular_bn.png</file>
-    <file>images/anadir-fila.png</file>
-    <file>images/eliminar-fila.png</file>
     <file>images/barra.png</file>
+    <file>images/Aniadir.png</file>
     <file>images/barra2.png</file>
-    <file>images/Calcular.png</file>
-    <file>images/cifras.png</file>
-    <file>images/ingreselafuncion.png</file>
-    <file>images/Limpiar.png</file>
     <file>images/titulo.png</file>
     <file>images/unidad1.png</file>
     <file>images/unidad2.png</file>
     <file>images/unidad3.png</file>
     <file>images/unidad4.png</file>
     <file>images/unidad5.png</file>
-    <file>images/valoresiniciales.png</file>
-    <file>images/x1.png</file>
-    <file>images/x2.png</file>
-    <file>images/x3.png</file>
   </qresource>
 </RCC>

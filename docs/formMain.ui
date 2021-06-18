@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1043</width>
-    <height>630</height>
+    <width>1235</width>
+    <height>684</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,8 +22,8 @@
      <rect>
       <x>220</x>
       <y>50</y>
-      <width>801</width>
-      <height>551</height>
+      <width>991</width>
+      <height>611</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -43,60 +43,69 @@
     <widget class="QPushButton" name="btnCalcular">
      <property name="geometry">
       <rect>
-       <x>300</x>
-       <y>170</y>
-       <width>101</width>
+       <x>360</x>
+       <y>210</y>
+       <width>131</width>
        <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">
 QPushButton {
-	border-radius: 0px;
-	background-image: url(:/images/images/Calcular.png);
+	border-radius: 15px;
+	border:0px;
+	font: 75 10pt &quot;SpaceMono Nerd Font&quot;;
+	color: rgb(255, 255, 255);
+	background-color: rgb(87, 85, 183);
 }
 QPushButton:hover {
-	border-radius: 16px;
-	background-image: url(:/images/images/Calcular_bn.png);
+	border-radius: 20px;
+	border:0px;
+	
+	background-color: rgb(70, 69, 149);
 
 }</string>
      </property>
      <property name="text">
-      <string/>
+      <string>Resolverlo</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btnLimpiar">
      <property name="geometry">
       <rect>
-       <x>420</x>
-       <y>170</y>
-       <width>101</width>
+       <x>510</x>
+       <y>210</y>
+       <width>141</width>
        <height>51</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
-	border-radius: 0px;
-	background-color: rgb(246, 247, 251);
-	background-image: url(:/images/images/Limpiar.png);
+	border-radius: 15px;
+	border:0px;
+	color: rgb(87, 85, 183);
+	font: 75 10pt &quot;SpaceMono Nerd Font&quot;;
+	background-color: rgb(255, 255, 255);
 }
 QPushButton:hover {
-	border-radius: 16px;
-	background-image: url(:/images/images/Limpiar_bn.png);
+	border-radius: 20px;
+	border:0px;
+	background-color: rgb(221, 221, 221);
+	
 }
 </string>
      </property>
      <property name="text">
-      <string/>
+      <string>Limpiar Campos</string>
      </property>
     </widget>
     <widget class="QFrame" name="frame_2">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>250</y>
-       <width>711</width>
-       <height>251</height>
+       <x>30</x>
+       <y>280</y>
+       <width>941</width>
+       <height>281</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -111,11 +120,14 @@ QPushButton:hover {
      <widget class="QTableWidget" name="tableWidget">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>20</y>
-        <width>671</width>
-        <height>211</height>
+        <x>10</x>
+        <y>10</y>
+        <width>921</width>
+        <height>261</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
@@ -125,10 +137,10 @@ QPushButton:hover {
     <widget class="QFrame" name="frame_3">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>221</width>
-       <height>111</height>
+       <x>70</x>
+       <y>30</y>
+       <width>261</width>
+       <height>121</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -143,25 +155,25 @@ QPushButton:hover {
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>0</y>
-        <width>201</width>
+        <x>20</x>
+        <y>10</y>
+        <width>231</width>
         <height>41</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/images/ingreselafuncion.png);
-background-image: url(:/images/images/ingreselafuncion.png);</string>
+       <string notr="true">font: 75 14pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(160, 160, 160);</string>
       </property>
       <property name="text">
-       <string/>
+       <string>Ingrese la Funcion </string>
       </property>
      </widget>
      <widget class="QLineEdit" name="txtfuncion">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>70</y>
+        <x>40</x>
+        <y>60</y>
         <width>181</width>
         <height>21</height>
        </rect>
@@ -169,17 +181,35 @@ background-image: url(:/images/images/ingreselafuncion.png);</string>
       <property name="styleSheet">
        <string notr="true">background-image: url(:/images/barra2.png);
 background-image: url(:/images/images/barra2.png);
+font: 8pt &quot;SpaceMono Nerd Font&quot;;
 border: 0px;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbl_mensaje_funcion">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>90</y>
+        <width>221</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 7pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(255, 0, 4);</string>
+      </property>
+      <property name="text">
+       <string>Mensaje Funcion</string>
       </property>
      </widget>
     </widget>
     <widget class="QFrame" name="frame_4">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>20</y>
+       <x>350</x>
+       <y>30</y>
        <width>281</width>
-       <height>111</height>
+       <height>121</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -194,18 +224,18 @@ border: 0px;</string>
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>0</y>
-        <width>201</width>
-        <height>61</height>
+        <x>40</x>
+        <y>10</y>
+        <width>211</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/images/valoresiniciales.png);
-background-image: url(:/images/images/valoresiniciales.png);</string>
+       <string notr="true">font: 75 14pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(160, 160, 160);</string>
       </property>
       <property name="text">
-       <string/>
+       <string>Valores Iniciales</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="txtX1">
@@ -219,7 +249,8 @@ background-image: url(:/images/images/valoresiniciales.png);</string>
       </property>
       <property name="styleSheet">
        <string notr="true">background-image: url(:/images/images/barra.png);
-border: 0px;</string>
+border: 0px;
+font: 8pt &quot;SpaceMono Nerd Font&quot;;</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="txtX2">
@@ -234,7 +265,8 @@ border: 0px;</string>
       <property name="styleSheet">
        <string notr="true">background-image: url(:/images/barra.png);
 background-image: url(:/images/images/barra.png);
-border: 0px;</string>
+border: 0px;
+font: 8pt &quot;SpaceMono Nerd Font&quot;;</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_3">
@@ -247,11 +279,11 @@ border: 0px;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/images/x1.png);
-background-image: url(:/images/images/x1.png);</string>
+       <string notr="true">font: 75 14pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(160, 160, 160);</string>
       </property>
       <property name="text">
-       <string/>
+       <string>X1</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_4">
@@ -264,10 +296,11 @@ background-image: url(:/images/images/x1.png);</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/images/images/x2.png);</string>
+       <string notr="true">font: 75 14pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(160, 160, 160);</string>
       </property>
       <property name="text">
-       <string/>
+       <string>X2</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="txtX2_2">
@@ -282,7 +315,8 @@ background-image: url(:/images/images/x1.png);</string>
       <property name="styleSheet">
        <string notr="true">background-image: url(:/images/barra.png);
 background-image: url(:/images/images/barra.png);
-border: 0px;</string>
+border: 0px;
+font: 8pt &quot;SpaceMono Nerd Font&quot;;</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_7">
@@ -295,20 +329,38 @@ border: 0px;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/images/images/x3.png);</string>
+       <string notr="true">font: 75 14pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(160, 160, 160);;</string>
       </property>
       <property name="text">
-       <string/>
+       <string>X3</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbl_mensaje_puntos">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>90</y>
+        <width>241</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 7pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(255, 0, 4);</string>
+      </property>
+      <property name="text">
+       <string>Mensaje puntos</string>
       </property>
      </widget>
     </widget>
     <widget class="QFrame" name="frame_5">
      <property name="geometry">
       <rect>
-       <x>560</x>
-       <y>20</y>
-       <width>221</width>
-       <height>111</height>
+       <x>650</x>
+       <y>30</y>
+       <width>241</width>
+       <height>121</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -320,21 +372,21 @@ border: 0px;</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_5">
+     <widget class="QLabel" name="lbl_cifras_h">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>75</x>
         <y>10</y>
-        <width>201</width>
+        <width>81</width>
         <height>61</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-image: url(:/images/cifras.png);
-background-image: url(:/images/images/cifras.png);</string>
+       <string notr="true">font: 75 14pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(160, 160, 160);</string>
       </property>
       <property name="text">
-       <string/>
+       <string>Cifras</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="txtcifras">
@@ -349,7 +401,25 @@ background-image: url(:/images/images/cifras.png);</string>
       <property name="styleSheet">
        <string notr="true">background-image: url(:/images/barra.png);
 background-image: url(:/images/images/barra.png);
-border: 0px;</string>
+border: 0px;
+font: 8pt &quot;SpaceMono Nerd Font&quot;;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbl_mensaje_cifras_h">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>90</y>
+        <width>201</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 7pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(255, 0, 4);</string>
+      </property>
+      <property name="text">
+       <string>Mensaje cifras</string>
       </property>
      </widget>
     </widget>
@@ -358,8 +428,8 @@ border: 0px;</string>
       <rect>
        <x>20</x>
        <y>10</y>
-       <width>771</width>
-       <height>151</height>
+       <width>951</width>
+       <height>161</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -374,69 +444,304 @@ border: 0px;</string>
      <widget class="QTableWidget" name="tableWidget_2">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>20</y>
-        <width>611</width>
-        <height>111</height>
+        <x>200</x>
+        <y>10</y>
+        <width>741</width>
+        <height>141</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(246, 247, 251);</string>
+       <string notr="true">background-color: rgb(246, 247, 251);
+font: 8pt &quot;SpaceMono Nerd Font&quot;;</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
      </widget>
-     <widget class="QPushButton" name="btnAgregarFIla">
+     <widget class="QPushButton" name="btnAgregarFila">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>20</y>
-        <width>100</width>
-        <height>50</height>
+        <x>200</x>
+        <y>25</y>
+        <width>101</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-	border-radius: 0px;
-	background-image: url(:/images/images/anadir-fila.png);
+	border-radius: 15px;
+	border:0px;
+	font: 75 8pt &quot;SpaceMono Nerd Font&quot;;
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 193, 0);
 }
 QPushButton:hover {
-
-	
-	background-color: rgb(246, 247, 251);
-	background-image: url(:/images/images/anadir-fila.png);
-
+	border-radius: 20px;
+	background-color: rgb(0, 136, 0);
 }</string>
       </property>
       <property name="text">
-       <string/>
+       <string>Añadir Fila</string>
       </property>
      </widget>
      <widget class="QPushButton" name="btnEliminarFila">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>200</x>
         <y>80</y>
-        <width>100</width>
+        <width>101</width>
         <height>50</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-	border-radius: 0px;
-	background-image: url(:/images/images/eliminar-fila.png);
+	border-radius: 15px;
+	border:0px;
+	font: 75 8pt &quot;SpaceMono Nerd Font&quot;;
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 130, 255);
 }
 QPushButton:hover {
-
-	
-	background-color: rgb(246, 247, 251);
-	background-image: url(:/images/images/eliminar-fila.png);
-
+	border-radius: 20px;
+	background-color: rgb(0, 95, 185);
 }</string>
       </property>
       <property name="text">
+       <string>Eliminar Fila</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbl_aniadir">
+      <property name="geometry">
+       <rect>
+        <x>12</x>
+        <y>23</y>
+        <width>50</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/images/images/Aniadir.png);
+border-radius: 0px;</string>
+      </property>
+      <property name="text">
        <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>50</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-radius: 0px;
+background-image: url(:/images/images/Eliminarr.png);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnAgregarCol">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>25</y>
+        <width>117</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	border-radius: 15px;
+	border:0px;
+	font: 75 8pt &quot;SpaceMono Nerd Font&quot;;
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 193, 0);
+}
+QPushButton:hover {
+	border-radius: 20px;
+	background-color: rgb(0, 136, 0);
+}</string>
+      </property>
+      <property name="text">
+       <string>Añadir Columna</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnEliminarCol">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>80</y>
+        <width>117</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	border-radius: 15px;
+	border:0px;
+	font: 75 8pt &quot;SpaceMono Nerd Font&quot;;
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 130, 255);
+}
+QPushButton:hover {
+	border-radius: 20px;
+	background-color: rgb(0, 95, 185);
+}</string>
+      </property>
+      <property name="text">
+       <string>Eliminar Columna</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbl_puntos_unidad3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>140</y>
+        <width>281</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 7pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(255, 0, 4);</string>
+      </property>
+      <property name="text">
+       <string>Mensaje puntos unidad 3 </string>
+      </property>
+     </widget>
+     <zorder>label_8</zorder>
+     <zorder>lbl_puntos_unidad3</zorder>
+     <zorder>btnAgregarFila</zorder>
+     <zorder>btnEliminarFila</zorder>
+     <zorder>lbl_aniadir</zorder>
+     <zorder>btnAgregarCol</zorder>
+     <zorder>btnEliminarCol</zorder>
+     <zorder>tableWidget_2</zorder>
+    </widget>
+    <widget class="QFrame" name="frame_hermite">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>180</y>
+       <width>181</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="lbl_punto_hermite">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>121</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 10pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(160, 160, 160);</string>
+      </property>
+      <property name="text">
+       <string>Punto a Evaluar</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txtHermitePunto">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px;
+background-image: url(:/images/images/barra2.png);</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_trazadores">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>180</y>
+       <width>211</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QComboBox" name="cbmSplineGrado">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>151</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-radius: 10px;
+background-color: rgb(246, 247, 251);
+font: 8pt &quot;SpaceMono Nerd Font&quot;;
+</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>Grado Cero</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Grado Uno</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Grado Dos</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Grado Tres</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>0</y>
+        <width>141</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>Seleccione el grado
+  Funcion Spline</string>
       </property>
      </widget>
     </widget>
@@ -447,23 +752,30 @@ QPushButton:hover {
     <zorder>frame_3</zorder>
     <zorder>frame_4</zorder>
     <zorder>frame_5</zorder>
+    <zorder>frame_hermite</zorder>
+    <zorder>frame_trazadores</zorder>
    </widget>
    <widget class="QComboBox" name="cmbMetodos">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>550</x>
       <y>10</y>
-      <width>181</width>
+      <width>221</width>
       <height>22</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">border-radius: 10px;
-background-color: rgb(246, 247, 251);</string>
+background-color: rgb(246, 247, 251);
+font: 8pt &quot;SpaceMono Nerd Font&quot;;
+</string>
+    </property>
+    <property name="currentText">
+     <string>&gt; Seleccione una Unidad &lt;</string>
     </property>
     <item>
      <property name="text">
-      <string>&gt; Seleccione un metodo &lt;</string>
+      <string>&gt; Seleccione una Unidad &lt;</string>
      </property>
     </item>
    </widget>
@@ -613,11 +925,15 @@ QPushButton:hover {
    <widget class="QRadioButton" name="radioButton">
     <property name="geometry">
      <rect>
-      <x>800</x>
+      <x>830</x>
       <y>10</y>
-      <width>82</width>
+      <width>111</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;
+</string>
     </property>
     <property name="text">
      <string>Ver polinomio</string>
@@ -626,16 +942,131 @@ QPushButton:hover {
    <widget class="QRadioButton" name="radioButton_2">
     <property name="geometry">
      <rect>
-      <x>900</x>
+      <x>960</x>
       <y>10</y>
-      <width>101</width>
+      <width>141</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;
+</string>
     </property>
     <property name="text">
      <string>No ver polinomio</string>
     </property>
    </widget>
+   <widget class="QLabel" name="lbl_unidad_actual">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>10</y>
+      <width>271</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(255, 0, 4);</string>
+    </property>
+    <property name="text">
+     <string>Unidad Actual # ninguna seleccionada</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_radiobuttons">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>30</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(255, 0, 4);</string>
+    </property>
+    <property name="text">
+     <string>*Seleccione una acción</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_grafica">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>510</y>
+      <width>64</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/images/images/parabola.png);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>510</y>
+      <width>101</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border-radius: 15px;
+	border:0px;
+	font: 75 12pt &quot;MS Shell Dlg 2&quot;;
+	color: rgb(255, 255, 255);
+	
+	background-color: rgb(87, 85, 183);
+}
+QPushButton:hover {
+	border-radius: 20px;
+	
+	background-color: rgb(71, 69, 150);
+}</string>
+    </property>
+    <property name="text">
+     <string>Realizar 
+ Grafico</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbl_grafico_mensaje">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>590</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 0, 4);
+font: 8pt &quot;SpaceMono Nerd Font&quot;;</string>
+    </property>
+    <property name="text">
+     <string>*Funcion incorrecta</string>
+    </property>
+   </widget>
+   <zorder>lbl_radiobuttons</zorder>
+   <zorder>frame</zorder>
+   <zorder>cmbMetodos</zorder>
+   <zorder>btnUnidad1</zorder>
+   <zorder>btnUnidad2</zorder>
+   <zorder>btnUnidad3</zorder>
+   <zorder>btnUnidad4</zorder>
+   <zorder>btnUnidad5</zorder>
+   <zorder>label_6</zorder>
+   <zorder>radioButton</zorder>
+   <zorder>radioButton_2</zorder>
+   <zorder>lbl_unidad_actual</zorder>
+   <zorder>label_grafica</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>lbl_grafico_mensaje</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
