@@ -28,7 +28,7 @@ def Sustituir_y_Evaluar_Funcion(funcion, valor, seDeriva, ordenDerivada):#Evualu
             resultado = Sympy.sympify(funcion).subs([(x, valor), (e, cmath.e)])
             return resultado
     except:
-        return False
+        return "False"
 
 
 #♪-------------------------------------------- METODOS NUMERICOS VISTOS EN CLASE -----------------------------------------------------------------

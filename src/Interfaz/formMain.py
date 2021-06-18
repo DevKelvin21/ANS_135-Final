@@ -1162,7 +1162,7 @@ class Ui_Analisis_Numerico(object):
         x1 = funciones.Validar_Valores_Iniciales(X1)
         x2 = funciones.Validar_Valores_Iniciales(X2)
         x3 = funciones.Validar_Valores_Iniciales(X3)
-        control_acceso = False
+        control_acceso = "False"
 
         cuantasVariables = 0
 
@@ -1175,7 +1175,7 @@ class Ui_Analisis_Numerico(object):
             self.Tabla_Unidad_2( queMetodo, funcion_txt, 0, 0,0, 0)
 
         if cuantasVariables == 2:
-            if x1 == False or x2 == False:
+            if x1 == "False" or x2 == "False":
                 mesaje=("Los valores iniciales son incorrectos")
                 self.lbl_mensaje_puntos.setText(mesaje)
                 self.lbl_mensaje_puntos.setVisible(True)
@@ -1183,33 +1183,30 @@ class Ui_Analisis_Numerico(object):
                 self.lbl_mensaje_puntos.setVisible(False)
                 try:
                     funcion = funciones.Sustituir_y_Evaluar_Funcion(funcion_txt, 1, 0, 0)
-                    control_acceso = True
+                    control_acceso = "True"
                 except:
-                    control_acceso = False
-                if control_acceso == False:
+                    control_acceso = "False"
+                if control_acceso == "False":
                     mesaje=("La funcion no es valida")
                     self.lbl_mensaje_funcion.setText(mesaje)
                     self.lbl_mensaje_funcion.setVisible(True)
                 else:
                     self.lbl_mensaje_funcion.setVisible(False)
                     control_cifras = funciones.Validar_Cifras_Significativas(cifras_txt)
-                    if control_cifras == False:
+                    if control_cifras == "False":
                        mesaje=("Cifras incorrectas")
                        self.lbl_mensaje_cifras_h.setText(mesaje)
                        self.lbl_mensaje_cifras_h.setVisible(True)
                     else:
                         self.lbl_mensaje_cifras_h.setVisible(False)
                         if queMetodo == 1:  # Biseccion
-                            self.Tabla_Unidad_2( 1, x1,
-                                            x2, funcion_txt, control_cifras)
+                            self.Tabla_Unidad_2( 1, x1,x2, funcion_txt, control_cifras)
                         elif queMetodo == 2:  # Falsa Posicion
-                            self.Tabla_Unidad_2( 2, x1,
-                                            x2, funcion_txt, control_cifras)
+                            self.Tabla_Unidad_2( 2, x1,x2, funcion_txt, control_cifras)
                         elif queMetodo == 6:  # secante
-                            self.Tabla_Unidad_2( 6, x1,
-                                            x2, funcion_txt, control_cifras)
+                            self.Tabla_Unidad_2( 6, x1,x2, funcion_txt, control_cifras)
         if cuantasVariables == 1:
-            if x1 == False :
+            if x1 == "False" :
                 mesaje=("Los valores iniciales son incorrectos")
                 self.lbl_mensaje_puntos.setText(mesaje)
                 self.lbl_mensaje_puntos.setVisible(True)
@@ -1217,17 +1214,17 @@ class Ui_Analisis_Numerico(object):
                 self.lbl_mensaje_puntos.setVisible(False)
                 try:
                     funcion = funciones.Sustituir_y_Evaluar_Funcion(funcion_txt, 1, 0, 0)
-                    control_acceso = True
+                    control_acceso = "True"
                 except:
-                    control_acceso = False
-                if control_acceso == False:
+                    control_acceso = "False"
+                if control_acceso == "False":
                     mesaje=("La funcion no es valida")
                     self.lbl_mensaje_funcion.setText(mesaje)
                     self.lbl_mensaje_funcion.setVisible(True)
                 else:
                     self.lbl_mensaje_funcion.setVisible(False)    
                     control_cifras = funciones.Validar_Cifras_Significativas(cifras_txt)
-                    if control_cifras == False:
+                    if control_cifras == "False":
                         mesaje=("Cifras incorrectas")
                         self.lbl_mensaje_cifras_h.setText(mesaje)
                         self.lbl_mensaje_cifras_h.setVisible(True)
@@ -1235,15 +1232,13 @@ class Ui_Analisis_Numerico(object):
                         self.lbl_mensaje_cifras_h.setVisible(False)
                         if queMetodo == 3:
                             # Falsa posicion
-                            self.Tabla_Unidad_2( 3, x1,
-                                            x2, funcion_txt, control_cifras)
+                            self.Tabla_Unidad_2( 3, x1,x2, funcion_txt, control_cifras)
                         elif queMetodo == 4:
-                            self.Tabla_Unidad_2( 4, x1,
-                                            x2, funcion_txt, control_cifras)  # newton
+                            # newton
+                            self.Tabla_Unidad_2( 4, x1,x2, funcion_txt, control_cifras)  
                         elif queMetodo == 5:
                             # newton mejorado
-                            self.Tabla_Unidad_2( 5, x1,
-                                            x2, funcion_txt, control_cifras)
+                            self.Tabla_Unidad_2( 5, x1,x2, funcion_txt, control_cifras)
 
     def agregarFila(self):
         global Numero_filas_Hermite
@@ -2057,3 +2052,251 @@ class Ui_Analisis_Numerico(object):
                     self.tableWidget.setItem(
                         row, 0, QtWidgets.QTableWidgetItem(str(Listado_Resultante[row])))
                     self.tableWidget.setColumnWidth(0, 830)
+
+    def Tabla_Unidad_4(self,metodo):
+
+        listaX = []
+        listaY = []
+        puntos = []
+        Sub_listaX = []
+        Sub_listaY = []
+        h = 0
+        puntoInicial = 0
+
+        global cuantasFilasYColumnas, tabla_unidad4_si_no
+
+        # Encontramos puntos de la tabla si los hay
+        if tabla_unidad4_si_no == 1:
+
+            for x in range(0, 2):
+
+                for y in range(1, cuantasFilasYColumnas+1):
+                    if x == 0:
+                        listaX.append(self.tableWidget_2.item(x, y).text())
+                    elif x == 1:
+                        listaY.append(self.tableWidget_2.item(x, y).text())
+
+           
+
+            for i in listaX:
+                Sub_listaX.append(float(i))
+
+            for i in listaY:
+                Sub_listaY.append(float(i))
+
+            puntos = [Sub_listaX, Sub_listaY]
+            print(puntos)
+
+        else:
+            funcion = self.funcion_uni4.text()
+            try:
+                puntoInicial = float(self.puntoInicial_uni4.text())
+                h = float(self.h_uni4.text())
+            except:
+                print('')
+
+
+        if metodo == 2:  # Hacia delante
+
+            if tabla_unidad4_si_no == 0:
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_adelante(
+                    funcion, puntoInicial, h, [])
+            else:
+
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
+
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_adelante(
+                    '', puntoInicial, h, puntos)
+
+        elif metodo == 3: # Hacia atras
+
+            if tabla_unidad4_si_no == 0:
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_atras(
+                    funcion, puntoInicial, h, [])
+            else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_atras(
+                    '', puntoInicial, h, puntos)
+
+        elif metodo == 4: # centrada
+
+            if tabla_unidad4_si_no == 0:
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_centrada(
+                    funcion, puntoInicial, h, [],0)
+            else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_centrada(
+                    '', puntoInicial, h, puntos,0)
+
+        elif metodo == 5: # Tres puntos
+
+            if tabla_unidad4_si_no == 0:
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_tres_puntos(
+                    funcion, puntoInicial, h, [])
+            else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_tres_puntos(
+                    '', puntoInicial, h, puntos)
+
+        elif metodo == 6: # Cinco Puntos
+
+            if tabla_unidad4_si_no == 0:
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_cinco_puntos(
+                    funcion, puntoInicial, h, [])
+            else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_cinco_puntos(
+                    '', puntoInicial, h, puntos)
+
+        elif metodo == 8: # Adelante orden superior 
+
+
+            if tabla_unidad4_si_no == 0:
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_adelante_orden_superior(
+                    funcion, puntoInicial, h, [])
+            else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_adelante_orden_superior(
+                    '', puntoInicial, h, puntos)
+
+        elif metodo == 9: # Atras orden superior
+
+            if tabla_unidad4_si_no == 0:
+                Listado_Resultante = unidad_cuatro.diferenicacion_numerica_atras_orden_superior(
+                    funcion, puntoInicial, h, [])
+            else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
+                Listado_Resultante = unidad_cuatro.diferenicacion_numerica_atras_orden_superior(
+                    '', puntoInicial, h, puntos)
+
+        elif metodo == 10: # Centrado orden superio
+
+            if tabla_unidad4_si_no == 0:
+                Listado_Resultante = unidad_cuatro.diferenicacion_numerica_centrales_orden_superior(
+                    funcion, puntoInicial, h, [])
+            else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
+                Listado_Resultante = unidad_cuatro.diferenicacion_numerica_centrales_orden_superior(
+                    '', puntoInicial, h, puntos)
+
+        elif metodo == 11: # Richardson
+            nivel = int(self.nivel_uni4.text())
+            Listado_Resultante = unidad_cuatro.metodo_richardson(funcion, puntoInicial, h, nivel)
+
+        elif metodo == 13: # Trapecio simple
+        
+            if tabla_unidad4_si_no == 0:
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
+                Listado_Resultante = unidad_cuatro.regla_del_trapecio_simple(
+                    funcion,a,b,[], 0)
+            else:
+                a = Sub_listaX[len(Sub_listaX)-1]
+                b = Sub_listaX[0]
+
+                Listado_Resultante = unidad_cuatro.regla_del_trapecio_simple(
+                    '', a, b, puntos, 0)
+
+        elif metodo == 14: # Trapecio Compuesto
+   
+            if tabla_unidad4_si_no == 0:
+                n = int(self.puntoInicial_uni4.text())
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
+                Listado_Resultante = unidad_cuatro.regla_del_trapecio_compuesta(
+                    funcion, a,b,n, [],0)
+            else:
+                a = Sub_listaX[len(Sub_listaX)-1]
+                b = Sub_listaX[0]
+                n = len(Sub_listaX)-1
+                Listado_Resultante = unidad_cuatro.regla_del_trapecio_compuesta(
+                    '', a,b,n, puntos,0)
+
+        elif metodo == 15:  # Integrales dobles y triples 
+            self.insertar_datos_a_tabla_unidad4(15)
+
+        elif metodo == 16: # simpson 1/3 simple
+                
+            if tabla_unidad4_si_no == 0:
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
+                Listado_Resultante = unidad_cuatro.integracion_simpson_unTercio_simple(
+                    funcion, a, b, [], [])
+            else:
+                a = Sub_listaX[len(Sub_listaX)-1]
+                b = Sub_listaX[0]
+                Listado_Resultante = unidad_cuatro.integracion_simpson_unTercio_simple(
+                    '', a, b, Sub_listaX, Sub_listaY)
+
+        elif metodo == 17: # simpson 1/3 compuesto
+            
+            if tabla_unidad4_si_no == 0:
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
+                n = int(self.puntoInicial_uni4.text())
+                Listado_Resultante = unidad_cuatro.integracion_simpson_unTercio_compuesta(
+                    funcion, a, b, n, [],[])
+            else:
+                a = Sub_listaX[len(Sub_listaX)-1]
+                b = Sub_listaX[0]
+                n = len(Sub_listaX)-1
+                Listado_Resultante = unidad_cuatro.integracion_simpson_unTercio_compuesta(
+                    '', a, b, n, Sub_listaX, Sub_listaY)
+
+        elif metodo == 18: # simpson 3/8 simple
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
+            Listado_Resultante = unidad_cuatro.integracion_simpson_tresOctavos_simple(
+                funcion, a, b)
+
+        elif metodo == 19: # simpson 3/8 compuesto
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
+            n = int(self.puntoInicial_uni4.text())
+
+            Listado_Resultante = unidad_cuatro.integracion_simpson_tresOctavos_compuesta(
+                funcion, a, b, n)
+
+        elif metodo == 20: # rosemberg
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
+            n = int(self.puntoInicial_uni4.text())
+            Listado_Resultante = unidad_cuatro.integracion_rosemberg(funcion, a, b, n)
+
+        elif metodo == 21: # cuadratura gaussiana
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
+            n = int(self.puntoInicial_uni4.text())
+            Listado_Resultante = unidad_cuatro.integracion_cuadratura_Gaussiana(
+                funcion, a, b, n)
+
+        elif metodo == 22: # simpson adaptativo
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
+            tolerancia = float(self.puntoInicial_uni4.text())
+            Listado_Resultante = unidad_cuatro.integracion_simpson_unTercio_adaptativo(
+                tolerancia, a, b, funcion)
+
+        elif metodo == 23: # boole
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
+            Listado_Resultante = unidad_cuatro.integracion_Boole(a, b, funcion)
+
+        self.tableWidget.setVisible(False)
+        self.cajaTexto.setVisible(True)
+
+        # Agregando respuesta a la caja de texto
+        salida = ""
+
+        for i in Listado_Resultante:
+            salida += "\n"+str(i)+"\n"
+
+        self.cajaTexto.setText(salida)

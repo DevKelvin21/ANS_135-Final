@@ -133,6 +133,23 @@ QPushButton:hover {
        <enum>QFrame::NoFrame</enum>
       </property>
      </widget>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>12</x>
+        <y>9</y>
+        <width>901</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px;
+font: 75 12pt &quot;SpaceMono Nerd Font&quot;;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="frame_3">
      <property name="geometry">

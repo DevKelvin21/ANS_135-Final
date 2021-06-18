@@ -27,7 +27,7 @@ def Sustituir_y_Evaluar_Funcion(funcion, valor, seDeriva, ordenDerivada):#Evualu
             resultado = Sympy.sympify(funcion).subs([(x, valor), (e, cmath.e)])
             return resultado
     except:
-        return False
+        return "False"
 
 def Calculo_Ea(xr, xrAnterior):#Calcula el Error absoluto
     resultado = (abs(xr-xrAnterior)/xr)*100
