@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Trabajo final ANS-135</string>
+   <string>Trabajo Final Analisis Numerico 2021</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -40,7 +40,7 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="btnCalcular">
+    <widget class="QPushButton" name="btnResolverlo">
      <property name="geometry">
       <rect>
        <x>360</x>
@@ -746,7 +746,7 @@ color: rgb(0, 0, 0);</string>
      </widget>
     </widget>
     <zorder>frame_6</zorder>
-    <zorder>btnCalcular</zorder>
+    <zorder>btnResolverlo</zorder>
     <zorder>btnLimpiar</zorder>
     <zorder>frame_2</zorder>
     <zorder>frame_3</zorder>
@@ -1038,10 +1038,10 @@ QPushButton:hover {
    <widget class="QLabel" name="lbl_grafico_mensaje">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>10</x>
       <y>590</y>
-      <width>141</width>
-      <height>16</height>
+      <width>201</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1049,7 +1049,20 @@ QPushButton:hover {
 font: 8pt &quot;SpaceMono Nerd Font&quot;;</string>
     </property>
     <property name="text">
-     <string>*Funcion incorrecta</string>
+     <string>*Ocurrio un problema :c</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblunidad">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>650</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
    <zorder>lbl_radiobuttons</zorder>
@@ -1067,6 +1080,7 @@ font: 8pt &quot;SpaceMono Nerd Font&quot;;</string>
    <zorder>label_grafica</zorder>
    <zorder>pushButton</zorder>
    <zorder>lbl_grafico_mensaje</zorder>
+   <zorder>lblunidad</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

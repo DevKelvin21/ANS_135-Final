@@ -453,7 +453,7 @@ class Ui_Analisis_Numerico(object):
 "}")
         self.pushButton.setObjectName("pushButton")
         self.lbl_grafico_mensaje = QtWidgets.QLabel(self.centralwidget)
-        self.lbl_grafico_mensaje.setGeometry(QtCore.QRect(30, 590, 141, 16))
+        self.lbl_grafico_mensaje.setGeometry(QtCore.QRect(10, 590, 201, 20))
         self.lbl_grafico_mensaje.setStyleSheet("color: rgb(255, 0, 4);\n"
 "font: 8pt \"SpaceMono Nerd Font\";")
         self.lbl_grafico_mensaje.setObjectName("lbl_grafico_mensaje")
@@ -482,7 +482,7 @@ class Ui_Analisis_Numerico(object):
 
     def retranslateUi(self, Analisis_Numerico):
         _translate = QtCore.QCoreApplication.translate
-        Analisis_Numerico.setWindowTitle(_translate("Analisis_Numerico", "Trabajo final ANS-135"))
+        Analisis_Numerico.setWindowTitle(_translate("Analisis_Numerico", "Trabajo Final Analisis Numerico 2021"))
         self.btnResolverlo.setText(_translate("Analisis_Numerico", "Resolverlo"))
         self.btnLimpiar.setText(_translate("Analisis_Numerico", "Limpiar Campos"))
         self.label.setText(_translate("Analisis_Numerico", "Ingrese la Funcion "))
@@ -523,6 +523,7 @@ class Ui_Analisis_Numerico(object):
         self.btnLimpiar.clicked.connect(self.Limpiar_Objects)
         self.btnAgregarCol.clicked.connect(self.agregarColumna)
         self.btnEliminarCol.clicked.connect(self.eliminarColumna)
+        self.pushButton.clicked.connect(self.graficar)
         #Botones unidades.
         self.btnUnidad1.clicked.connect(lambda: self.unidades(0))
         self.btnUnidad1.clicked.connect(self.Filtrar_llenado_cmbMetodos)
@@ -576,7 +577,7 @@ class Ui_Analisis_Numerico(object):
 
         if cual == 0:  # Metodos de la primera unidad
 
-            self.cmbMetodos.setGeometry(QtCore.QRect(530, 10, 181, 22))
+            self.cmbMetodos.setGeometry(QtCore.QRect(550, 10, 221, 22))
             # Siempre limpiamos el combobox para evitar duplicados o cosas raras
             self.cmbMetodos.clear()
 
@@ -625,7 +626,7 @@ class Ui_Analisis_Numerico(object):
 
 
         elif cual == 1:  # Metodos de la segunda unidad
-            self.cmbMetodos.setGeometry(QtCore.QRect(530, 10, 181, 22))
+            self.cmbMetodos.setGeometry(QtCore.QRect(550, 10, 221, 22))
             # Siempre limpiamos el combobox para evitar duplicados o cosas raras
             self.cmbMetodos.clear()
             self.cmbMetodos.addItem("")
@@ -666,7 +667,7 @@ class Ui_Analisis_Numerico(object):
             
 
         elif cual == 2:  # Metodos de la unidad 3
-            self.cmbMetodos.setGeometry(QtCore.QRect(530, 10, 181, 22))
+            self.cmbMetodos.setGeometry(QtCore.QRect(550, 10, 221, 22))
 
             self.cmbMetodos.clear()
             self.cmbMetodos.addItem("")
@@ -695,7 +696,7 @@ class Ui_Analisis_Numerico(object):
             self.frame_trazadores.setVisible(False)
 
         elif cual == 3: #metodos de la unidad 4
-            self.cmbMetodos.setGeometry(QtCore.QRect(530, 10, 181, 22))
+            self.cmbMetodos.setGeometry(QtCore.QRect(550, 10, 221, 22))
             
             # Siempre limpiamos el combobox para evitar duplicados o cosas raras
             self.cmbMetodos.clear()
@@ -955,117 +956,32 @@ class Ui_Analisis_Numerico(object):
         self.radioButton_2.setAutoExclusive(True)
 
     def graficar(self, MainWindow):
-        queMetodo = self.cmbMetodos.currentIndex()
-        if queMetodo >= 0 and queMetodo <= 6 or queMetodo == 9:
-            x = []
-            y = []
-            i = 0
-
-            for j in range(-50, 51):
-                x.append(i)
-                y.append(i)
-
+        Es_Unidad_dos = self.cmbMetodos.currentIndex()
+        if Es_Unidad_dos==1: #Si puede graficar.Es_Unidad_dos
             try:
-                def f1(x):
-                    funcion = metodos.Sustituir_y_Evaluar_Funcion(
-                        self.txtfuncion.text(), x, 0, 0)
-                    return funcion
+                funcion = str(self.txtfuncion.text())
+                Graficar = ''
+                title = 'Funcion: '+str(self.txtfuncion.text())
 
-                # asignamos un rango de valores a graficar
-                var = range(start=-100, stop=100, step=0.01)
-
-                plt.plot(var, [f1(i) for i in var], label='Funcion 1')
-
-                plt.xlim(-50, 50)
-                plt.ylim(-50, 50)
-
-                plt.plot(x, y)
-                plt.axvline(0, color='r')
-                plt.axhline(0, color='r')
-
-                plt.xlabel("Eje X")
-                plt.ylabel("Eje Y")
-                plt.grid()
-                plt.title("Representacion de la función")
-                # colocamos la leyenda en la parte inferior derecha
-                plt.show()
-            except:
-                print("Algo salio mal")
-
-        elif queMetodo >= 7 and queMetodo <= 8 or queMetodo == 10:
-
-            coeficientes = metodos.Obtener_Coeficientes(self.txtfuncion.text())
-            coeficientes.reverse()
-
-            print(coeficientes)
-
-            tamanio = len(coeficientes)
-
-            funGraficar = ""
-
-            # Hacemos una funcion que si se pueda graficar
-            for x in range(len(coeficientes)):
-                if coeficientes[x] != 0:
-                    if coeficientes[x] > 0:
-                        if x == 0:
-                            funGraficar += str(coeficientes[x]) + \
-                                "*x^"+str(tamanio-1)
-                            tamanio = tamanio - 1
+                for i in range(0, len(funcion)):
+                    if funcion[i] == 'e':
+                        if funcion[i+1] == '^':
+                            Graficar += str(cmath.e)
                         else:
-                            if x == (len(coeficientes)-1):
-                                funGraficar += "+" + str(coeficientes[x])
-                                tamanio = tamanio - 1
-                            else:
-                                funGraficar += "+" + \
-                                    str(coeficientes[x]) + "*x^"+str(tamanio-1)
-                                tamanio = tamanio - 1
+                            Graficar += funcion[i]
                     else:
-                        if x == (len(coeficientes)-1):
-                            funGraficar += str(coeficientes[x])
-                            tamanio = tamanio - 1
-                        else:
-                            funGraficar += str(coeficientes[x]) + \
-                                "*x^"+str(tamanio-1)
-                            tamanio = tamanio - 1
-                else:
-                    funGraficar += "+0*x^"+str(tamanio-1)
-                    tamanio = tamanio - 1
-
-            print(funGraficar)
-
-            x = []
-            y = []
-            i = 0
-
-            for j in range(-50, 51):
-                x.append(i)
-                y.append(i)
-
-            try:
-                def f1(x):
-                    funcion = metodos.Sustituir_y_Evaluar_Funcion(funGraficar, x, 0, 0)
-                    return funcion
-
-                # asignamos un rango de valores a graficar
-                var = range(-100, 100)
-
-                plt.plot(var, [f1(i) for i in var], label='Funcion 1')
-
-                plt.xlim(-50, 50)
-                plt.ylim(-50, 50)
-
-                plt.plot(x, y)
-                plt.axvline(0, color='r')
-                plt.axhline(0, color='r')
-
-                plt.xlabel("Eje X")
-                plt.ylabel("Eje Y")
-                plt.grid()
-                plt.title("Representacion de la función")
-                # colocamos la leyenda en la parte inferior derecha
-                plt.show()
+                        Graficar += funcion[i]
+                grafica = plot((Graficar, (x, -100, 100)), box_background='blue', show=False, line_color='#96ADEA',ylabel='Y', xlabel='X', title=title, size=(6, 5), xlim=(-25, 25), ylim=(-25, 25))
+                grafica.show()
             except:
-                print("Algo salio mal")
+                self.lbl_grafico_mensaje.setText("*Ocurrio un problema :c)
+                self.lbl_grafico_mensaje.setVisible(True)
+            finally:
+                self.lbl_grafico_mensaje.setVisible(False) 
+
+        else:
+            self.lbl_grafico_mensaje.setText("*disponible en unidad 2")
+            self.lbl_grafico_mensaje.setVisible(True)
 
     def agregarColumna(self):
         global Numero_Filas_Columnas
@@ -1220,7 +1136,6 @@ class Ui_Analisis_Numerico(object):
                             # newton mejorado
                             self.Tabla_Unidad_2(MainWindow, 5, x1,
                                             x2, funcionTXT, control_cifras)
-
 
     def Resolverlo(self, MainWindow):
 

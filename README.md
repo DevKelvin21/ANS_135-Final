@@ -7,13 +7,19 @@
 - Empaquetamos cada uno de los modulos que conforman el backend de nuestro programa para mejorar el flujo de trabajo y visual dentro de nuestro proyecto. 
 - Se está trabajando con formularios y las opciones graficas basicas que ofrece Pyqt5
 - Este programa puede mejorarse a una version web, utilizando los modulos existentes.
+- Este programa utiliza en algunos objetcs (label,combobox,textfield) una fuente de tetxo personalizada "Space Mono Nerd Font" 
+- Se anexo el archivo de instalacion para windows 10 en el directorio docs/fonts
 
 ##  Tecnologias Utilizadas:
-
 
 - [QtDesigner](https://www.qt.io/ "QtDesigner") 
 - [Python3](https://www.python.org/ "Python3")  
 - [PyQt5](https://pypi.org/project/PyQt5/ "PyQt5")
+
+##  Recursos de la Web:
+
+- [SpaceMonoNF](https://www.nerdfonts.com/ "SpaceMonoNF")
+- [Flaticon](https://www.flaticon.es "Iconos")
 
 ## Librerias Necesarias
 
@@ -30,7 +36,7 @@
 
 `$~ pip install numpy`
 
-`$~ install matplotlib`
+`$~ pip install matplotlib`
 
 ####    En caso de existir algun error colocar un numero 3 posterior a cada 'pip' comando, ejemplo:
 
