@@ -11,6 +11,7 @@ import cmath
 import platform
 from modulos import *
 import modulos.globalfunctions as funciones
+import modulos.unidaduno as unidad_uno
 import modulos.unidaddos as unidad_dos
 import modulos.unidadtres as unidad_tres
 import modulos.unidadcuatro as unidad_cuatro
@@ -193,7 +194,7 @@ class Ui_Analisis_Numerico(object):
         self.tableWidget_2 = QtWidgets.QTableWidget(self.frame_6)
         self.tableWidget_2.setGeometry(QtCore.QRect(200, 10, 741, 141))
         self.tableWidget_2.setStyleSheet("background-color: rgb(246, 247, 251);\n"
-"font: 8pt \"SpaceMono Nerd Font\";")
+"font: 8pt \"SpaceMono Nerd Font\";\n""border-radius: 10px;")
         self.tableWidget_2.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tableWidget_2.setObjectName("tableWidget_2")
         self.tableWidget_2.setColumnCount(0)
@@ -624,6 +625,10 @@ class Ui_Analisis_Numerico(object):
             self.frame_3.setVisible(False)
             self.frame_hermite.setVisible(False)
             self.frame_trazadores.setVisible(False)
+            self.frame_4.setVisible(False)
+            self.frame_5.setVisible(False)
+            self.btnResolverlo.setVisible(False)
+            self.btnLimpiar.setVisible(False)
 
 
           # <----------- Mostramos el combobox donde estan los metodos ---------->
@@ -771,7 +776,7 @@ class Ui_Analisis_Numerico(object):
         self.tableWidget_2.setColumnCount(0)
         self.tableWidget_2.verticalHeader().setVisible(False)
         self.tableWidget_2.horizontalHeader().setVisible(False)
-        self.tableWidget_2.verticalHeader().setDefaultSectionSize(60)
+        self.tableWidget_2.verticalHeader().setDefaultSectionSize(70)
         self.tableWidget_2.horizontalHeader().setDefaultSectionSize(75)
        
 
@@ -779,8 +784,7 @@ class Ui_Analisis_Numerico(object):
         if control == 0:#configuracion normal, no es hermite
             self.tableWidget_2.setColumnCount(columnas)
             self.tableWidget_2.setRowCount(2)
-            self.radioButton.setVisible(True)
-            self.radioButton_2.setVisible(True)
+            
 
             for x in range(0, 2):
                 for y in range(0, 3):
@@ -788,12 +792,12 @@ class Ui_Analisis_Numerico(object):
                         salida = "    X"
                         self.tableWidget_2.setItem(
                             x, y, QtWidgets.QTableWidgetItem(salida))
-                        self.tableWidget_2.setColumnWidth(y, 8)
+                        self.tableWidget_2.setColumnWidth(y, 20)
                     elif y == 0 and x == 1:
                         salida = "    Y"
                         self.tableWidget_2.setItem(
                             x, y, QtWidgets.QTableWidgetItem(salida))
-                        self.tableWidget_2.setColumnWidth(y, 8)
+                        self.tableWidget_2.setColumnWidth(y, 20)
                     else:
                         salida = ""
                         self.tableWidget_2.setItem(
@@ -829,8 +833,8 @@ class Ui_Analisis_Numerico(object):
 
         queMetodo = self.cmbMetodos.currentIndex()
         queUnidad = int(self.lblunidad.text())
-        
-
+        self.txtfuncion.setReadOnly(False)
+        self.label.setText("Ingrese la Funcion ")  
         if queUnidad == 0: #unidad 1
 
             self.frame_6.setVisible(False)
@@ -840,16 +844,18 @@ class Ui_Analisis_Numerico(object):
             self.frame_trazadores.setVisible(False)
 
             # <---- dejamos solo los componentes que usa la unidad 1 -------->
-            
-            
+            self.frame_2.setVisible(True)
+            self.label.setText("Funcion Seleccionada")          
             self.frame_4.setVisible(True)
             self.frame_5.setVisible(True)
             self.btnResolverlo.setVisible(True)
             self.btnLimpiar.setVisible(True)
-                
+            unidad1=self.cmbMetodos.currentText()
+            self.txtfuncion.setText(unidad1)
+            self.txtfuncion.setReadOnly(True)
+            self.frame_3.setVisible(True)    
 
-            # <-------- Ocultamos lo demas ------------->
-            self.frame_3.setVisible(False)
+            # <-------- Ocultamos lo demas ------------->            
             self.label_4.setVisible(False)
             self.label_7.setVisible(False)
             self.txtX2.setVisible(False)
@@ -893,7 +899,7 @@ class Ui_Analisis_Numerico(object):
                 self.label_4.setVisible(False)
                 self.label_7.setVisible(False)
 
-            elif queMetodo >= 7 and queMetodo <= 8:
+            elif queMetodo == 7:
                 # <---- dejamos solo los componentes que usa metodo de cero de polinomios --->
                 self.frame_3.setVisible(True)
                 self.frame_5.setVisible(True)
@@ -902,6 +908,15 @@ class Ui_Analisis_Numerico(object):
                 # <-------- ocultamos lo demas ---------->
                 self.frame_4.setVisible(False)
                 self.frame_5.setVisible(False)
+            
+            elif queMetodo == 8:
+                self.frame_5.setVisible(True)
+                self.frame_4.setVisible(True)
+                self.frame_3.setVisible(True)
+                self.txtX2_2.setVisible(False)
+                self.txtX2.setVisible(False)
+                self.label_4.setVisible(False)
+                self.label_7.setVisible(False)
 
             elif queMetodo == 9:
                 # <---- dejamos solo los componentes que usa metodo muller -->
@@ -938,18 +953,28 @@ class Ui_Analisis_Numerico(object):
             self.radioButton_2.setAutoExclusive(True)
 
             if queMetodo == 1:#Lineal
+                self.radioButton.setVisible(True)
+                self.radioButton_2.setVisible(True)
                 Numero_Filas_Columnas = 3
                 self.Aplicar_Ajustes_Tabla_Unidad_3(0,4)
             elif queMetodo == 2:#Cuadratica
+                self.radioButton.setVisible(True)
+                self.radioButton_2.setVisible(True)
                 Numero_Filas_Columnas = 4
                 self.Aplicar_Ajustes_Tabla_Unidad_3(0,5)
             elif queMetodo == 3:#Lagrange
+                self.radioButton.setVisible(True)
+                self.radioButton_2.setVisible(True)
                 Numero_Filas_Columnas = 3
                 self.Aplicar_Ajustes_Tabla_Unidad_3(0,4)
             elif queMetodo == 4:#Newton
+                self.radioButton.setVisible(True)
+                self.radioButton_2.setVisible(True)
                 Numero_Filas_Columnas = 3
                 self.Aplicar_Ajustes_Tabla_Unidad_3(0,4)
             elif queMetodo == 5:#Hermite
+                self.radioButton.setVisible(True)
+                self.radioButton_2.setVisible(True)
                 self.tableWidget_2.setGeometry(QtCore.QRect(320, 10, 621, 141))
                 self.frame_hermite.setVisible(True)
                 Numero_Filas_Columnas = 2
@@ -958,8 +983,8 @@ class Ui_Analisis_Numerico(object):
                 self.frame_trazadores.setVisible(True)
                 self.cbmSplineGrado.setCurrentIndex(0)
                 self.frame_hermite.setVisible(True)
-                self.radioButton_2.setVisible(False)
                 self.radioButton.setVisible(False)
+                self.radioButton_2.setVisible(False)
                 self.lbl_radiobuttons.setVisible(False)
                 Numero_Filas_Columnas = 3
                 self.Aplicar_Ajustes_Tabla_Unidad_3(0,4)
@@ -1055,8 +1080,7 @@ class Ui_Analisis_Numerico(object):
                         salida = lbl_Hermite_tabla
 
                     self.tableWidget_2.insertColumn(Numero_Filas_Columnas+1)
-                    self.tableWidget_2.setItem(
-                        0, Numero_Filas_Columnas+1, QtWidgets.QTableWidgetItem(salida))
+                    self.tableWidget_2.setItem(0, Numero_Filas_Columnas+1, QtWidgets.QTableWidgetItem(salida))
                     Numero_Filas_Columnas += 1
             if metodo == 6:
                 if Numero_Filas_Columnas == 10:
@@ -1133,7 +1157,7 @@ class Ui_Analisis_Numerico(object):
                 Numero_Filas_Columnas = Numero_Filas_Columnas-1
                 self.lbl_puntos_unidad3.setVisible(False)
 
-    def Validar_Datos_en_Formulario(self, MainWindow, queMetodo, funcion_txt, X1, X2,X3, cifras_txt):
+    def Validar_Datos_en_Formulario(self,  queMetodo, funcion_txt, X1, X2,X3, cifras_txt):
         # <---- Validamos que sean numeros ------->
         x1 = funciones.Validar_Valores_Iniciales(X1)
         x2 = funciones.Validar_Valores_Iniciales(X2)
@@ -1147,7 +1171,8 @@ class Ui_Analisis_Numerico(object):
         elif queMetodo == 3 or queMetodo == 4 or queMetodo == 5:
             cuantasVariables = 1
         elif queMetodo == 7:
-            self.Tabla_Unidad_2(MainWindow, 7, 0, 0, 0, 0)
+            cuantasVariables = 0
+            self.Tabla_Unidad_2( queMetodo, funcion_txt, 0, 0,0, 0)
 
         if cuantasVariables == 2:
             if x1 == False or x2 == False:
@@ -1175,13 +1200,13 @@ class Ui_Analisis_Numerico(object):
                     else:
                         self.lbl_mensaje_cifras_h.setVisible(False)
                         if queMetodo == 1:  # Biseccion
-                            self.Tabla_Unidad_2(MainWindow, 1, x1,
+                            self.Tabla_Unidad_2( 1, x1,
                                             x2, funcion_txt, control_cifras)
                         elif queMetodo == 2:  # Falsa Posicion
-                            self.Tabla_Unidad_2(MainWindow, 2, x1,
+                            self.Tabla_Unidad_2( 2, x1,
                                             x2, funcion_txt, control_cifras)
                         elif queMetodo == 6:  # secante
-                            self.Tabla_Unidad_2(MainWindow, 6, x1,
+                            self.Tabla_Unidad_2( 6, x1,
                                             x2, funcion_txt, control_cifras)
         if cuantasVariables == 1:
             if x1 == False :
@@ -1210,14 +1235,14 @@ class Ui_Analisis_Numerico(object):
                         self.lbl_mensaje_cifras_h.setVisible(False)
                         if queMetodo == 3:
                             # Falsa posicion
-                            self.Tabla_Unidad_2(MainWindow, 3, x1,
+                            self.Tabla_Unidad_2( 3, x1,
                                             x2, funcion_txt, control_cifras)
                         elif queMetodo == 4:
-                            self.Tabla_Unidad_2(MainWindow, 4, x1,
+                            self.Tabla_Unidad_2( 4, x1,
                                             x2, funcion_txt, control_cifras)  # newton
                         elif queMetodo == 5:
                             # newton mejorado
-                            self.Tabla_Unidad_2(MainWindow, 5, x1,
+                            self.Tabla_Unidad_2( 5, x1,
                                             x2, funcion_txt, control_cifras)
 
     def agregarFila(self):
@@ -1245,35 +1270,36 @@ class Ui_Analisis_Numerico(object):
         metodo = self.cmbMetodos.currentIndex()
 
         if unidad == 0:
-            print("Aún falta esta parte :c")
+            if metodo >= 1:
+                self.Tabla_Unidad_1(metodo)
 
         elif unidad == 1:  # Parte unidad 2
             if metodo == 1:  # Biseccion
-                self.Validar_Datos_en_Formulario(MainWindow, metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(), self.txtcifras.text())
+                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
+                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
             elif metodo == 2:  # Falsa posicion
-                self.Validar_Datos_en_Formulario(MainWindow, metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(), self.txtcifras.text())
+                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
+                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
             elif metodo == 3:  # Punto fijo
-                self.Validar_Datos_en_Formulario(MainWindow, metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(), self.txtcifras.text())
+                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
+                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
             elif metodo == 4:  # Newton
-                self.Validar_Datos_en_Formulario(MainWindow, metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(), self.txtcifras.text())
+                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
+                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
             elif metodo == 5:  # Newton mejorado
-                self.Validar_Datos_en_Formulario(MainWindow, metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(), self.txtcifras.text())
+                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
+                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
             elif metodo == 6:  # secante
-                self.Validar_Datos_en_Formulario(MainWindow, metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(), self.txtcifras.text())
+                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
+                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
             elif metodo == 7:  # cero polinomios
-                self.Validar_Datos_en_Formulario(MainWindow, metodo, self.txtfuncion.text(), 0, 0, 0)
+                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(), 0, 0,0, 0)
             elif metodo == 8:  # Horner
-                self.Tabla_Unidad_2(MainWindow, metodo, self.txtfuncion.text(), 0, 0, 0)
+                self.Tabla_Unidad_2( metodo, self.txtfuncion.text(), 0, 0, 0,0)
             elif metodo == 9:  # Muller
-                self.Tabla_Unidad_2(MainWindow, metodo, self.txtfuncion.text(), 0, 0, 0)
+                self.Tabla_Unidad_2( metodo, self.txtfuncion.text(), self.txtX1.text(), self.txtX2.text(), self.txtX2_2.text(),self.txtcifras.text())
             elif metodo == 10:  # Baristow
-                self.Tabla_Unidad_2(MainWindow, metodo, self.txtfuncion.text(), 0, 0, 0)
+                self.Tabla_Unidad_2( metodo, self.txtfuncion.text(), self.txtX1.text(), self.txtX2.text(),0,self.txtcifras.text())
 
         elif unidad == 2: #Metodos de la unidad 3
 
@@ -1290,14 +1316,96 @@ class Ui_Analisis_Numerico(object):
             elif metodo == 6:# Trazadores Cubicos
                 self.Validar_Puntos_Tabla_Unidad_3(6)
 
-    def Tabla_Unidad_2(self, MainWindow, metodo, x1, x2, x3, funcion, control_cifras):
+    def Tabla_Unidad_1(self,metodo):
+        punto = float(self.txtX1.text())
+        cifras = float(self.txtcifras.text())
+
+        if metodo == 1:
+            Listado_Resultante = unidad_uno.metodo1(punto,cifras)
         
+        elif metodo == 2:
+            Listado_Resultante = unidad_uno.metodo2(punto,cifras)
+
+        elif metodo == 3:
+            Listado_Resultante = unidad_uno.metodo3(punto,cifras)
+
+        elif metodo == 4:
+            Listado_Resultante = unidad_uno.metodo4(punto,cifras)
+
+        elif metodo == 5:
+            Listado_Resultante = unidad_uno.metodo5(punto,cifras)
+
+        elif metodo == 6:
+            Listado_Resultante = unidad_uno.metodo6(punto,cifras)
+
+        elif metodo == 7:
+            Listado_Resultante = unidad_uno.metodo7(punto,cifras)
+        
+        elif metodo == 8:
+            Listado_Resultante = unidad_uno.metodo8(punto,cifras)
+        
+        elif metodo == 9:
+            Listado_Resultante = unidad_uno.metodo9(punto,cifras)
+        
+        elif metodo == 10:
+            Listado_Resultante = unidad_uno.metodo10(punto,cifras)
+        
+        elif metodo == 11:
+            Listado_Resultante = unidad_uno.metodo11(punto,cifras)
+
+        self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
+        rows = len(Listado_Resultante)  # Numero de filas
+        columns = len(Listado_Resultante[0])  # Numero de columnas
+        tamanioColumnas = int(930/columns)-5  # Tamaño que tendran las columnas
+
         self.tableWidget.setColumnCount(columns)
         self.tableWidget.setRowCount(rows)
         self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.horizontalHeader().setVisible(False)
-        self.tableWidget.horizontalScrollMode()
         
+        for row in range(rows):  # Primer for recorre las filas en Listado_Resultante
+            # Segundo for recorre las columnas en Listado_Resultante
+            for column in range(columns):
+                if row == 0:  # Encabezado o header
+
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+
+                    salida = Listado_Resultante[row][column]
+                    item.setText(str(salida))
+
+                    self.tableWidget.setItem(row, column, item)
+                    self.tableWidget.setColumnWidth(column, tamanioColumnas)
+                else:
+
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                   
+                    if column == 0:
+                        salida = (Listado_Resultante[row][column])
+                        item.setText(str(salida))
+                        self.tableWidget.setItem(row, column, item)
+                        self.tableWidget.setColumnWidth(column, tamanioColumnas)
+                    else:
+
+                        if row == 1 and column == 2:
+                            salida = Listado_Resultante[row][column]
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column,item)
+                            self.tableWidget.setColumnWidth(column, tamanioColumnas)
+                        else:
+                            salida = "%.5f" % float(Listado_Resultante[row][column])
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
+                            self.tableWidget.setColumnWidth(column, tamanioColumnas)
+
+    def Tabla_Unidad_2(self,  metodo, funcion, x1, x2, x3, control_cifras):
+        
+        item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
+        item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
         unidad = int(self.lblunidad.text())
         if unidad == 1:
             if metodo == 1:
@@ -1367,53 +1475,56 @@ class Ui_Analisis_Numerico(object):
 
                         for row in range(rows):
                             for column in range(columns):
+                                item = QtWidgets.QTableWidgetItem()
+                                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                                item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
                                 if row == 0:
                                     salida = "raiz #"+str(column+1)
-                                    self.tableWidget.setItem(
-                                        row, column, QtWidgets.QTableWidgetItem(str(salida)))
+                                    item.setText(str(salida))
+                                    self.tableWidget.setItem(row, column, item)
                                     self.tableWidget.setColumnWidth(
                                         column, tamanioColumnas)
                                 else:
                                     salida = str(Listado_Resultante[column])
-                                    self.tableWidget.setItem(
-                                        row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                                    self.tableWidget.setColumnWidth(
-                                        column, tamanioColumnas)
+                                    item.setText(str(salida))
+                                    self.tableWidget.setItem(row, column, item)
+                                    self.tableWidget.setColumnWidth(column, tamanioColumnas)
 
             elif metodo == 8:  # Metodo para crear tabla de horner
                 lista = funciones.Obtener_Coeficientes(self.txtfuncion.text())
-                print(lista)
-                Listado_Resultante = unidad_dos.metodoHorner(lista, float(
-                    self.txtX1.text()), float(self.txtcifras.text()))
+                
+                Listado_Resultante = unidad_dos.metodoHorner(lista, float(self.txtX1.text()), float(self.txtcifras.text()))
 
                 rows = len(Listado_Resultante)
                 columns = len(Listado_Resultante[0])
-
                 tamanioColumnas = int(930/columns)
 
-                
+                self.tableWidget.setColumnCount(columns)
+                self.tableWidget.setRowCount(rows)
+                self.tableWidget.verticalHeader().setVisible(False)
+                self.tableWidget.horizontalHeader().setVisible(False)
 
                 for row in range(rows):
                     for column in range(columns):
+                        item = QtWidgets.QTableWidgetItem()
+                        item.setTextAlignment(QtCore.Qt.AlignCenter)
+                        item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
                         if row == 0:
                             salida = Listado_Resultante[row][column]
-                            self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                            self.tableWidget.setColumnWidth(
-                                column, tamanioColumnas)
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
+                            self.tableWidget.setColumnWidth(column, tamanioColumnas)
                         else:
                             if column == 0:
                                 salida = "%.0f" % (Listado_Resultante[row][column])
-                                self.tableWidget.setItem(
-                                    row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                                self.tableWidget.setColumnWidth(
-                                    column, tamanioColumnas)
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
+                                self.tableWidget.setColumnWidth(column, tamanioColumnas)
                             else:
                                 salida = "%.5f" % float(Listado_Resultante[row][column])
-                                self.tableWidget.setItem(
-                                    row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                                self.tableWidget.setColumnWidth(
-                                    column, tamanioColumnas)
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
+                                self.tableWidget.setColumnWidth(column, tamanioColumnas)
 
             elif metodo == 9:  # Metodo para crear tabla de müller
                 
@@ -1423,31 +1534,36 @@ class Ui_Analisis_Numerico(object):
 
                 rows = len(Listado_Resultante)  # Capturamos cuantas filas hay
                 columns = len(Listado_Resultante[0])  # Capturamos cuantas columnas hay           
+                tamanioColumnas = int(930/columns)
+
+                self.tableWidget.setColumnCount(columns)
+                self.tableWidget.setRowCount(rows)
+                self.tableWidget.verticalHeader().setVisible(False)
+                self.tableWidget.horizontalHeader().setVisible(False)
 
                 for row in range(rows):
                     for column in range(columns):
+                        item = QtWidgets.QTableWidgetItem()
+                        item.setTextAlignment(QtCore.Qt.AlignCenter)
+                        item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
                         if row == 0:
                             salida = Listado_Resultante[row][column]
-                            # Asignamos los valores del metodo en las casillas de la tabla
-                            self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                            self.tableWidget.setColumnWidth(
-                                column, tamanioColumnas)
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
+                            self.tableWidget.setColumnWidth(column, tamanioColumnas)
 
                             # Asignamos el tamaño que necesita la columna
                         else:
                             if column == 0:
                                 salida = "%.0f" % (Listado_Resultante[row][column])
-                                self.tableWidget.setItem(
-                                    row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                                self.tableWidget.setColumnWidth(
-                                    column, tamanioColumnas)
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
+                                self.tableWidget.setColumnWidth(column, tamanioColumnas)
                             else:
                                 salida = "%.5f" % float(Listado_Resultante[row][column])
-                                self.tableWidget.setItem(
-                                    row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                                self.tableWidget.setColumnWidth(
-                                    column, tamanioColumnas)
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
+                                self.tableWidget.setColumnWidth(column, tamanioColumnas)
 
             elif metodo == 10:  # metodo para crear tabla de bairstown
 
@@ -1469,17 +1585,17 @@ class Ui_Analisis_Numerico(object):
                 for x in range(0, columns):
                     listaTamanio.append(len(str(Listado_Resultante[x]))*7)
                     contadorTamanio += len(str(Listado_Resultante[x]))*7
-
                 listaTamanio.sort()
-
-               
 
                 for row in range(0, 2):
                     for column in range(0, columns):
+                        item = QtWidgets.QTableWidgetItem()
+                        item.setTextAlignment(QtCore.Qt.AlignCenter)
+                        item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
                         if row == 0:
                             salida = "Raiz #"+str(column+1)
-                            self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(salida))
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
                             if contadorTamanio < 930:
                                 tamanioColumnas = float(
                                     listaTamanio[len(listaTamanio)-1])
@@ -1491,8 +1607,8 @@ class Ui_Analisis_Numerico(object):
                                     column, tamanioColumnas)
                         else:
                             salida = str(Listado_Resultante[column])
-                            self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(salida))
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
                             if contadorTamanio < 930:
                                 tamanioColumnas = float(
                                     listaTamanio[len(listaTamanio)-1])
@@ -1508,33 +1624,38 @@ class Ui_Analisis_Numerico(object):
                 self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
                 rows = len(Listado_Resultante)
                 columns = len(Listado_Resultante[0])
-                tamanioColumnas = int(930/columns)-3
+                tamanioColumnas = int(930/columns)-5
+
+                self.tableWidget.setColumnCount(columns)
+                self.tableWidget.setRowCount(rows)
+                self.tableWidget.verticalHeader().setVisible(False)
+                self.tableWidget.horizontalHeader().setVisible(False)
 
                 
 
                 for row in range(rows):
                     for column in range(columns):
+                        item = QtWidgets.QTableWidgetItem()
+                        item.setTextAlignment(QtCore.Qt.AlignCenter)
+                        item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
                         if row == 0:
                             salida = Listado_Resultante[row][column]
-                            self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                            self.tableWidget.item(row, column).setBackground(
-                                QtGui.QColor(11, 133, 192))
-                            self.tableWidget.setColumnWidth(
-                                column, tamanioColumnas)
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
+                            self.tableWidget.item(row, column).setBackground(QtGui.QColor(11, 133, 192))
+                            self.tableWidget.setColumnWidth(column, tamanioColumnas)
                         else:
                             if column == 0:
                                 salida = (Listado_Resultante[row][column])
-                                self.tableWidget.setItem(
-                                    row, column, QtWidgets.QTableWidgetItem(str(salida)))
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
                                 self.tableWidget.setColumnWidth(
                                     column, tamanioColumnas)
                             else:
                                 salida = "%.5f" % float(Listado_Resultante[row][column])
-                                self.tableWidget.setItem(
-                                    row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                                self.tableWidget.setColumnWidth(
-                                    column, tamanioColumnas)
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
+                                self.tableWidget.setColumnWidth(column, tamanioColumnas)
 
     def Validar_Puntos_Tabla_Unidad_3(self,metodo):
         global Numero_Filas_Columnas, Numero_filas_Hermite
