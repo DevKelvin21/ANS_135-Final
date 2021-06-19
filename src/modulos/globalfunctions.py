@@ -20,7 +20,7 @@ def Validar_Valores_Iniciales(x):
     if variable_de_control == 1:
         return salida
     else:
-        return "False"
+        return "Error"
 
 #Valida que las cifras significativas sea un numero entero
 def Validar_Cifras_Significativas(cifras):
@@ -34,7 +34,7 @@ def Validar_Cifras_Significativas(cifras):
         if variable_de_control == 1:
             return cifras
         else:
-            return "False"
+            return "Error"
 
 #Evualua las funciones que se envien en los parametros, las deriva si es necesario, si la funcion es incorrecta devuleve un False sino, devuleve el valor
 def Sustituir_y_Evaluar_Funcion(funcion, valor, seDeriva, ordenDerivada):
@@ -53,7 +53,7 @@ def Sustituir_y_Evaluar_Funcion(funcion, valor, seDeriva, ordenDerivada):
             resultado = Sympy.sympify(funcion).subs([(x, valor), (e, cmath.e)])
             return resultado
     except:
-        return "False"
+        return "Error"
 
 #Devuelve los coeficientes del polinomio que se pase como parametros, utiliza RegEx para hacerlo
 def Obtener_Coeficientes(entrada):

@@ -1,5 +1,6 @@
 import sympy as Sympy
 import numpy as np
+import sympy as sp
 import math
 from numpy.lib.shape_base import column_stack
 import decimal
@@ -33,7 +34,7 @@ def Sustituir_y_Evaluar_Funcion(funcion, valor, seDeriva, ordenDerivada): #Evual
             resultado = Sympy.sympify(funcion).subs([(x, valor), (e, cmath.e)])
             return resultado
     except:
-        return "False"
+        return "Error"
 
 def encontrarDerivada(funcion, queDerivada):
     funcioon = sp.sympify(funcion)
@@ -55,25 +56,25 @@ def diferenciacion_numerica_adelante(funcion, puntoInicial, h, tablaValores):
         # variables donde guardaremos el numerador
         numerador1 = 0
 
-        numerador1 = evaluarFuncion(
-            funcion, puntoInicial+h, 0, 0) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(-1)
+        numerador1 = Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial+h, 0, 0) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(-1)
 
         # guardamos la primera diferencia
         Listado_Resultante.append((numerador1)/h)
         Listado_Resultante_Final.append(
-            "Primera diferencia: "+str((numerador1)/h))
+            "\nPrimera diferencia: "+str((numerador1)/h))
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial+(2*h), 0, 0)*(-1) + evaluarFuncion(
-            funcion, puntoInicial+h, 0, 0)*(4) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(-3)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+(2*h), 0, 0)*(-1) + Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial+h, 0, 0)*(4) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(-3)
 
         # guardamos la segunda diferencia
         Listado_Resultante.append(numerador1/(2*h))
         Listado_Resultante_Final.append(
-            "Segunda diferencia: "+str((numerador1)/(2*h)))
+            "\nSegunda diferencia: "+str((numerador1)/(2*h)))
 
         # calculamos los errores para la primera y la segunda diferencia
         lista_errores = []
-        valor_verdadero = evaluarFuncion(funcion, puntoInicial, 1, 1)
+        valor_verdadero = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 1, 1)
         valor_apro1 = Listado_Resultante[0]
         valor_apro2 = Listado_Resultante[1]
 
@@ -82,14 +83,14 @@ def diferenciacion_numerica_adelante(funcion, puntoInicial, h, tablaValores):
             abs((valor_verdadero-valor_apro1)/valor_verdadero))
         Listado_Resultante.append(Listado_Resultante[2]*100)
 
-        Listado_Resultante_Final.append("Primer error: "+str(Listado_Resultante[2]*100))
+        Listado_Resultante_Final.append("\nPrimer error: "+str(Listado_Resultante[2]*100))
 
         # segundo error
         Listado_Resultante.append(
             abs((valor_verdadero-valor_apro2)/valor_verdadero))
         Listado_Resultante.append(Listado_Resultante[4]*100)
 
-        Listado_Resultante_Final.append("Segundo error: "+str(Listado_Resultante[4]*100))
+        Listado_Resultante_Final.append("\nSegundo error: "+str(Listado_Resultante[4]*100))
 
         return Listado_Resultante_Final
 
@@ -111,7 +112,7 @@ def diferenciacion_numerica_adelante(funcion, puntoInicial, h, tablaValores):
         # guardamos la primera diferencia
         Listado_Resultante.append((numerador1)/(h))
         Listado_Resultante_Final.append(
-            "Primera diferencia hacia delante:\n"+str((numerador1)/(h))+"\n")
+            "\nPrimera diferencia hacia delante:\n"+str((numerador1)/(h))+"\n")
 
         lista_valores = []
 
@@ -130,7 +131,7 @@ def diferenciacion_numerica_adelante(funcion, puntoInicial, h, tablaValores):
         # guardamos la segunda diferencia
         Listado_Resultante.append((numerador1)/(h*2))
         Listado_Resultante_Final.append(
-            "Segunda diferencia hacia delante:\n"+str((numerador1)/(h*2))+"\n")
+            "\nSegunda diferencia hacia delante:\n"+str((numerador1)/(h*2))+"\n")
 
         return Listado_Resultante_Final
 
@@ -144,25 +145,25 @@ def diferenciacion_numerica_atras(funcion, puntoInicial, h, tablaValores):
         # variables donde guardaremos el numerador
         numerador1 = 0
 
-        numerador1 = evaluarFuncion(
-            funcion, puntoInicial, 0, 0) + evaluarFuncion(funcion, puntoInicial-h, 0, 0)*(-1)
+        numerador1 = Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial, 0, 0) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-h, 0, 0)*(-1)
 
         # guardamos la primera diferencia
         Listado_Resultante.append((numerador1)/h)
         Listado_Resultante_Final.append(
-            "Primera diferencia: "+str((numerador1)/h)+"\n")
+            "\nPrimera diferencia: "+str((numerador1)/h)+"\n")
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial, 0, 0)*(3) + evaluarFuncion(
-            funcion, puntoInicial-h, 0, 0)*(-4) + evaluarFuncion(funcion, puntoInicial-2*h, 0, 0)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(3) + Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial-h, 0, 0)*(-4) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-2*h, 0, 0)
 
         # guardamos la segunda diferencia
         Listado_Resultante.append(numerador1/(2*h))
         Listado_Resultante_Final.append(
-            "Segunda diferencia: "+str(numerador1/(2*h))+"\n")
+            "\nSegunda diferencia: "+str(numerador1/(2*h))+"\n")
 
         # calculamos los errores para la primera y la segunda diferencia
         lista_errores = []
-        valor_verdadero = evaluarFuncion(funcion, puntoInicial, 1, 1)
+        valor_verdadero = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 1, 1)
         valor_apro1 = Listado_Resultante[0]
         valor_apro2 = Listado_Resultante[1]
 
@@ -171,21 +172,21 @@ def diferenciacion_numerica_atras(funcion, puntoInicial, h, tablaValores):
         Listado_Resultante.append(
             abs((valor_verdadero-valor_apro1)/valor_verdadero))  # Relativo
         Listado_Resultante_Final.append(
-            "Primer error relativo: "+str(abs((valor_verdadero-valor_apro1)/valor_verdadero))+"\n")
+            "\nPrimer error relativo: "+str(abs((valor_verdadero-valor_apro1)/valor_verdadero))+"\n")
 
         Listado_Resultante.append(Listado_Resultante[2]*100)  # Porcentual
         Listado_Resultante_Final.append(
-            "Primer error porcentual: "+str(Listado_Resultante[2]*100)+"\n")
+            "\nPrimer error porcentual: "+str(Listado_Resultante[2]*100)+"\n")
 
         # segundo error
         Listado_Resultante.append(
             abs((valor_verdadero-valor_apro2)/valor_verdadero))  # Relativo
         Listado_Resultante_Final.append(
-            "Segundo error relativo: "+str(abs((valor_verdadero-valor_apro2)/valor_verdadero))+"\n")
+            "\nSegundo error relativo: "+str(abs((valor_verdadero-valor_apro2)/valor_verdadero))+"\n")
 
         Listado_Resultante.append(Listado_Resultante[4]*100)  # Porcentual
         Listado_Resultante_Final.append(
-            "Segundo error porcentual: "+str(Listado_Resultante[4]*100)+"\n")
+            "\nSegundo error porcentual: "+str(Listado_Resultante[4]*100)+"\n")
 
         return Listado_Resultante_Final
 
@@ -207,7 +208,7 @@ def diferenciacion_numerica_atras(funcion, puntoInicial, h, tablaValores):
         # guardamos la primera diferencia
         Listado_Resultante.append((numerador1)/(h))
         Listado_Resultante_Final.append(
-            "Primera diferencia: "+str((numerador1)/h)+"\n")
+            "\nPrimera diferencia: "+str((numerador1)/h)+"\n")
 
         lista_valores = []
 
@@ -226,7 +227,7 @@ def diferenciacion_numerica_atras(funcion, puntoInicial, h, tablaValores):
         # guardamos la segunda diferencia
         Listado_Resultante.append((numerador1)/(h*2))
         Listado_Resultante_Final.append(
-            "Segunda diferencia: "+str((numerador1)/(2*h))+"\n")
+            "\nSegunda diferencia: "+str((numerador1)/(2*h))+"\n")
 
         return Listado_Resultante_Final
 
@@ -244,16 +245,16 @@ def diferenciacion_numerica_centrada(funcion, puntoInicial, h, tablaValores, for
         # variables donde guardaremos el numerador
         numerador1 = 0
 
-        numerador1 = evaluarFuncion(
-            funcion, puntoInicial+h, 0, 0) + evaluarFuncion(funcion, puntoInicial-h, 0, 0)*(-1)
+        numerador1 = Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial+h, 0, 0) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-h, 0, 0)*(-1)
 
         # guardamos la primera diferencia
         Listado_Resultante.append((numerador1)/(2*h))
         Listado_Resultante_Final.append(
             "Primera diferencia: "+str((numerador1)/(2*h))+"\n")
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(-1) + evaluarFuncion(funcion, puntoInicial+h, 0, 0)*(
-            8) + evaluarFuncion(funcion, puntoInicial-h, 0, 0)*(-8) + evaluarFuncion(funcion, puntoInicial-2*h, 0, 0)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+2*h, 0, 0)*(-1) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+h, 0, 0)*(
+            8) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-h, 0, 0)*(-8) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-2*h, 0, 0)
 
         # guardamos la segunda diferencia
         Listado_Resultante.append(numerador1/(12*h))
@@ -262,7 +263,7 @@ def diferenciacion_numerica_centrada(funcion, puntoInicial, h, tablaValores, for
 
         # calculamos los errores para la primera y la segunda diferencia
         lista_errores = []
-        valor_verdadero = evaluarFuncion(funcion, puntoInicial, 1, 1)
+        valor_verdadero = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 1, 1)
         valor_apro1 = Listado_Resultante[0]
         valor_apro2 = Listado_Resultante[1]
 
@@ -347,16 +348,16 @@ def diferenciacion_numerica_tres_puntos(funcion, puntoInicial, h, tablaValores):
         # variables donde guardaremos el numerador
         numerador1 = 0
 
-        numerador1 = evaluarFuncion(
-            funcion, puntoInicial+h, 0, 0) + evaluarFuncion(funcion, puntoInicial-h, 0, 0)*(-1)
+        numerador1 = Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial+h, 0, 0) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-h, 0, 0)*(-1)
 
         # guardamos la primera diferencia
         Listado_Resultante.append((numerador1)/(2*h))
         Listado_Resultante_Final.append("Primer diferencia: " +
                                 str((numerador1)/(2*h))+"\n")
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial, 0, 0)*(-3) + evaluarFuncion(
-            funcion, puntoInicial+h, 0, 0)*(4) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(-1)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(-3) + Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial+h, 0, 0)*(4) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+2*h, 0, 0)*(-1)
 
         # guardamos la segunda diferencia
         Listado_Resultante.append(numerador1/(2*h))
@@ -365,7 +366,7 @@ def diferenciacion_numerica_tres_puntos(funcion, puntoInicial, h, tablaValores):
 
         # calculamos los errores para la primera y la segunda diferencia
         lista_errores = []
-        valor_verdadero = evaluarFuncion(funcion, puntoInicial, 1, 1)
+        valor_verdadero = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 1, 1)
         valor_apro1 = Listado_Resultante[0]
         valor_apro2 = Listado_Resultante[1]
 
@@ -443,38 +444,38 @@ def diferenciacion_numerica_cinco_puntos(funcion, puntoInicial, h, tablaValores)
         # variables donde guardaremos el numerador
         numerador1 = 0
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial, 0, 0)*(-25) + evaluarFuncion(funcion, puntoInicial+h, 0, 0)*(48) + evaluarFuncion(
-            funcion, puntoInicial+2*h, 0, 0)*(-36) + evaluarFuncion(funcion, puntoInicial+3*h, 0, 0)*(16) + evaluarFuncion(funcion, puntoInicial+4*h, 0, 0)*(-3)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(-25) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+h, 0, 0)*(48) + Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial+2*h, 0, 0)*(-36) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+3*h, 0, 0)*(16) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+4*h, 0, 0)*(-3)
         # guardamos la primera diferencia
         Listado_Resultante.append((numerador1)/(12*h))
         Listado_Resultante_Final.append("Primer diferencia: " +
                                 str((numerador1)/(12*h))+"\n")
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial-h, 0, 0)*(-3) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(-10) + evaluarFuncion(
-            funcion, puntoInicial+h, 0, 0)*(18) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(-6) + evaluarFuncion(funcion, puntoInicial+3*h, 0, 0)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-h, 0, 0)*(-3) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(-10) + Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial+h, 0, 0)*(18) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+2*h, 0, 0)*(-6) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+3*h, 0, 0)
         # guardamos la segunda diferencia
         Listado_Resultante.append(numerador1/(12*h))
         Listado_Resultante_Final.append(
             "Segunda diferencia: "+str(numerador1/(12*h))+"\n")
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial-2*h, 0, 0) + evaluarFuncion(funcion, puntoInicial-h, 0, 0) * \
-            (-8) + evaluarFuncion(funcion, puntoInicial+h, 0, 0) * \
-            (8) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(-1)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-2*h, 0, 0) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-h, 0, 0) * \
+            (-8) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+h, 0, 0) * \
+            (8) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+2*h, 0, 0)*(-1)
         # guardamos la Tercera diferencia
         Listado_Resultante.append(numerador1/(12*h))
         Listado_Resultante_Final.append("Tercer diferencia: " +
                                 str(numerador1/(12*h))+"\n")
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial-3*h, 0, 0)*(4) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(6) + evaluarFuncion(funcion, puntoInicial-h, 0, 0) * \
-            (-8) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(34) + evaluarFuncion(funcion,
-                                                                                     puntoInicial+h, 0, 0)*(3) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(34)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-3*h, 0, 0)*(4) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+2*h, 0, 0)*(6) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-h, 0, 0) * \
+            (-8) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(34) + Sustituir_y_Evaluar_Funcion(funcion,
+                                                                                     puntoInicial+h, 0, 0)*(3) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+2*h, 0, 0)*(34)
         # guardamos la cuarta diferencia
         Listado_Resultante.append(numerador1/(12*h))
         Listado_Resultante_Final.append("Cuarta diferencia: " +
                                 str(numerador1/(12*h))+"\n")
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial-4*h, 0, 0) + evaluarFuncion(funcion, puntoInicial-3*h, 0, 0)*(-3) + evaluarFuncion(
-            funcion, puntoInicial-2*h, 0, 0)*(4) + evaluarFuncion(funcion, puntoInicial-h, 0, 0)*(-36) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(25)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-4*h, 0, 0) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-3*h, 0, 0)*(-3) + Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial-2*h, 0, 0)*(4) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial-h, 0, 0)*(-36) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(25)
         # guardamos la quinta diferencia
         Listado_Resultante.append(numerador1/(12*h))
         Listado_Resultante_Final.append("Quinta diferencia: " +
@@ -482,7 +483,7 @@ def diferenciacion_numerica_cinco_puntos(funcion, puntoInicial, h, tablaValores)
 
         # calculamos los errores para la primera y la segunda diferencia
         lista_errores = []
-        valor_verdadero = evaluarFuncion(funcion, puntoInicial, 1, 1)
+        valor_verdadero = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 1, 1)
         valor_apro1 = Listado_Resultante[0]
         valor_apro2 = Listado_Resultante[1]
         valor_apro3 = Listado_Resultante[2]
@@ -645,43 +646,43 @@ def diferenciacion_numerica_adelante_orden_superior(funcion, puntoInicial, h, ta
         numerador1 = 0
 
         # <------------------ Primera diferencia ----------------------------->
-        numerador1 = evaluarFuncion(funcion, puntoInicial+2*h, 0, 0) + evaluarFuncion(
-            funcion, puntoInicial+h, 0, 0)*(-2) + evaluarFuncion(funcion, puntoInicial, 0, 0)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+2*h, 0, 0) + Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial+h, 0, 0)*(-2) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)
         Listado_Resultante.append((numerador1)/(h**2))
         Listado_Resultante_Final.append(
             "Primera diferencia f''(x): "+str((numerador1)/(h**2))+"\n")
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial+3*h, 0, 0) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0) * \
-            (-3) + evaluarFuncion(funcion, puntoInicial+h, 0, 0) * \
-            (3) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(-1)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+3*h, 0, 0) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+2*h, 0, 0) * \
+            (-3) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+h, 0, 0) * \
+            (3) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(-1)
 
         Listado_Resultante.append(numerador1/(h**3))
         Listado_Resultante_Final.append(
             "Primera diferencia f'''(x): "+str(numerador1/(h**3))+"\n")
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial+4*h, 0, 0) + evaluarFuncion(funcion, puntoInicial+3*h, 0, 0)*(-4) + evaluarFuncion(
-            funcion, puntoInicial+2*h, 0, 0)*(6) + evaluarFuncion(funcion, puntoInicial+h, 0, 0)*(-4) + evaluarFuncion(funcion, puntoInicial, 0, 0)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+4*h, 0, 0) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+3*h, 0, 0)*(-4) + Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial+2*h, 0, 0)*(6) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+h, 0, 0)*(-4) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)
 
         Listado_Resultante.append(numerador1/(h**4))
         Listado_Resultante_Final.append(
             "Primera diferencia f''''(x): "+str(numerador1/(h**4))+"\n")
 
         # <------------------ Segunda diferencia ----------------------------------->
-        numerador1 = evaluarFuncion(funcion, puntoInicial+3*h, 0, 0)*(-1) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(
-            4) + evaluarFuncion(funcion, puntoInicial+h, 0, 0)*(-5) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(2)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+3*h, 0, 0)*(-1) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+2*h, 0, 0)*(
+            4) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+h, 0, 0)*(-5) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(2)
         Listado_Resultante.append((numerador1)/(h**2))
         Listado_Resultante_Final.append(
             "Segunda diferencia f''(x): "+str((numerador1)/(h**2))+"\n")
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial+4*h, 0, 0)*(-3) + evaluarFuncion(funcion, puntoInicial+3*h, 0, 0)*(14) + evaluarFuncion(
-            funcion, puntoInicial+2*h, 0, 0)*(24) + evaluarFuncion(funcion, puntoInicial+h, 0, 0)*(-18) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(-5)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+4*h, 0, 0)*(-3) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+3*h, 0, 0)*(14) + Sustituir_y_Evaluar_Funcion(
+            funcion, puntoInicial+2*h, 0, 0)*(24) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+h, 0, 0)*(-18) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(-5)
         Listado_Resultante.append(numerador1/(h**3))
         Listado_Resultante_Final.append(
             "Segunda diferencia f'''(x): "+str(numerador1/(h**3))+"\n")
 
-        numerador1 = evaluarFuncion(funcion, puntoInicial+5*h, 0, 0)*(-2) + evaluarFuncion(funcion, puntoInicial+4*h, 0, 0)*(11) + evaluarFuncion(funcion, puntoInicial+3*h, 0, 0) * \
-            (-24) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(26) + evaluarFuncion(funcion,
-                                                                                          puntoInicial+h, 0, 0)*(-14) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(3)
+        numerador1 = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+5*h, 0, 0)*(-2) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+4*h, 0, 0)*(11) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+3*h, 0, 0) * \
+            (-24) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial+2*h, 0, 0)*(26) + Sustituir_y_Evaluar_Funcion(funcion,
+                                                                                          puntoInicial+h, 0, 0)*(-14) + Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 0, 0)*(3)
 
         Listado_Resultante.append(numerador1/(h**4))
         Listado_Resultante_Final.append(
@@ -690,7 +691,7 @@ def diferenciacion_numerica_adelante_orden_superior(funcion, puntoInicial, h, ta
         # calculamos los errores para la primera y la segunda diferencia
 
         lista_errores = []
-        valor_verdadero = evaluarFuncion(funcion, puntoInicial, 1, 1)
+        valor_verdadero = Sustituir_y_Evaluar_Funcion(funcion, puntoInicial, 1, 1)
 
         valor_apro1 = Listado_Resultante[0]
         valor_apro2 = Listado_Resultante[1]
@@ -933,8 +934,8 @@ def regla_del_trapecio_simple(funcion, a, b, tablaValores, formaRespuesta):
 
     if funcion != '':
 
-        numerador = evaluarFuncion(funcion, a, 0, 0) + \
-            evaluarFuncion(funcion, b, 0, 0)
+        numerador = Sustituir_y_Evaluar_Funcion(funcion, a, 0, 0) + \
+            Sustituir_y_Evaluar_Funcion(funcion, b, 0, 0)
         evaluacion = (b-a)*(numerador/2)
 
         Listado_Resultante.append(evaluacion)
@@ -986,7 +987,7 @@ def regla_del_trapecio_compuesta(funcion, a, b, n, tablaValores, formaRespuesta)
 
         for i in range(0, n+1, 1):
             lista_con_valor_h.append(aa)
-            lista_evaluaciones.append(evaluarFuncion(
+            lista_evaluaciones.append(Sustituir_y_Evaluar_Funcion(
                 funcion, lista_con_valor_h[i], 0, 0))
             if i >= 1 and i <= n-1:
                 sumatoria_puntos_medios += lista_evaluaciones[i]
@@ -1193,9 +1194,9 @@ def integracion_simpson_unTercio_simple(funcion, a, b, listaX, listaY):
     if funcion != "":
 
         # Realizas la evaluacion de los puntos en la funcion
-        funcion_Evaludad_En_A = evaluarFuncion(funcion, a, 0, 0)
-        funcion_Evaludad_En_B = evaluarFuncion(funcion, b, 0, 0)
-        funcion_Evaludad_En_PM = evaluarFuncion(funcion, puntoMedio, 0, 0)
+        funcion_Evaludad_En_A = Sustituir_y_Evaluar_Funcion(funcion, a, 0, 0)
+        funcion_Evaludad_En_B = Sustituir_y_Evaluar_Funcion(funcion, b, 0, 0)
+        funcion_Evaludad_En_PM = Sustituir_y_Evaluar_Funcion(funcion, puntoMedio, 0, 0)
 
         # Realizamos la formula de integracion de simpson
         respuesta = (b-a)*((funcion_Evaludad_En_A +
@@ -1232,7 +1233,7 @@ def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX
 
     if funcion != "" and len(valoresX) == 0:
         listaX.append(a)  # Agregamos la primera x
-        listaX_Evaluados.append(evaluarFuncion(funcion, a, 0, 0))
+        listaX_Evaluados.append(Sustituir_y_Evaluar_Funcion(funcion, a, 0, 0))
 
         # For para calcular valore de X
         for i in range(0, n_Intervalos, 1):
@@ -1244,7 +1245,7 @@ def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX
         # For para calcular valore de X en la funcion
         for i in range(0, len(listaX)-1, 1):
 
-            valor_X_Funcion_Proximo = evaluarFuncion(
+            valor_X_Funcion_Proximo = Sustituir_y_Evaluar_Funcion(
                 funcion, listaX[i+1], 0, 0)  # Calculamos los x
 
             # Agregamos los x a esta lista
@@ -1263,10 +1264,10 @@ def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX
         # Sacamos los valores de los puntos medios evaluadosen la funcion
         for i in range(0, len(lista_Puntos_Medios), 1):
 
-            lista_Puntos_Medios_Funciones.append(evaluarFuncion(
+            lista_Puntos_Medios_Funciones.append(Sustituir_y_Evaluar_Funcion(
                 funcion, lista_Puntos_Medios[i], 0, 0))
 
-            sumatoria_Fx_Medios += evaluarFuncion(
+            sumatoria_Fx_Medios += Sustituir_y_Evaluar_Funcion(
                 funcion, lista_Puntos_Medios[i], 0, 0)
 
         respuesta = (b-a)*((listaX[0]+(4*sumatoria_Fx_Medios) +
@@ -1290,9 +1291,9 @@ def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX
         for i in range(0, len(lista_Puntos_Medios), 1):
 
             lista_Puntos_Medios_Funciones.append(
-                evaluarFuncion(funcion, lista_Puntos_Medios[i], 0, 0))
+                Sustituir_y_Evaluar_Funcion(funcion, lista_Puntos_Medios[i], 0, 0))
 
-            sumatoria_Fx_Medios += evaluarFuncion(
+            sumatoria_Fx_Medios += Sustituir_y_Evaluar_Funcion(
                 funcion, lista_Puntos_Medios[i], 0, 0)
 
         respuesta = (b-a)*((valoresX[0]+(4*sumatoria_Fx_Medios) +
@@ -1315,10 +1316,10 @@ def integracion_simpson_tresOctavos_simple(funcion, a, b):
         for i in range(0, 3, 1):
             listaX.append(listaX[i]+h)
 
-        respuesta = (b-a)*((evaluarFuncion(funcion, listaX[0], 0, 0) +
-                            (3*evaluarFuncion(funcion, listaX[1], 0, 0)) +
-                            (3*evaluarFuncion(funcion, listaX[2], 0, 0)) +
-                            (evaluarFuncion(funcion, listaX[3], 0, 0)))/8)
+        respuesta = (b-a)*((Sustituir_y_Evaluar_Funcion(funcion, listaX[0], 0, 0) +
+                            (3*Sustituir_y_Evaluar_Funcion(funcion, listaX[1], 0, 0)) +
+                            (3*Sustituir_y_Evaluar_Funcion(funcion, listaX[2], 0, 0)) +
+                            (Sustituir_y_Evaluar_Funcion(funcion, listaX[3], 0, 0)))/8)
 
         Listado_Resultante_Final.append("Respuesta: "+str(respuesta))
         return Listado_Resultante_Final
@@ -1355,17 +1356,17 @@ def integracion_simpson_tresOctavos_compuesta(funcion, a, b, n_Intervalos):
 
         # for para sumar los x evaluados en la funcion
         for i in range(1, len(listaX)-1, 1):
-            sumatoria_Fx += evaluarFuncion(funcion, listaX[i], 0, 0)
+            sumatoria_Fx += Sustituir_y_Evaluar_Funcion(funcion, listaX[i], 0, 0)
 
         # for para sumar los subintervalos en la funcion
         for i in range(0, len(lista_subIntervalos), 1):
-            sumatoria_Fx_Subindices += evaluarFuncion(
+            sumatoria_Fx_Subindices += Sustituir_y_Evaluar_Funcion(
                 funcion, lista_subIntervalos[i], 0, 0)
 
-        respuesta = ((b-a)/(8*n_Intervalos))*(evaluarFuncion(funcion, listaX[0], 0, 0) +
+        respuesta = ((b-a)/(8*n_Intervalos))*(Sustituir_y_Evaluar_Funcion(funcion, listaX[0], 0, 0) +
                                               3*sumatoria_Fx_Subindices +
                                               2*sumatoria_Fx +
-                                              evaluarFuncion(funcion, listaX[len(listaX)-1], 0, 0))
+                                              Sustituir_y_Evaluar_Funcion(funcion, listaX[len(listaX)-1], 0, 0))
 
         Listado_Resultante_Final.append("Respuesta: "+str(respuesta))
         return Listado_Resultante_Final
@@ -1451,7 +1452,7 @@ def integracion_cuadratura_Gaussiana(funcion, a, b, n):
 
     for i in range(0, n, 1):
         punto = ((b-a)*lista_variable_Tk[i] + (b+a))/2
-        resultado += lista_variable_Wk[i]*evaluarFuncion(funcion, punto, 0, 0)
+        resultado += lista_variable_Wk[i]*Sustituir_y_Evaluar_Funcion(funcion, punto, 0, 0)
 
     resultado = resultado*(b-a)/2
 
@@ -1463,7 +1464,7 @@ def integracion_cuadratura_Gaussiana(funcion, a, b, n):
 
 def evaluar_formula_Simpson_adapatativo(a, b, funcion):
     puntoS = []
-    puntoS = ((b-a)/6)*(evaluarFuncion(funcion, a, 0, 0)+evaluarFuncion(funcion,b, 0, 0) + (4 * evaluarFuncion(funcion, ((a+b)/2), 0, 0)))
+    puntoS = ((b-a)/6)*(Sustituir_y_Evaluar_Funcion(funcion, a, 0, 0)+Sustituir_y_Evaluar_Funcion(funcion,b, 0, 0) + (4 * Sustituir_y_Evaluar_Funcion(funcion, ((a+b)/2), 0, 0)))
     return puntoS
 
 def integracion_simpson_unTercio_adaptativo(tolerancia, a, b, funcion):
@@ -1562,7 +1563,7 @@ def integracion_Boole(a, b, funcion):
         puntos.append(p)
         p += h
 
-    Listado_Resultante = ((2*h)/45)*((7*evaluarFuncion(funcion, puntos[0], 0, 0))+(32*evaluarFuncion(funcion, puntos[1], 0, 0))+(12*evaluarFuncion(funcion, puntos[2], 0, 0))+(32*evaluarFuncion(funcion, puntos[3], 0, 0))+(7*evaluarFuncion(funcion, puntos[4], 0, 0)))
+    Listado_Resultante = ((2*h)/45)*((7*Sustituir_y_Evaluar_Funcion(funcion, puntos[0], 0, 0))+(32*Sustituir_y_Evaluar_Funcion(funcion, puntos[1], 0, 0))+(12*Sustituir_y_Evaluar_Funcion(funcion, puntos[2], 0, 0))+(32*Sustituir_y_Evaluar_Funcion(funcion, puntos[3], 0, 0))+(7*Sustituir_y_Evaluar_Funcion(funcion, puntos[4], 0, 0)))
 
     salida = []
     salida.append(Listado_Resultante)

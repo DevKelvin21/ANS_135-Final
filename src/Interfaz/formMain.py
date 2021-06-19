@@ -646,6 +646,7 @@ class Ui_Analisis_Numerico(object):
         self.pushButton.setText(_translate("Analisis_Numerico", "Realizar \n"
 " Grafico"))
         self.lbl_grafico_mensaje.setText(_translate("Analisis_Numerico", "*Ocurrio un problema :c"))
+        
         self.txtResultados.setVisible(False)
         #Asignamos funcion que filtra los objetos respecto al item seleccionado en cmb
         self.cmbMetodos.activated[str].connect(self.Filtrar_Objects)
@@ -966,7 +967,10 @@ class Ui_Analisis_Numerico(object):
         self.lbl_cifras_h.setText("Cifras")
         self.lbl_punto_hermite.setText("Punto a Evaluar")  
         if queUnidad == 0: #unidad 1
-
+            self.frame_integrales.setVisible(False)
+            self.frame_3.setVisible(False)
+            self.frame_4.setVisible(False)
+            self.frame_5.setVisible(False)
             self.frame_6.setVisible(False)
             self.radioButton.setVisible(False)
             self.radioButton_2.setVisible(False)
@@ -999,6 +1003,11 @@ class Ui_Analisis_Numerico(object):
             self.radioButton_2.setVisible(False)
             self.frame_hermite.setVisible(False)
             self.frame_trazadores.setVisible(False)
+            self.frame_integrales.setVisible(False)
+            self.frame_3.setVisible(False)
+            self.frame_4.setVisible(False)
+            self.frame_5.setVisible(False)
+            self.frame_6.setVisible(False)
 
             if queMetodo >= 1 and queMetodo <= 2:
 
@@ -1074,6 +1083,11 @@ class Ui_Analisis_Numerico(object):
             self.frame_trazadores.setVisible(False)
             self.tableWidget_2.setGeometry(QtCore.QRect(200, 10, 741, 141))
             global Numero_Filas_Columnas
+            self.frame_integrales.setVisible(False)
+            self.frame_3.setVisible(False)
+            self.frame_4.setVisible(False)
+            self.frame_5.setVisible(False)
+            self.frame_6.setVisible(False)
             # Deseleccionamos los radio button
             self.radioButton.setAutoExclusive(False)
             self.radioButton.setChecked(False)
@@ -1135,7 +1149,22 @@ class Ui_Analisis_Numerico(object):
             self.lbl_comodin.setVisible(False)
             self.txtResultados.setVisible(True)
             self.tableWidget.setVisible(False)
-            if queMetodo >=1 and queMetodo <=14:
+            self.frame_integrales.setVisible(False)
+            self.frame_3.setVisible(False)
+            self.frame_4.setVisible(False)
+            self.frame_5.setVisible(False)
+            self.frame_6.setVisible(False)
+            if queMetodo == 12:
+                self.label_9.setText("¿Doble? o\n¿Triple?")
+                self.cbmSplineGrado.setGeometry(QtCore.QRect(30, 40, 151, 22))
+                self.cbmSplineGrado.clear()
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.setItemText(0, "Doble")
+                self.cbmSplineGrado.setItemText(1, "Triple")
+                self.frame_trazadores.setVisible(True)
+                self.bl_mensaje_integracion.setVisible(False)
+            elif queMetodo >=1 and queMetodo <=14:
                 self.label_9.setText("¿Usar funcion? o\n¿Usar puntos?")
                 self.cbmSplineGrado.setGeometry(QtCore.QRect(30, 40, 151, 22))
                 self.cbmSplineGrado.clear()
@@ -1144,6 +1173,7 @@ class Ui_Analisis_Numerico(object):
                 self.cbmSplineGrado.setItemText(0, "Usar Funcion")
                 self.cbmSplineGrado.setItemText(1, "Usar Puntos")
                 self.frame_trazadores.setVisible(True)
+                self.bl_mensaje_integracion.setVisible(False)
             elif queMetodo ==15: #3/8 simple
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
@@ -1155,8 +1185,9 @@ class Ui_Analisis_Numerico(object):
                 self.txt_limite_b_3.setVisible(False)
                 self.txt_limite_a_2.setVisible(False)
                 self.txt_limite_a_3.setVisible(False)
+                self.bl_mensaje_integracion.setVisible(False)
                 self.frame_integrales.setVisible(True)
-            elif queMetodo == 16 and queMetodo ==18: #3/8 compuesto y cuadratura
+            elif queMetodo == 16 or queMetodo ==18: #3/8 compuesto y cuadratura
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
                 self.lbl_integral_3.setVisible(False)
@@ -1164,11 +1195,13 @@ class Ui_Analisis_Numerico(object):
                 self.txt_limite_b_2.setVisible(False)
                 self.txt_limite_b_3.setVisible(False)
                 self.txt_limite_a_2.setVisible(False)
-                self.txt_limite_a_3.setVisible(False)
-                self.frame_integrales.setVisible(True)
+                self.txt_limite_a_3.setVisible(False) 
                 self.txt_comodin.setVisible(True)
                 self.lbl_comodin.setText("N:")
                 self.lbl_comodin.setVisible(True)
+                self.bl_mensaje_integracion.setVisible(False)
+                self.frame_integrales.setVisible(True)
+
             elif queMetodo == 17:
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
@@ -1182,6 +1215,7 @@ class Ui_Analisis_Numerico(object):
                 self.txt_comodin.setVisible(True)
                 self.lbl_comodin.setText("Nivel")
                 self.lbl_comodin.setVisible(True)
+                self.bl_mensaje_integracion.setVisible(False)
             elif queMetodo ==19:
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
@@ -1195,6 +1229,7 @@ class Ui_Analisis_Numerico(object):
                 self.txt_comodin.setVisible(True)
                 self.lbl_comodin.setText("Tolerancia")
                 self.lbl_comodin.setVisible(True)
+                self.bl_mensaje_integracion.setVisible(False)
             elif queMetodo == 20:
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
@@ -1206,10 +1241,12 @@ class Ui_Analisis_Numerico(object):
                 self.txt_limite_a_3.setVisible(False)
                 self.frame_integrales.setVisible(True)
                 self.txt_comodin.setVisible(False)
-                self.lbl_comodin.setVisible(False)    
+                self.lbl_comodin.setVisible(False)
+                self.bl_mensaje_integracion.setVisible(False)    
 
     def Filtrar_Objects_Unidad_4(self):
         unidad = int(self.lblunidad.text())
+        
         if unidad == 3: #Solo se activara si la unidad seleccionada es la 4
             global control_unidad_4
             tabla=self.cbmSplineGrado.currentIndex()
@@ -1228,19 +1265,27 @@ class Ui_Analisis_Numerico(object):
             else: #Ingresar funcion
                 control_unidad_4=0
                 self.frame_6.setVisible(False)
-                self.frame_3.setVisible(True)
-                self.frame_4.setVisible(True)
-                self.frame_5.setVisible(True)
                 self.frame_hermite.setVisible(False)
                 
                 if metodo >= 1 and metodo <=8: #dif numerica todas las variantes y orden superior
-                    self.lbl_cifras_h.setText("Valor de h")
+                    self.lbl_cifras_h.setText("h")
                     self.label_4.setVisible(False)
                     self.label_7.setVisible(False)
                     self.txtX2.setVisible(False)
                     self.txtX2_2.setVisible(False)
+                    self.frame_3.setVisible(True)
+                    self.frame_4.setVisible(True)
+                    self.frame_5.setVisible(True)
                 elif metodo == 9: #Richardson
                     self.lbl_punto_hermite.setText("Nivel")
+                    self.lbl_cifras_h.setText("h")
+                    self.label_4.setVisible(False)
+                    self.label_7.setVisible(False)
+                    self.txtX2.setVisible(False)
+                    self.txtX2_2.setVisible(False)
+                    self.frame_3.setVisible(True)
+                    self.frame_4.setVisible(True)
+                    self.frame_5.setVisible(True)
                     self.frame_hermite.setVisible(True)
                 elif metodo == 10 or metodo ==13 or metodo==15: #Metodos de integracion simples
                     self.cbmDerivadas.setVisible(False)
@@ -1252,7 +1297,64 @@ class Ui_Analisis_Numerico(object):
                     self.txt_limite_b_3.setVisible(False)
                     self.txt_limite_a_2.setVisible(False)
                     self.txt_limite_a_3.setVisible(False)
+                    self.frame_4.setVisible(False)
+                    self.frame_5.setVisible(False)
+                    self.frame_6.setVisible(False)
                     self.frame_integrales.setVisible(True)
+                    self.bl_mensaje_integracion.setVisible(False)
+                elif metodo==11 or metodo ==14:#metodos de integracion compuesta
+                    self.frame_4.setVisible(False)
+                    self.frame_5.setVisible(False)
+                    self.frame_6.setVisible(False)
+                    self.frame_integrales.setVisible(True)
+                    self.lbl_comodin.setText("n")
+                    self.lbl_comodin.setVisible(True)
+                    self.txt_comodin.setVisible(True)
+                    self.lbl_integral_3.setVisible(False)
+                    self.lbl_integral_2.setVisible(False)
+                    self.txt_limite_b_2.setVisible(False)
+                    self.txt_limite_b_3.setVisible(False)
+                    self.txt_limite_a_2.setVisible(False)
+                    self.txt_limite_a_3.setVisible(False)
+                    self.cbmDerivadas.setVisible(False)
+                    self.bl_mensaje_integracion.setVisible(False)
+                elif metodo == 12: #integrales dobles y triples
+                    tipo_integral=self.cbmSplineGrado.currentIndex()
+                    if tipo_integral ==0: #dobles
+                        self.bl_mensaje_integracion.setVisible(False)
+                        self.lbl_integral_2.setVisible(True)
+                        self.txt_limite_a_2.setVisible(True)
+                        self.txt_limite_b_2.setVisible(True)
+                        self.cbmDerivadas.setGeometry(QtCore.QRect(400, 70, 111, 22))
+                        self.cbmDerivadas.clear()
+                        self.cbmDerivadas.addItem("")
+                        self.cbmDerivadas.addItem("")
+                        self.cbmDerivada.setItemText(0,"dx, dy")
+                        self.cbmDerivada.setItemText(1,"dy, dx")
+                        self.frame_integrales.setVisible(True)
+                    elif tipo_integral==1: #Triple
+                        self.bl_mensaje_integracion.setVisible(False)
+                        self.lbl_integral_3.setVisible(True)
+                        self.txt_limite_b_3.setVisible(True)
+                        self.txt_limite_a_3.setVisible(True)
+                        self.lbl_integral_2.setVisible(True)
+                        self.txt_limite_a_2.setVisible(True)
+                        self.txt_limite_b_2.setVisible(True)
+                        self.cbmDerivadas.setGeometry(QtCore.QRect(400, 70, 111, 22))
+                        self.cbmDerivadas.clear()
+                        self.cbmDerivadas.addItem("")
+                        self.cbmDerivadas.addItem("")
+                        self.cbmDerivadas.addItem("")
+                        self.cbmDerivadas.addItem("")
+                        self.cbmDerivadas.addItem("")
+                        self.cbmDerivadas.addItem("")
+                        self.cbmDerivada.setItemText(0,"dx, dy, dz")
+                        self.cbmDerivada.setItemText(1,"dx, dz, dy")
+                        self.cbmDerivada.setItemText(2,"dy, dx, dz")
+                        self.cbmDerivada.setItemText(3,"dy, dz, dx")
+                        self.cbmDerivada.setItemText(4,"dz, dx, dy")
+                        self.cbmDerivada.setItemText(5,"dz, dy, dx")
+                        self.frame_integrales.setVisible(True)
 
     def Limpiar_Objects(self, MainWindow):
         
@@ -1427,7 +1529,7 @@ class Ui_Analisis_Numerico(object):
         x1 = funciones.Validar_Valores_Iniciales(X1)
         x2 = funciones.Validar_Valores_Iniciales(X2)
         x3 = funciones.Validar_Valores_Iniciales(X3)
-        control_acceso = "False"
+        control_acceso = "Error"
 
         cuantasVariables = 0
 
@@ -1440,7 +1542,7 @@ class Ui_Analisis_Numerico(object):
             self.Tabla_Unidad_2( queMetodo, funcion_txt, 0, 0,0, 0)
 
         if cuantasVariables == 2:
-            if x1 == "False" or x2 == "False":
+            if x1 == "Error" or x2 == "Error":
                 mesaje=("Los valores iniciales son incorrectos")
                 self.lbl_mensaje_puntos.setText(mesaje)
                 self.lbl_mensaje_puntos.setVisible(True)
@@ -1450,15 +1552,15 @@ class Ui_Analisis_Numerico(object):
                     funcion = funciones.Sustituir_y_Evaluar_Funcion(funcion_txt, 1, 0, 0)
                     control_acceso = "True"
                 except:
-                    control_acceso = "False"
-                if control_acceso == "False":
+                    control_acceso = "Error"
+                if control_acceso == "Error":
                     mesaje=("La funcion no es valida")
                     self.lbl_mensaje_funcion.setText(mesaje)
                     self.lbl_mensaje_funcion.setVisible(True)
                 else:
                     self.lbl_mensaje_funcion.setVisible(False)
                     control_cifras = funciones.Validar_Cifras_Significativas(cifras_txt)
-                    if control_cifras == "False":
+                    if control_cifras == "Error":
                        mesaje=("Cifras incorrectas")
                        self.lbl_mensaje_cifras_h.setText(mesaje)
                        self.lbl_mensaje_cifras_h.setVisible(True)
@@ -1471,7 +1573,7 @@ class Ui_Analisis_Numerico(object):
                         elif queMetodo == 6:  # secante
                             self.Tabla_Unidad_2( 6, funcion_txt, x1, x2 ,0, control_cifras)
         if cuantasVariables == 1:
-            if x1 == "False" :
+            if x1 == "Error" :
                 mesaje=("Los valores iniciales son incorrectos")
                 self.lbl_mensaje_puntos.setText(mesaje)
                 self.lbl_mensaje_puntos.setVisible(True)
@@ -1481,15 +1583,15 @@ class Ui_Analisis_Numerico(object):
                     funcion = funciones.Sustituir_y_Evaluar_Funcion(funcion_txt, 1, 0, 0)
                     control_acceso = "True"
                 except:
-                    control_acceso = "False"
-                if control_acceso == "False":
+                    control_acceso = "Error"
+                if control_acceso == "Error":
                     mesaje=("La funcion no es valida")
                     self.lbl_mensaje_funcion.setText(mesaje)
                     self.lbl_mensaje_funcion.setVisible(True)
                 else:
                     self.lbl_mensaje_funcion.setVisible(False)    
                     control_cifras = funciones.Validar_Cifras_Significativas(cifras_txt)
-                    if control_cifras == "False":
+                    if control_cifras == "Error":
                         mesaje=("Cifras incorrectas")
                         self.lbl_mensaje_cifras_h.setText(mesaje)
                         self.lbl_mensaje_cifras_h.setVisible(True)
@@ -1529,53 +1631,15 @@ class Ui_Analisis_Numerico(object):
         unidad = int(self.lblunidad.text())
         metodo = self.cmbMetodos.currentIndex()
 
-        if unidad == 0:
+        if unidad == 0:#unidad 1
             if metodo >= 1:
                 self.Tabla_Unidad_1(metodo)
-
-        elif unidad == 1:  # Parte unidad 2
-            if metodo == 1:  # Biseccion
-                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
-            elif metodo == 2:  # Falsa posicion
-                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
-            elif metodo == 3:  # Punto fijo
-                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
-            elif metodo == 4:  # Newton
-                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
-            elif metodo == 5:  # Newton mejorado
-                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
-            elif metodo == 6:  # secante
-                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(
-                ), self.txtX1.text(), self.txtX2.text(),0, self.txtcifras.text())
-            elif metodo == 7:  # cero polinomios
-                self.Validar_Datos_en_Formulario( metodo, self.txtfuncion.text(), 0, 0,0, 0)
-            elif metodo == 8:  # Horner
-                self.Tabla_Unidad_2( metodo, self.txtfuncion.text(), 0, 0, 0,0)
-            elif metodo == 9:  # Muller
-                self.Tabla_Unidad_2( metodo, self.txtfuncion.text(), self.txtX1.text(), self.txtX2.text(), self.txtX2_2.text(),self.txtcifras.text())
-            elif metodo == 10:  # Baristow
-                self.Tabla_Unidad_2( metodo, self.txtfuncion.text(), self.txtX1.text(), self.txtX2.text(),0,self.txtcifras.text())
-
-        elif unidad == 2: #Metodos de la unidad 3
-
-            if metodo == 1:# lineal
-                self.Validar_Puntos_Tabla_Unidad_3(1)
-            elif metodo == 2:# cuadratica
-                self.Validar_Puntos_Tabla_Unidad_3(2)
-            elif metodo == 3:# lagrange
-                self.Validar_Puntos_Tabla_Unidad_3(3)
-            elif metodo == 4:# newton
-                self.Validar_Puntos_Tabla_Unidad_3(4)
-            elif metodo == 5:# hermite
-                self.Validar_Puntos_Tabla_Unidad_3(5)
-            elif metodo == 6:# Trazadores Cubicos
-                self.Validar_Puntos_Tabla_Unidad_3(6)
-
+        elif unidad == 1:#unidad 2
+            if metodo >=1:
+                self.Tabla_Unidad_2(metodo)
+        elif unidad == 2: #unidad 3
+            if metodo >= 1:
+                self.Validar_Puntos_Tabla_Unidad_3(metodo)
         elif unidad == 3: #Unidad 4
             if metodo >=1 and metodo <=21:
                 self.Tabla_Unidad_4(metodo)
@@ -1665,25 +1729,45 @@ class Ui_Analisis_Numerico(object):
                             self.tableWidget.setItem(row, column, item)
                             self.tableWidget.setColumnWidth(column, tamanioColumnas)
 
-    def Tabla_Unidad_2(self,  metodo, funcion, x1, x2, x3, control_cifras):
+    def Tabla_Unidad_2(self,  metodo):
         
         item = QtWidgets.QTableWidgetItem()
         item.setTextAlignment(QtCore.Qt.AlignCenter)
         item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
         unidad = int(self.lblunidad.text())
+        
+        # Puntos a evaluar, funcion en la que evaluaremos y las cifras que se usaran
+        x1 = self.txtX1.text()  # Primer punto a evaluar
+        x2 = self.txtX2.text()  # Segundo punto a evaluar
+        x3 = self.txtX2_2.text()  # Tercer punto a evaluar
+        funcion = self.txtfuncion.text()  # función a evaluar
+        cifras = self.txtcifras.text()  # numero de cifras significativas
+
+        # Si nos devuelven la palabra: 'Error' estan vacios
+        x1Prueba = funciones.Validar_Valores_Iniciales(x1)
+        x2Prueba = funciones.Validar_Valores_Iniciales(x2)
+        x3Prueba = funciones.Validar_Valores_Iniciales(x3)
+        control_cifras = funciones.Validar_Cifras_Significativas(cifras)
+
+        # Limpiamos la tabla antes de llenarla
+        self.tableWidget.clear()
+        self.tableWidget.setColumnCount(0)
+        self.tableWidget.setRowCount(0)
+        self.tableWidget.setVisible(True)
+
         if unidad == 1:
             if metodo == 1:
-                Listado_Resultante = unidad_dos.metodoBiseccion(x1, x2, funcion, control_cifras)
+                Listado_Resultante = unidad_dos.metodoBiseccion(x1Prueba, x2Prueba, funcion, control_cifras)
             elif metodo == 2:
-                Listado_Resultante = unidad_dos.metodoFalsaPosicion(x1, x2, funcion, control_cifras)
+                Listado_Resultante = unidad_dos.metodoFalsaPosicion(x1Prueba, x2Prueba, funcion, control_cifras)
             elif metodo == 3:
-                Listado_Resultante = unidad_dos.metodoPuntoFijo(x1, funcion, control_cifras)
+                Listado_Resultante = unidad_dos.metodoPuntoFijo(x1Prueba, funcion, control_cifras)
             elif metodo == 4:
-                Listado_Resultante = unidad_dos.metodoNewtonRaphson(x1, funcion, control_cifras)
+                Listado_Resultante = unidad_dos.metodoNewtonRaphson(x1Prueba, funcion, control_cifras)
             elif metodo == 5:
-                Listado_Resultante = unidad_dos.metodoNewtonRaphsonMejorado(x1, funcion, control_cifras)
+                Listado_Resultante = unidad_dos.metodoNewtonRaphsonMejorado(x1Prueba, funcion, control_cifras)
             elif metodo == 6:
-                Listado_Resultante = unidad_dos.metodoSecante(x1, x2, funcion, control_cifras)
+                Listado_Resultante = unidad_dos.metodoSecante(x1Prueba, x2Prueba, funcion, control_cifras)
 
             elif metodo == 7:  # Metodo para crear tabla de cero de polinomios
                 listaCoeficientes = funciones.Obtener_Coeficientes(self.txtfuncion.text())
@@ -1793,8 +1877,7 @@ class Ui_Analisis_Numerico(object):
             elif metodo == 9:  # Metodo para crear tabla de müller
                 
                 # Metodo muller me devuelve todas las iteraciones
-                Listado_Resultante = unidad_dos.metodoMuller(self.txtfuncion.text(), self.txtX1.text(
-                ), self.txtX2.text(), self.txtX2_2.text(), self.txtcifras.text())
+                Listado_Resultante = unidad_dos.metodoMuller(funcion, x1Prueba, x2Prueba, x3Prueba, control_cifras)
 
                 rows = len(Listado_Resultante)  # Capturamos cuantas filas hay
                 columns = len(Listado_Resultante[0])  # Capturamos cuantas columnas hay           
@@ -1982,11 +2065,11 @@ class Ui_Analisis_Numerico(object):
                             try:
                                 listaY.append(self.tableWidget_2.item(x,y).text())
                             except:
-                                listaY.append('?')
+                                listaY.append('B')
             
             #Buscamos la posicion donde se desea interpolar
             for i in range(0,len(listaY)):
-                    if listaY[i] == '?':
+                    if listaY[i] == 'B':
                         macht = i
 
             #Lineal
@@ -2008,7 +2091,7 @@ class Ui_Analisis_Numerico(object):
 
                 #Creamos las listas que serian los pares x,y
                 for i in range(0,len(listaY)):
-                    if listaY[i] != '?':
+                    if listaY[i] != 'B':
                         try:
                             esNumero = float(listaY[i])
                             if esNumero<=0 or esNumero>=0:
@@ -2031,7 +2114,7 @@ class Ui_Analisis_Numerico(object):
 
                 #Encontramos los puntos x,y
                 for i in range(0,len(listaY)):
-                    if listaY[i] != '?':
+                    if listaY[i] != 'B':
                         try:
                             esNumero = float(listaY[i])
                             if esNumero<=0 or esNumero>=0:
@@ -2054,7 +2137,7 @@ class Ui_Analisis_Numerico(object):
 
                 #Encontramos los pares x,y
                 for i in range(0,len(listaY)):
-                    if listaY[i] != '?':
+                    if listaY[i] != 'B':
                         try:
                             esNumero = float(listaY[i])
                             if esNumero<=0 or esNumero>=0:
@@ -2279,7 +2362,7 @@ class Ui_Analisis_Numerico(object):
         elif metodo == 6: #trazadores cubicos
             grado=self.cbmSplineGrado.currentIndex()
             if grado == 0:
-                Listado_Resultante = unidad_tres.trazadoresCubicos(puntos[0], puntos[1], 0, valor)
+                Listado_Resultante = unidad_tres.trazadoresCubicos(Puntos_Validados[0], Puntos_Validados[1], 0, valor)
                 rows = len(Listado_Resultante)
 
                 self.tableWidget.setColumnCount(1)
@@ -2289,7 +2372,7 @@ class Ui_Analisis_Numerico(object):
                         row, 0, QtWidgets.QTableWidgetItem(str(Listado_Resultante[row])))
                     self.tableWidget.setColumnWidth(0, 830)
             elif grado == 1:
-                Listado_Resultante = unidad_tres.trazadoresCubicos(puntos[0], puntos[1], 1, valor)
+                Listado_Resultante = unidad_tres.trazadoresCubicos(Puntos_Validados[0], Puntos_Validados[1], 1, valor)
                 rows = len(Listado_Resultante)
 
                 self.tableWidget.setColumnCount(1)
@@ -2300,7 +2383,7 @@ class Ui_Analisis_Numerico(object):
                         row, 0, QtWidgets.QTableWidgetItem(str(Listado_Resultante[row])))
                     self.tableWidget.setColumnWidth(0, 830)
             elif grado == 2:
-                Listado_Resultante = unidad_tres.trazadoresCubicos(puntos[0], puntos[1], 2, valor)
+                Listado_Resultante = unidad_tres.trazadoresCubicos(Puntos_Validados[0], Puntos_Validados[1], 2, valor)
                 rows = len(Listado_Resultante)
 
                 self.tableWidget.setColumnCount(1)
@@ -2311,7 +2394,7 @@ class Ui_Analisis_Numerico(object):
                         row, 0, QtWidgets.QTableWidgetItem(str(Listado_Resultante[row])))
                     self.tableWidget.setColumnWidth(0, 830)
             elif grado == 3:
-                Listado_Resultante = unidad_tres.trazadoresCubicos(puntos[0], puntos[1], 3, valor)
+                Listado_Resultante = unidad_tres.trazadoresCubicos(Puntos_Validados[0], Puntos_Validados[1], 3, valor)
                 rows = len(Listado_Resultante)
 
                 self.tableWidget.setColumnCount(1)
@@ -2457,7 +2540,7 @@ class Ui_Analisis_Numerico(object):
                     '', puntoInicial, h, puntos)
 
         elif metodo == 9: # Richardson
-            h = float(self.txt_comodin.text())
+            h = float(self.txtcifras.text())
             nivel = int(self.txtHermitePunto.text())
             Listado_Resultante = unidad_cuatro.metodo_richardson(funcion, puntoInicial, h, nivel)
 

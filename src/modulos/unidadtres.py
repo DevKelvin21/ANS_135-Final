@@ -1,6 +1,7 @@
 from numpy.lib.shape_base import column_stack
 import sympy as Sympy
 import numpy as np
+import sympy as sp
 import math
 import cmath
 from sympy import cos, sin, tan, cot, sec, csc, sinh, cosh, tanh, csch, sech, coth
@@ -28,7 +29,7 @@ def Sustituir_y_Evaluar_Funcion(funcion, valor, seDeriva, ordenDerivada):#Evualu
             resultado = Sympy.sympify(funcion).subs([(x, valor), (e, cmath.e)])
             return resultado
     except:
-        return "False"
+        return "Error"
 
 
 #♪-------------------------------------------- METODOS NUMERICOS VISTOS EN CLASE -----------------------------------------------------------------

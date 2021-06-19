@@ -1,4 +1,5 @@
 import sympy as Sympy
+import sympy as sp
 import numpy as np
 import math
 import cmath
@@ -16,18 +17,18 @@ def Sustituir_y_Evaluar_Funcion(funcion, valor, seDeriva, ordenDerivada):#Evualu
         funcioon = 0
         if seDeriva == 1:
             if ordenDerivada == 1:
-                funcioon = Sympy.sympify(funcion)
-                gxValor = Sympy.diff(funcioon, x).subs([(x, valor), (e, cmath.e)])
+                funcioon = sp.sympify(funcion)
+                gxValor = sp.diff(funcioon, x).subs([(x, valor), (e, cmath.e)])
                 return gxValor
             else:
-                funcioon = Sympy.sympify(funcion)
-                gxValor = Sympy.Derivative(funcion, x, 2).subs([(x, valor), (e, cmath.e)])
+                funcioon = sp.sympify(funcion)
+                gxValor = sp.Derivative(funcion, x, 2).subs([(x, valor), (e, cmath.e)])
                 return gxValor
         else:
-            resultado = Sympy.sympify(funcion).subs([(x, valor), (e, cmath.e)])
+            resultado = sp.sympify(funcion).subs([(x, valor), (e, cmath.e)])
             return resultado
     except:
-        return "False"
+        return "Error"
 
 def Calculo_Ea(xr, xrAnterior):#Calcula el Error absoluto
     resultado = (abs(xr-xrAnterior)/xr)*100
@@ -35,10 +36,33 @@ def Calculo_Ea(xr, xrAnterior):#Calcula el Error absoluto
         resultado = resultado*-1
     return resultado
 
+def ordenPolinomio(x,lista):
+    listaResultados = []
+    if x == 3:
+        raicesFaltantes = factorizar(0, 0, lista[0], lista[1], lista[2])
+        listaResultados.append(raicesFaltantes[0])
+        listaResultados.append(raicesFaltantes[1])
+
+                #Si es una funcion cubica
+    elif x == 4:
+        raicesFaltantes = factorizar(0,lista[0], lista[1], lista[2], lista[3])
+        listaResultados.append(raicesFaltantes[0])
+        listaResultados.append(raicesFaltantes[1])
+        listaResultados.append(raicesFaltantes[2])
+
+                #Si es una funcion cuadratica o bicuadrada
+    elif x == 5:
+        raicesFaltantes = factorizar(lista[0], lista[1], lista[2], lista[3], lista[4])
+        listaResultados.append(raicesFaltantes[0])
+        listaResultados.append(raicesFaltantes[1])
+        listaResultados.append(raicesFaltantes[2])
+        listaResultados.append(raicesFaltantes[3])
+
+    return listaResultados
 #♪-------------------------------------------- METODOS NUMERICOS VISTOS EN CLASE -----------------------------------------------------------------
 
 def metodoBiseccion(x1, x2, func, cifr):
-    print(x1,x2)
+    
     funcion = func
     cifSig = cifr
     es = (10**(2-cifSig))/2
@@ -215,7 +239,7 @@ def metodoNewtonRaphson(x1, func, cif):
 
     convergencia = Sympy.simplify(
         abs((valorFx*valorFxPrimaSegunda)/(valorFxPrima)**2))
-    print(convergencia)
+    
     if (convergencia > 0 and convergencia < 1):
         cifrasSig = cif
         es = (10**(2-cifrasSig))/2
@@ -258,7 +282,7 @@ def metodoNewtonRaphsonMejorado(x1, func, cif):
 
     convergencia = Sympy.simplify(
         abs((valorFx*valorFxPrimaSegunda)/(valorFxPrima)**2))
-    print(convergencia)
+    
     if (convergencia > 0 and convergencia < 1):
         cifrasSig = cif
         es = (10**(2-cifrasSig))/2
@@ -276,7 +300,7 @@ def metodoNewtonRaphsonMejorado(x1, func, cif):
             XnMasUno = Xn - ((valorFx*valorFxPrima) /
                              ((valorFxPrima**2)-(valorFx*valorFxPrimaSegunda)))
             ea = Sympy.simplify(Calculo_Ea(XnMasUno, Xn))
-            print(ea)
+            
             if ea < es:
                 Solucion_Listado.append(
                     [iteracion, Xn, valorFx, valorFxPrima, valorFxPrimaSegunda, XnMasUno, ea])
@@ -777,15 +801,15 @@ def metodoMuller(funcion, valor0, valor1, valor2, cifrasSignificativas):
         fx0 = Sustituir_y_Evaluar_Funcion(funcion, x0, 0, 0)
         fx1 = Sustituir_y_Evaluar_Funcion(funcion, x1, 0, 0)
         fx2 = Sustituir_y_Evaluar_Funcion(funcion, x2, 0, 0)
-
+        
         # Calculamos h0 y h1
         h0 = x1 - x0
         h1 = x2 - x1
-
+        
         # Calculamos el valor del amperson
         ampersand0 = (fx1 - fx0) / h0
         ampersand1 = (fx2 - fx1) / h1
-
+        
         # Calculamos a, b, c
         a = (ampersand1 - ampersand0) / (h1 + h0)
         b = a*h1 + ampersand1
@@ -802,7 +826,7 @@ def metodoMuller(funcion, valor0, valor1, valor2, cifrasSignificativas):
 
         ea = Calculo_Ea(xr, x2)
 
-        # print(x0,x1,x2,xr,ea)
+        
         if(ea <= es):
             Solucion_Listado.append([iteracion, x0, x1, x2, xr, ea])
             salida = 1
@@ -919,7 +943,7 @@ def metodoBairstow(coeficientes,r,s,cifrasSig):
                                               
                     #Si (r**2+4*s) > 0 no hay raices imaginarias 
                     else:
-                        print("Entrando con positivas")
+                        
                         x1 = "%.5f" % float((r+(r**2+4*s)**0.5)/2)
                         x2 = "%.5f" % float((r-(r**2+4*s)**0.5)/2)
 

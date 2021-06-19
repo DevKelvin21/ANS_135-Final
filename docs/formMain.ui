@@ -1049,9 +1049,9 @@ color: rgb(87, 85, 183);</string>
      </widget>
     </widget>
     <zorder>frame_6</zorder>
-    <zorder>frame_3</zorder>
     <zorder>frame_5</zorder>
     <zorder>frame_4</zorder>
+    <zorder>frame_3</zorder>
     <zorder>frame_integrales</zorder>
     <zorder>btnResolverlo</zorder>
     <zorder>btnLimpiar</zorder>
