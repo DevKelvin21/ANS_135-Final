@@ -133,7 +133,7 @@ QPushButton:hover {
        <enum>QFrame::NoFrame</enum>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="txtResultados">
       <property name="geometry">
        <rect>
         <x>12</x>
@@ -763,13 +763,299 @@ color: rgb(0, 0, 0);</string>
       </property>
      </widget>
     </widget>
+    <widget class="QFrame" name="frame_integrales">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>10</y>
+       <width>771</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="lbl_integral_1">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>45</y>
+        <width>64</width>
+        <height>64</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/images/images/signo-matematico-integral.png);
+border-radius:0px;
+border:0px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbl_integral_2">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>45</y>
+        <width>64</width>
+        <height>64</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/images/images/signo-matematico-integral.png);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbl_integral_3">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>45</y>
+        <width>64</width>
+        <height>64</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/images/images/signo-matematico-integral.png);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txt_limite_a_1">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>110</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;
+background-image: url(:/images/images/barra.png);
+border:0px;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txt_limite_a_2">
+      <property name="geometry">
+       <rect>
+        <x>115</x>
+        <y>110</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;
+background-image: url(:/images/images/barra.png);
+border:0px;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txt_limite_a_3">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>110</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;
+background-image: url(:/images/images/barra.png);
+border:0px;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txt_limite_b_1">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>10</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;
+background-image: url(:/images/images/barra.png);
+border:0px;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txt_limite_b_2">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>10</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;
+background-image: url(:/images/images/barra.png);
+border:0px;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txt_limite_b_3">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>10</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 8pt &quot;SpaceMono Nerd Font&quot;;
+background-image: url(:/images/images/barra.png);
+border:0px;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>70</y>
+        <width>161</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 75 12pt &quot;SpaceMono Nerd Font&quot;;
+background-image: url(:/images/images/barra.png);
+border:0px;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbl_mensaje_integracion">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>140</y>
+        <width>261</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 0, 4);
+font: 8pt &quot;SpaceMono Nerd Font&quot;;</string>
+      </property>
+      <property name="text">
+       <string>*Limites de integracion Incorrectos</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="cbmDerivadas">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>70</y>
+        <width>111</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(246, 247, 251);
+font: 75 9pt &quot;SpaceMono Nerd Font&quot;;
+border:0px;
+border-radius: 10px;</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>dx, dy, dz</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>dx, dz, dy</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>dy, dx, dz</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>dy, dz, dx</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>dz, dx, dy</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>dz, dy, dx</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="lbl_comodin">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>40</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 75 10pt &quot;SpaceMono Nerd Font&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Tolerancia</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="txt_comodin">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>70</y>
+        <width>113</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(:/images/images/barra.png);
+font: 75 10pt &quot;SpaceMono Nerd Font&quot;;
+border:0px;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>10</y>
+        <width>191</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 75 12pt &quot;SpaceMono Nerd Font&quot;;
+color: rgb(87, 85, 183);</string>
+      </property>
+      <property name="text">
+       <string>Escriba la funcion</string>
+      </property>
+     </widget>
+    </widget>
     <zorder>frame_6</zorder>
+    <zorder>frame_3</zorder>
+    <zorder>frame_5</zorder>
+    <zorder>frame_4</zorder>
+    <zorder>frame_integrales</zorder>
     <zorder>btnResolverlo</zorder>
     <zorder>btnLimpiar</zorder>
     <zorder>frame_2</zorder>
-    <zorder>frame_3</zorder>
-    <zorder>frame_4</zorder>
-    <zorder>frame_5</zorder>
     <zorder>frame_hermite</zorder>
     <zorder>frame_trazadores</zorder>
    </widget>

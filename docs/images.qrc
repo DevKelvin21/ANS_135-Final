@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="images">
     <file>images/parabola.png</file>
+    <file>images/signo-matematico-integral.png</file>
     <file>images/Eliminarr.png</file>
     <file>images/unidad1_bn.png</file>
     <file>images/unidad2_bn.png</file>
