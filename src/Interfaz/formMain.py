@@ -1163,7 +1163,7 @@ class Ui_Analisis_Numerico(object):
                 self.cbmSplineGrado.setItemText(0, "Doble")
                 self.cbmSplineGrado.setItemText(1, "Triple")
                 self.frame_trazadores.setVisible(True)
-                self.bl_mensaje_integracion.setVisible(False)
+                self.lbl_mensaje_integracion.setVisible(False)
             elif queMetodo >=1 and queMetodo <=14:
                 self.label_9.setText("¿Usar funcion? o\n¿Usar puntos?")
                 self.cbmSplineGrado.setGeometry(QtCore.QRect(30, 40, 151, 22))
@@ -1173,7 +1173,7 @@ class Ui_Analisis_Numerico(object):
                 self.cbmSplineGrado.setItemText(0, "Usar Funcion")
                 self.cbmSplineGrado.setItemText(1, "Usar Puntos")
                 self.frame_trazadores.setVisible(True)
-                self.bl_mensaje_integracion.setVisible(False)
+                self.lbl_mensaje_integracion.setVisible(False)
             elif queMetodo ==15: #3/8 simple
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
@@ -1185,7 +1185,7 @@ class Ui_Analisis_Numerico(object):
                 self.txt_limite_b_3.setVisible(False)
                 self.txt_limite_a_2.setVisible(False)
                 self.txt_limite_a_3.setVisible(False)
-                self.bl_mensaje_integracion.setVisible(False)
+                self.lbl_mensaje_integracion.setVisible(False)
                 self.frame_integrales.setVisible(True)
             elif queMetodo == 16 or queMetodo ==18: #3/8 compuesto y cuadratura
                 self.frame_trazadores.setVisible(False)
@@ -1199,7 +1199,7 @@ class Ui_Analisis_Numerico(object):
                 self.txt_comodin.setVisible(True)
                 self.lbl_comodin.setText("N:")
                 self.lbl_comodin.setVisible(True)
-                self.bl_mensaje_integracion.setVisible(False)
+                self.lbl_mensaje_integracion.setVisible(False)
                 self.frame_integrales.setVisible(True)
 
             elif queMetodo == 17:
@@ -1215,7 +1215,7 @@ class Ui_Analisis_Numerico(object):
                 self.txt_comodin.setVisible(True)
                 self.lbl_comodin.setText("Nivel")
                 self.lbl_comodin.setVisible(True)
-                self.bl_mensaje_integracion.setVisible(False)
+                self.lbl_mensaje_integracion.setVisible(False)
             elif queMetodo ==19:
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
@@ -1229,7 +1229,7 @@ class Ui_Analisis_Numerico(object):
                 self.txt_comodin.setVisible(True)
                 self.lbl_comodin.setText("Tolerancia")
                 self.lbl_comodin.setVisible(True)
-                self.bl_mensaje_integracion.setVisible(False)
+                self.lbl_mensaje_integracion.setVisible(False)
             elif queMetodo == 20:
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
@@ -1242,7 +1242,7 @@ class Ui_Analisis_Numerico(object):
                 self.frame_integrales.setVisible(True)
                 self.txt_comodin.setVisible(False)
                 self.lbl_comodin.setVisible(False)
-                self.bl_mensaje_integracion.setVisible(False)    
+                self.lbl_mensaje_integracion.setVisible(False)    
 
     def Filtrar_Objects_Unidad_4(self):
         unidad = int(self.lblunidad.text())
@@ -1252,7 +1252,7 @@ class Ui_Analisis_Numerico(object):
             tabla=self.cbmSplineGrado.currentIndex()
             metodo=self.cmbMetodos.currentIndex()
 
-            if tabla ==1: #Utilizar tabla para colocar puntos
+            if tabla ==1 and metodo!=12: #Utilizar tabla para colocar puntos
                 global Numero_Filas_Columnas
                 Numero_Filas_Columnas=2
                 self.Aplicar_Ajustes_Tabla_Unidad_3(0,3)
@@ -1301,7 +1301,7 @@ class Ui_Analisis_Numerico(object):
                     self.frame_5.setVisible(False)
                     self.frame_6.setVisible(False)
                     self.frame_integrales.setVisible(True)
-                    self.bl_mensaje_integracion.setVisible(False)
+                    self.lbl_mensaje_integracion.setVisible(False)
                 elif metodo==11 or metodo ==14:#metodos de integracion compuesta
                     self.frame_4.setVisible(False)
                     self.frame_5.setVisible(False)
@@ -1317,23 +1317,35 @@ class Ui_Analisis_Numerico(object):
                     self.txt_limite_a_2.setVisible(False)
                     self.txt_limite_a_3.setVisible(False)
                     self.cbmDerivadas.setVisible(False)
-                    self.bl_mensaje_integracion.setVisible(False)
+                    self.lbl_mensaje_integracion.setVisible(False)
                 elif metodo == 12: #integrales dobles y triples
                     tipo_integral=self.cbmSplineGrado.currentIndex()
+                    
                     if tipo_integral ==0: #dobles
-                        self.bl_mensaje_integracion.setVisible(False)
+                        self.lbl_mensaje_integracion.setVisible(False)
                         self.lbl_integral_2.setVisible(True)
                         self.txt_limite_a_2.setVisible(True)
                         self.txt_limite_b_2.setVisible(True)
+                        self.lbl_integral_3.setVisible(False)
+                        self.txt_limite_b_3.setVisible(False)
+                        self.txt_limite_a_3.setVisible(False)
                         self.cbmDerivadas.setGeometry(QtCore.QRect(400, 70, 111, 22))
                         self.cbmDerivadas.clear()
                         self.cbmDerivadas.addItem("")
                         self.cbmDerivadas.addItem("")
-                        self.cbmDerivada.setItemText(0,"dx, dy")
-                        self.cbmDerivada.setItemText(1,"dy, dx")
+                        self.cbmDerivadas.setItemText(0,"dx, dy")
+                        self.cbmDerivadas.setItemText(1,"dy, dx")
                         self.frame_integrales.setVisible(True)
+                        self.frame_6.setVisible(False)
+                        self.frame_3.setVisible(False)
+                        self.frame_4.setVisible(False)
+                        self.frame_5.setVisible(False)
                     elif tipo_integral==1: #Triple
-                        self.bl_mensaje_integracion.setVisible(False)
+                        self.lbl_mensaje_integracion.setVisible(False)
+                        self.frame_6.setVisible(False)
+                        self.frame_3.setVisible(False)
+                        self.frame_4.setVisible(False)
+                        self.frame_5.setVisible(False)
                         self.lbl_integral_3.setVisible(True)
                         self.txt_limite_b_3.setVisible(True)
                         self.txt_limite_a_3.setVisible(True)
@@ -1348,12 +1360,12 @@ class Ui_Analisis_Numerico(object):
                         self.cbmDerivadas.addItem("")
                         self.cbmDerivadas.addItem("")
                         self.cbmDerivadas.addItem("")
-                        self.cbmDerivada.setItemText(0,"dx, dy, dz")
-                        self.cbmDerivada.setItemText(1,"dx, dz, dy")
-                        self.cbmDerivada.setItemText(2,"dy, dx, dz")
-                        self.cbmDerivada.setItemText(3,"dy, dz, dx")
-                        self.cbmDerivada.setItemText(4,"dz, dx, dy")
-                        self.cbmDerivada.setItemText(5,"dz, dy, dx")
+                        self.cbmDerivadas.setItemText(0,"dx, dy, dz")
+                        self.cbmDerivadas.setItemText(1,"dx, dz, dy")
+                        self.cbmDerivadas.setItemText(2,"dy, dx, dz")
+                        self.cbmDerivadas.setItemText(3,"dy, dz, dx")
+                        self.cbmDerivadas.setItemText(4,"dz, dx, dy")
+                        self.cbmDerivadas.setItemText(5,"dz, dy, dx")
                         self.frame_integrales.setVisible(True)
 
     def Limpiar_Objects(self, MainWindow):
