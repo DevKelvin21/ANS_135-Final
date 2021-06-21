@@ -1254,8 +1254,54 @@ class Ui_Analisis_Numerico(object):
                 self.label_4.setText("Y0")
                 self.label_7.setText("X1")
                 self.label_7.setVisible(True)
-                self.txtX2_2.setVisible(True)  
-                
+                self.txtX2_2.setVisible(True)
+                self.tableWidget.setVisible(True)
+                self.txtResultados.setVisible(False)  
+            elif queMetodo == 5:#Taylor
+                self.tableWidget.setVisible(False)
+                self.label_9.setText("Seleccione el Grado")
+                self.cbmSplineGrado.setGeometry(QtCore.QRect(30, 40, 151, 22))
+                self.cbmSplineGrado.clear()
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.setItemText(0, "Grado Dos")
+                self.cbmSplineGrado.setItemText(1, "Grado Tres")
+                self.frame_trazadores.setVisible(True)
+                self.lbl_cifras_h.setText("h")
+                self.frame_3.setVisible(True)
+                self.frame_4.setVisible(True)
+                self.frame_5.setVisible(True)
+                self.label_4.setVisible(True)
+                self.txtX2.setVisible(True)
+                self.label_3.setText("X0")
+                self.label_4.setText("Y0")
+                self.label_7.setText("X1")
+                self.label_7.setVisible(True)
+                self.txtX2_2.setVisible(True)
+            elif queMetodo == 6: #Kutta
+                self.tableWidget.setVisible(False)
+                self.label_9.setText("Seleccione el Orden")
+                self.cbmSplineGrado.setGeometry(QtCore.QRect(30, 40, 151, 22))
+                self.cbmSplineGrado.clear()
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.setItemText(0, "Orden Dos")
+                self.cbmSplineGrado.setItemText(1, "Orden Tres")
+                self.cbmSplineGrado.setItemText(2, "Orden cuatro")
+                self.frame_trazadores.setVisible(True)
+                self.lbl_cifras_h.setText("h")
+                self.frame_3.setVisible(True)
+                self.frame_4.setVisible(True)
+                self.frame_5.setVisible(True)
+                self.label_4.setVisible(True)
+                self.txtX2.setVisible(True)
+                self.label_3.setText("X0")
+                self.label_4.setText("Y0")
+                self.label_7.setText("X1")
+                self.label_7.setVisible(True)
+                self.txtX2_2.setVisible(True)    
+
     def Filtrar_Objects_Unidad_4(self):
         unidad = int(self.lblunidad.text())
         
@@ -2526,23 +2572,23 @@ class Ui_Analisis_Numerico(object):
         elif metodo == 7: # Atras orden superior
 
             if control_unidad_4 == 0:
-                Listado_Resultante = unidad_cuatro.diferenicacion_numerica_atras_orden_superior(
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_adelante_orden_superior(
                     funcion, puntoInicial, h, [])
             else:
                 h = float(listaX[1])-float(listaX[0])
                 puntoInicial = float(self.txtX1.text())
-                Listado_Resultante = unidad_cuatro.diferenicacion_numerica_atras_orden_superior(
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_adelante_orden_superior(
                     '', puntoInicial, h, puntos)
 
         elif metodo == 8: # Centrado orden superio
 
             if control_unidad_4 == 0:
-                Listado_Resultante = unidad_cuatro.diferenicacion_numerica_centrales_orden_superior(
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_adelante_orden_superior(
                     funcion, puntoInicial, h, [])
             else:
                 h = float(listaX[1])-float(listaX[0])
                 puntoInicial = float(self.txtX1.text())
-                Listado_Resultante = unidad_cuatro.diferenicacion_numerica_centrales_orden_superior(
+                Listado_Resultante = unidad_cuatro.diferenciacion_numerica_adelante_orden_superior(
                     '', puntoInicial, h, puntos)
 
         elif metodo == 9: # Richardson
@@ -2642,7 +2688,7 @@ class Ui_Analisis_Numerico(object):
                 a = float(self.txt_limite_a_1.text())
                 b = float(self.txt_limite_b_1.text())
                 funcion = self.lineEdit.text()
-                n = int(self.txtX1.text())
+                n = int(self.txt_comodin.text())
                 if b<a:
                     self.lbl_mensaje_integracion.setVisible(True)
                 else:
@@ -2733,10 +2779,10 @@ class Ui_Analisis_Numerico(object):
     def Tabla_Unidad_5(self, metodo):
         unidad = int(self.lblunidad.text())
         funcion =self.txtfuncion.text()
-        x0=self.txtX1.text()
-        y0=self.txtX2.text()
-        x1=self.txtX2_2.text()
-        n=self.txtcifras.text()
+        x0=float(self.txtX1.text())
+        y0=float(self.txtX2.text())
+        x1=float(self.txtX2_2.text())
+        n=float(self.txtcifras.text())
 
         x0Prueba = funciones.Validar_Valores_Iniciales(x0)
         y0Prueba = funciones.Validar_Valores_Iniciales(y0)
@@ -2767,40 +2813,88 @@ class Ui_Analisis_Numerico(object):
             self.tableWidget.setVisible(True)
 
             if unidad == 4:
-                if metodo == 1: # Euler Adelante
+
+                if metodo ==1 : # Euler Adelante
+                    
                     Listado_Resultante= unidad_cinco.metodo_Euler_Adelante(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba)
+                elif metodo == 2:
+                    
+                    Listado_Resultante=  unidad_cinco.metodo_Euler_Atras(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba)  
+                elif metodo == 3:
+                    
+                    Listado_Resultante = unidad_cinco.metodo_Euler_Centrado(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba)
+                elif metodo == 4:
+                    
+                    Listado_Resultante= unidad_cinco.metodo_Euler_Mejorado(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba)
+                elif metodo == 5:
+                    
+                    grado=self.cbmSplineGrado.currentIndex()
+                    if grado == 0:
+
+                        listaT=[x0Prueba,x1Prueba]
+                        y_inicial=y0Prueba
+                        Listado_Resultante = unidad_cinco.metodo_Taylor_Grado2('',listaT,y_inicial,0)
+                    elif grado == 1:
+                        listaT=[x0Prueba,x1Prueba]
+                        y_inicial=y0Prueba
+                        Listado_Resultante = unidad_cinco.metodo_Taylor_Grado3('',listaT,y_inicial,0)
+                    salida = ""
+                    
+                    for i in Listado_Resultante:
+                        salida += "\n"+str(i)+"\n"
+                        
+                    self.txtResultados.setVisible(True)  
+                    self.txtResultados.setText(salida)
+
+                elif metodo == 6: #-Runge
+                    orden=self.cbmSplineGrado.currentIndex()
+                    if orden == 0:
+                        Listado_Resultante =unidad_cinco.metodo_Runge_Kutta(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba, 2, 0)
+                    elif orden == 1:
+                        Listado_Resultante =unidad_cinco.metodo_Runge_Kutta(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba, 3, 0)
+                    elif orden == 2:
+                        Listado_Resultante =unidad_cinco.metodo_Runge_Kutta(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba, 4, 0)
+                               
+                if metodo>=1 and metodo<=6 and metodo !=5: #imprime euler y kutta
 
                     self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
-                    rows = len(Listado_Resultante)
-                    columns = len(Listado_Resultante[0])
-                    tamanioColumnas = int(930/columns)-5
+                    rows = len(Listado_Resultante)  # Numero de filas
+                    columns = len(Listado_Resultante[0])  # Numero de columnas
+                    tamanioColumnas = int(930/columns)-5  # Tamaño que tendran las columnas
 
                     self.tableWidget.setColumnCount(columns)
                     self.tableWidget.setRowCount(rows)
                     self.tableWidget.verticalHeader().setVisible(False)
                     self.tableWidget.horizontalHeader().setVisible(False)
-
                     
-
-                    for row in range(rows):
+                    for row in range(rows):  # Primer for recorre las filas en Listado_Resultante
+                        # Segundo for recorre las columnas en Listado_Resultante
                         for column in range(columns):
-                            item = QtWidgets.QTableWidgetItem()
-                            item.setTextAlignment(QtCore.Qt.AlignCenter)
-                            item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
-                            if row == 0:
+                            if row == 0:  # Encabezado o header
+
+                                item = QtWidgets.QTableWidgetItem()
+                                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                                item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+
                                 salida = Listado_Resultante[row][column]
                                 item.setText(str(salida))
+
                                 self.tableWidget.setItem(row, column, item)
                                 self.tableWidget.setColumnWidth(column, tamanioColumnas)
                             else:
+
+                                item = QtWidgets.QTableWidgetItem()
+                                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                                item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                            
                                 if column == 0:
                                     salida = (Listado_Resultante[row][column])
                                     item.setText(str(salida))
                                     self.tableWidget.setItem(row, column, item)
-                                    self.tableWidget.setColumnWidth(
-                                        column, tamanioColumnas)
+                                    self.tableWidget.setColumnWidth(column, tamanioColumnas)
                                 else:
+  
                                     salida = "%.5f" % float(Listado_Resultante[row][column])
                                     item.setText(str(salida))
                                     self.tableWidget.setItem(row, column, item)
-                                    self.tableWidget.setColumnWidth(column, tamanioColumnas)
+                                    self.tableWidget.setColumnWidth(column, tamanioColumnas)    

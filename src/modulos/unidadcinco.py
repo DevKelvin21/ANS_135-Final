@@ -1,7 +1,6 @@
 import decimal
 from numpy.lib.shape_base import column_stack
 import sympy as sp
-import sympy as Sympy
 import numpy as np
 import math
 import cmath
@@ -11,8 +10,10 @@ from numpy.polynomial import Polynomial as P
 from sympy.core.function import expand
 from sympy.simplify.radsimp import fraction, numer
 from fractions import Fraction
+from sympy.solvers.ode.ode import dsolve
+from sympy import*
 
-x, e, y, z, t = Sympy.symbols('x e y z t')
+x, e, y, z, t = sp.symbols('x e y z t')
 
 # <-------------------------------- FUNCIONES NECESARIAS ------------------------------>
 def Sustituir_y_Evaluar_Funcion(funcion, valor, valor2, seDeriva, ordenDerivada): #Evualua las funciones que se envien en los parametros, las deriva si es necesario, si la funcion es incorrecta devuleve un False sino, devuleve el valor
@@ -20,15 +21,15 @@ def Sustituir_y_Evaluar_Funcion(funcion, valor, valor2, seDeriva, ordenDerivada)
         funcioon = 0
         if seDeriva == 1:
             if ordenDerivada == 1:
-                funcioon = Sympy.sympify(funcion)
-                gxValor = Sympy.diff(funcioon, x).subs([(x, valor), (e, cmath.e)])
+                funcioon = sp.sympify(funcion)
+                gxValor = sp.diff(funcioon, x).subs([(x, valor), (e, cmath.e)])
                 return gxValor
             else:
-                funcioon = Sympy.sympify(funcion)
-                gxValor = Sympy.Derivative(funcion, x, 2).subs([(x, valor), (e, cmath.e)])
+                funcioon = sp.sympify(funcion)
+                gxValor = sp.Derivative(funcion, x, 2).subs([(x, valor), (e, cmath.e)])
                 return gxValor
         else:
-            resultado = Sympy.sympify(funcion).subs([(x, valor), (e, cmath.e), (y, valor2)])
+            resultado = sp.sympify(funcion).subs([(x, valor), (e, cmath.e), (y, valor2)])
             return resultado
     except:
         return "Error"
@@ -45,7 +46,8 @@ def encontrarDerivada(funcion, queDerivada):
 def metodo_Euler_Adelante(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
     # Variables a utilizar
-    lista_Salida_Final = []  # Lista para guardar la salida mostrada en el formulario
+    lista_Salida_Final = []
+    lista_Salida_Final.append(["Iteracion","X","Yn"])  # Lista para guardar la salida mostrada en el formulario
     lista_X = []  # Lista para almacenar los valores de x
     lista_Y = []  # Lista para almacenar los valores de y
     h = (x_Final-x_Inicial)/n_intervalos  # Pasos para el siguiente x
@@ -60,9 +62,7 @@ def metodo_Euler_Adelante(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
     lista_Y.append(y_Inicial)
 
     # Agregamos la primera iteracion de la respuesta final
-    lista_Salida_Final.append("Iteracion: "+str(1)+"\n" +
-                              "X: "+str(lista_X[0])+"\n" +
-                              "Yn: "+str(lista_Y[0])+"\n")
+    lista_Salida_Final.append([str(1),str(lista_X[0]),str(lista_Y[0])])
 
     # Iniciamos las siguientes iteraciones
     for i in range(1, len(lista_X), 1):
@@ -71,17 +71,17 @@ def metodo_Euler_Adelante(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
         lista_Y.append(operacion)
 
-        lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
-                                  "X: "+str(lista_X[i])+"\n" +
-                                  "Yn: "+str(lista_Y[i])+"\n")
+        lista_Salida_Final.append([str(i+1),str(lista_X[i]),str(lista_Y[i])])
 
     return lista_Salida_Final
+
 
 
 def metodo_Euler_Atras(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
     # Variables a utilizar
     lista_Salida_Final = []  # Lista para guardar la salida mostrada en el formulario
+    lista_Salida_Final.append(["Iteracion","X","Yn"])
     lista_X = []  # Lista para almacenar los valores de x
     lista_Y = []  # Lista para almacenar los valores de y
     h = (x_Final-x_Inicial)/n_intervalos  # Pasos para el siguiente x
@@ -107,9 +107,7 @@ def metodo_Euler_Atras(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
             lista_Y[i]+(h*Sustituir_y_Evaluar_Funcion(funcion, (lista_X[i]+h), lista_Ysupra[i], 0, 0)))
 
     for i in range(0, len(lista_X), 1):
-        lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
-                                  "X: "+str(lista_X[i])+"\n" +
-                                  "Yn: "+str(lista_Y[i])+"\n")
+        lista_Salida_Final.append([str(i+1),str(lista_X[i]),str(lista_Y[i])])
 
     return(lista_Salida_Final)
 
@@ -118,6 +116,7 @@ def metodo_Euler_Centrado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
     # Variables a utilizar
     lista_Salida_Final = []  # Lista para guardar la salida mostrada en el formulario
+    lista_Salida_Final.append(["Iteracion","X","Yn"])
     lista_X = []  # Lista para almacenar los valores de x
     lista_Y = []  # Lista para almacenar los valores de y
     h = (x_Final-x_Inicial)/n_intervalos  # Pasos para el siguiente x
@@ -138,9 +137,7 @@ def metodo_Euler_Centrado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
             lista_Y[i]+(h*Sustituir_y_Evaluar_Funcion(funcion, lista_X[i], lista_Y[i], 0, 0)))
 
     for i in range(0, len(lista_X), 1):
-        lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
-                                  "X: "+str(lista_X[i])+"\n" +
-                                  "Yn: "+str(lista_Y[i])+"\n")
+        lista_Salida_Final.append([str(i+1),str(lista_X[i]),str(lista_Y[i])])
 
     return(lista_Salida_Final)
 
@@ -148,6 +145,7 @@ def metodo_Euler_Centrado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 def metodo_Euler_Mejorado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
     # Variables a utilizar
     lista_Salida_Final = []  # Lista para guardar la salida mostrada en el formulario
+    lista_Salida_Final.append(["Iteracion","X","Yn"])
     lista_X = []  # Lista para almacenar los valores de x
     lista_Y = []  # Lista para almacenar los valores de y
     lista_Yasterisco = []  # Lista para almacenar los valores de y*
@@ -173,9 +171,7 @@ def metodo_Euler_Mejorado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
             lista_Y[i]+(h*((Sustituir_y_Evaluar_Funcion(funcion, lista_X[i], lista_Y[i], 0, 0)+Sustituir_y_Evaluar_Funcion(funcion, lista_X[i]+h, lista_Yasterisco[i], 0, 0))/2)))
 
     for i in range(0, len(lista_X), 1):
-        lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
-                                  "X: "+str(lista_X[i])+"\n" +
-                                  "Yn: "+str(lista_Y[i])+"\n")
+        lista_Salida_Final.append([str(i+1),str(lista_X[i]),str(lista_Y[i])])
 
     return(lista_Salida_Final)
 
@@ -184,33 +180,44 @@ def metodo_Euler_Mejorado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 # Falta
 
 
-def metodo_Taylor(funcion, x_Inicial, y_Inicial, x_Final, h, orden):
+def metodo_Taylor_Grado2(funcion,listaT,y_inicial,h):
 
-    derivadaY = []
+    salida =[]
+    y = sp.Function('y')
 
-    derivadaY.append(encontrarDerivada(funcion, 1))
+    func = Eq(y(t).diff(),y(t)-t**2) #Creamos la funcion
+    CI = {y(listaT[0]):y_inicial} #condicion inicial
 
-    print(derivadaY)
+    #resolvemos la edo
+    edo_sol = sp.dsolve(func,y(t),ics=CI)
+    salida.append(edo_sol.subs(t,listaT[1]))
+    
+    return(salida)
 
-    print("")
+def metodo_Taylor_Grado3(funcion,listaT,y_inicial,h):
 
-#metodo_Taylor("y-x", 1, 3, 5, 1, 3)
+    salida =[]
+    y = sp.Function('y')
 
+    func = Eq(y(t).diff(),y(t)-t) #Creamos la funcion
+    CI = {y(listaT[0]):y_inicial} #condicion inicial
+
+    #resolvemos la edo
+    edo_sol = sp.dsolve(func,y(t),ics=CI)
+
+    salida.append(edo_sol.subs(t,listaT[1]))
+    
+    return(salida)
 
 # <-------------------------------- metodo de Runge Kutta ------------------------------>
 
-'''
-Nota: 
-El parametro "tipoRespuesta", es utilizado en el orden 4 (el else para seleccionar orden, solo es utilizada para orden 4)
-si en tipoRespuesta se envia un 0 se retornara una lista para mostrar al interfaz de usuario
-si en tipoRespuesta se envia cualquier otro numero, se retornara la lista de los Y, que es utilizada en multipasos
-'''
 
 
 def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, orden, tipoRespuesta):
 
     # Variables utilizadas
     lista_Salida_Final = []  # Lista para mostrar la salida final
+    lista_Salida_Final.append(["Iteracion","X","Yn"])
     lista_X = []  # Lista con los valores de x
     lista_Y = []  # Lista con valores de y
     h = (x_Final-x_Inicial)/n_Intervalos  # Pasos para el siguiente x
@@ -245,11 +252,9 @@ def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, ord
                 lista_Y.append(lista_Y[i]+((1/2)*h*(k1+k2)))
 
             # Armamos la salida final
-            lista_Salida_Final.append("Orden 2:\n")
+            
             for i in range(0, len(lista_X), 1):
-                lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
-                                          "X: "+str(lista_X[i])+"\n" +
-                                          "Yn: "+str(lista_Y[i])+"\n")
+                lista_Salida_Final.append([str(i+1),str(lista_X[i]),str(lista_Y[i])])
 
             return lista_Salida_Final
 
@@ -268,14 +273,11 @@ def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, ord
                 lista_Y.append(lista_Y[i]+((h/6)*(k1+4*k2+k3)))
 
             # Armamos la salida final
-            lista_Salida_Final.append("Orden 3:\n")
+            
             for i in range(0, len(lista_X), 1):
-                lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
-                                          "X: "+str(lista_X[i])+"\n" +
-                                          "Yn: "+str(lista_Y[i])+"\n")
+                lista_Salida_Final.append([str(i+1),str(lista_X[i]),str(lista_Y[i])])
 
-            for i in lista_Salida_Final:
-                print(i)
+            
 
             return lista_Salida_Final
 
@@ -298,11 +300,9 @@ def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, ord
                 lista_Y.append(lista_Y[i]+((h/6)*(k1+(2*k2)+(2*k3)+k4)))
 
             # Armamos la salida final
-            lista_Salida_Final.append("Orden 4:\n")
+            
             for i in range(0, len(lista_X), 1):
-                lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
-                                          "X: "+str(lista_X[i])+"\n" +
-                                          "Yn: "+str(lista_Y[i])+"\n")
+                lista_Salida_Final.append([str(i+1),str(lista_X[i]),str(lista_Y[i])])
 
             if tipoRespuesta == 0:
                 return lista_Salida_Final
@@ -389,4 +389,3 @@ def Adam_Bashforth_Moulton(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos,
             return lista_Salida_Final
 
 
-#Adam_Bashforth_Moulton("x+y-1", 0, 1, 0.8, 4, 4)

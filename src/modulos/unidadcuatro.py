@@ -847,10 +847,10 @@ def diferenciacion_numerica_adelante_orden_superior(funcion, puntoInicial, h, ta
         return Listado_Resultante_Final
 
 def diferenicacion_numerica_atras_orden_superior(funcion, puntoInicial, h, tablaValores):
-    print("falta")
+    print("")
 
 def diferenicacion_numerica_centrales_orden_superior(funcion, puntoInicial, h, tablaValores):
-    print("falta")
+    print("")
 
 # <------------- metodo de richardson --------------------->
 
