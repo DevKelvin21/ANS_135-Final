@@ -67,7 +67,7 @@ def metodo_Euler_Adelante(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
     # Iniciamos las siguientes iteraciones
     for i in range(1, len(lista_X), 1):
         operacion = lista_Y[i-1]+h * \
-            evaluarFuncion(funcion, lista_X[i-1], lista_Y[i-1], 0, 0)
+            Sustituir_y_Evaluar_Funcion(funcion, lista_X[i-1], lista_Y[i-1], 0, 0)
 
         lista_Y.append(operacion)
 
@@ -100,11 +100,11 @@ def metodo_Euler_Atras(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
     for i in range(0, len(lista_X)-1, 1):
         # Sacamos el valor de ý
         lista_Ysupra.append(
-            lista_Y[i]+(h*evaluarFuncion(funcion, lista_X[i], lista_Y[i], 0, 0)))
+            lista_Y[i]+(h*Sustituir_y_Evaluar_Funcion(funcion, lista_X[i], lista_Y[i], 0, 0)))
 
         # Luego sacamos Y
         lista_Y.append(
-            lista_Y[i]+(h*evaluarFuncion(funcion, (lista_X[i]+h), lista_Ysupra[i], 0, 0)))
+            lista_Y[i]+(h*Sustituir_y_Evaluar_Funcion(funcion, (lista_X[i]+h), lista_Ysupra[i], 0, 0)))
 
     for i in range(0, len(lista_X), 1):
         lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
@@ -135,7 +135,7 @@ def metodo_Euler_Centrado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
     for i in range(0, len(lista_X)-1, 1):
         # Luego sacamos Y
         lista_Y.append(
-            lista_Y[i]+(h*evaluarFuncion(funcion, lista_X[i], lista_Y[i], 0, 0)))
+            lista_Y[i]+(h*Sustituir_y_Evaluar_Funcion(funcion, lista_X[i], lista_Y[i], 0, 0)))
 
     for i in range(0, len(lista_X), 1):
         lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
@@ -166,11 +166,11 @@ def metodo_Euler_Mejorado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
     for i in range(0, len(lista_X)-1, 1):
         # Encontramos Y*
         lista_Yasterisco.append(
-            lista_Y[i]+h*evaluarFuncion(funcion, lista_X[i], lista_Y[i], 0, 0))
+            lista_Y[i]+h*Sustituir_y_Evaluar_Funcion(funcion, lista_X[i], lista_Y[i], 0, 0))
 
         # Luego sacamos Y
         lista_Y.append(
-            lista_Y[i]+(h*((evaluarFuncion(funcion, lista_X[i], lista_Y[i], 0, 0)+evaluarFuncion(funcion, lista_X[i]+h, lista_Yasterisco[i], 0, 0))/2)))
+            lista_Y[i]+(h*((Sustituir_y_Evaluar_Funcion(funcion, lista_X[i], lista_Y[i], 0, 0)+Sustituir_y_Evaluar_Funcion(funcion, lista_X[i]+h, lista_Yasterisco[i], 0, 0))/2)))
 
     for i in range(0, len(lista_X), 1):
         lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
@@ -237,8 +237,8 @@ def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, ord
         if orden == 2:
             for i in range(0, len(lista_X), 1):
                 # Evaluamos los K
-                k1 = evaluarFuncion(funcion, lista_X[i], lista_Y[i], 0, 0)
-                k2 = evaluarFuncion(
+                k1 = Sustituir_y_Evaluar_Funcion(funcion, lista_X[i], lista_Y[i], 0, 0)
+                k2 = Sustituir_y_Evaluar_Funcion(
                     funcion, (lista_X[i]+h), (lista_Y[i]+(k1*h)), 0, 0)
 
                 # Agregamos las y
@@ -256,12 +256,12 @@ def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, ord
         elif orden == 3:
             for i in range(0, len(lista_X), 1):
                 # Evaluamos los K
-                k1 = evaluarFuncion(funcion, lista_X[i], lista_Y[i], 0, 0)
+                k1 = Sustituir_y_Evaluar_Funcion(funcion, lista_X[i], lista_Y[i], 0, 0)
 
-                k2 = evaluarFuncion(
+                k2 = Sustituir_y_Evaluar_Funcion(
                     funcion, (lista_X[i]+h), (lista_Y[i]+((1/2)*k1*h)), 0, 0)
 
-                k3 = evaluarFuncion(
+                k3 = Sustituir_y_Evaluar_Funcion(
                     funcion, (lista_X[i]+h), (lista_Y[i]-(k1*h)+(2*k2*h)), 0, 0)
 
                 # Agregamos las y
@@ -283,15 +283,15 @@ def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, ord
 
             for i in range(0, len(lista_X), 1):
                 # Evaluamos los K
-                k1 = evaluarFuncion(funcion, lista_X[i], lista_Y[i], 0, 0)
+                k1 = Sustituir_y_Evaluar_Funcion(funcion, lista_X[i], lista_Y[i], 0, 0)
 
-                k2 = evaluarFuncion(
+                k2 = Sustituir_y_Evaluar_Funcion(
                     funcion, (lista_X[i]+h/2), (lista_Y[i]+(((h*k1)/2))), 0, 0)
 
-                k3 = evaluarFuncion(
+                k3 = Sustituir_y_Evaluar_Funcion(
                     funcion, (lista_X[i]+h/2), (lista_Y[i]+(((h*k2)/2))), 0, 0)
 
-                k4 = evaluarFuncion(
+                k4 = Sustituir_y_Evaluar_Funcion(
                     funcion, (lista_X[i]+h), (lista_Y[i]+((h)*k3)), 0, 0)
 
                 # Agregamos las y
@@ -358,7 +358,7 @@ def Adam_Bashforth_Moulton(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos,
         elif pasos == 4:
             # Sacamos los valores primos de Y
             for i in range(0, pasos, 1):
-                lista_YPrima.append(evaluarFuncion(
+                lista_YPrima.append(Sustituir_y_Evaluar_Funcion(
                     funcion, lista_X[i], lista_YRunge[i], 0, 0))
 
             inicio = len(lista_YMultipasos)
@@ -368,7 +368,7 @@ def Adam_Bashforth_Moulton(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos,
                     (h/24)*(55*lista_YPrima[len(lista_YPrima)-1]-59*lista_YPrima[len(lista_YPrima)-2] +
                             37*lista_YPrima[len(lista_YPrima)-3]-9*lista_YPrima[len(lista_YPrima)-4])
 
-                lista_YPrima.append(evaluarFuncion(
+                lista_YPrima.append(Sustituir_y_Evaluar_Funcion(
                     funcion, lista_X[len(lista_YMultipasos)], yPrediccion, 0, 0))
 
                 # print(lista_YPrima[len(lista_YPrima)-4])
