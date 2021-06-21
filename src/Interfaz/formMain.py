@@ -99,9 +99,9 @@ class Ui_Analisis_Numerico(object):
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
         self.txtResultados = QtWidgets.QLineEdit(self.frame_2)
-        self.txtResultados.setGeometry(QtCore.QRect(12, 9, 901, 111))
+        self.txtResultados.setGeometry(QtCore.QRect(9, 9, 920, 260))
         self.txtResultados.setStyleSheet("border:0px;\n"
-"font: 75 12pt \"SpaceMono Nerd Font\";")
+"font: 75 9pt \"SpaceMono Nerd Font\";")
         self.txtResultados.setText("")
         self.txtResultados.setObjectName("txtResultados")
         self.frame_3 = QtWidgets.QFrame(self.frame)
@@ -648,6 +648,7 @@ class Ui_Analisis_Numerico(object):
         self.lbl_grafico_mensaje.setText(_translate("Analisis_Numerico", "*Ocurrio un problema :c"))
         
         self.txtResultados.setVisible(False)
+        self.txtResultados.setReadOnly(True)
         #Asignamos funcion que filtra los objetos respecto al item seleccionado en cmb
         self.cmbMetodos.activated[str].connect(self.Filtrar_Objects)
         self.cbmSplineGrado.activated[str].connect(self.Filtrar_Objects_Unidad_4)
@@ -669,7 +670,7 @@ class Ui_Analisis_Numerico(object):
         self.btnUnidad4.clicked.connect(lambda: self.unidades(3))
         self.btnUnidad4.clicked.connect(self.Filtrar_llenado_cmbMetodos)
         self.btnUnidad5.clicked.connect(lambda: self.unidades(4))
-        #self.btnUnidad5.clicked.connect(self.Filtrar_llenado_cmbMetodos)
+        self.btnUnidad5.clicked.connect(self.Filtrar_llenado_cmbMetodos)
 
         #Ocultamos todos los componetes para filtrarlos con los btn de las unidades.
         self.frame.setVisible(False)
@@ -704,7 +705,7 @@ class Ui_Analisis_Numerico(object):
         self.lbl_unidad_actual.setText(f"Unidad Actual # {str(cual)}")
 
     def Filtrar_llenado_cmbMetodos(self):
-        
+        self.Limpiar_Objects()
         cual = int(self.lblunidad.text())
         self.frame.setVisible(True)
         self.frame_6.setVisible(False)
@@ -716,6 +717,7 @@ class Ui_Analisis_Numerico(object):
         self.frame_4.setVisible(False)
         self.frame_5.setVisible(False)
         self.frame_6.setVisible(False)
+        self.frame_integrales.setVisible(False)
 
 
         if cual == 0:  # Metodos de la primera unidad
@@ -749,8 +751,6 @@ class Ui_Analisis_Numerico(object):
             self.cmbMetodos.setCurrentIndex(0)
             self.cmbMetodos.setVisible(True)
             
-
-
         elif cual == 1:  # Metodos de la segunda unidad
             self.txtResultados.setVisible(False)
             self.cmbMetodos.setGeometry(QtCore.QRect(550, 10, 221, 22))
@@ -780,7 +780,6 @@ class Ui_Analisis_Numerico(object):
             self.cmbMetodos.setCurrentIndex(0)
             self.cmbMetodos.setVisible(True)
             
-
         elif cual == 2:  # Metodos de la unidad 3
             self.txtResultados.setVisible(False)
             self.cmbMetodos.setGeometry(QtCore.QRect(550, 10, 221, 22))
@@ -848,6 +847,23 @@ class Ui_Analisis_Numerico(object):
             self.cmbMetodos.setItemText(18, "- Cuadratura Gaussiana")
             self.cmbMetodos.setItemText(19, "- Simpson un tercio adaptativo")
             self.cmbMetodos.setItemText(20, "- Boole")
+            self.cmbMetodos.setVisible(True)
+            self.cmbMetodos.setCurrentIndex(0)
+        
+        elif cual == 4: #unidad 5
+
+            self.cmbMetodos.setGeometry(QtCore.QRect(550, 10, 221, 22))
+            self.cmbMetodos.clear()
+            self.cmbMetodos.addItem("")
+            self.cmbMetodos.addItem("")
+            self.cmbMetodos.addItem("")
+            self.cmbMetodos.addItem("")
+            self.cmbMetodos.addItem("")
+            self.cmbMetodos.setItemText(0, "> Seleccione un metodo <")
+            self.cmbMetodos.setItemText(1,  "- Metodo Euler")
+            self.cmbMetodos.setItemText(2,  "- Metodo Taylor")
+            self.cmbMetodos.setItemText(3,  "- Runge Kutta")
+            self.cmbMetodos.setItemText(4,  "- Metodo adaptativo")
             self.cmbMetodos.setVisible(True)
             self.cmbMetodos.setCurrentIndex(0)
 
@@ -1116,7 +1132,20 @@ class Ui_Analisis_Numerico(object):
                 self.cbmSplineGrado.setItemText(1, "Triple")
                 self.frame_trazadores.setVisible(True)
                 self.lbl_mensaje_integracion.setVisible(False)
-            elif queMetodo >=1 and queMetodo <=14:
+            elif queMetodo ==9:#Richardson
+                self.lbl_punto_hermite.setText("Nivel")
+                self.lbl_cifras_h.setText("h")
+                self.label_4.setVisible(False)
+                self.label_7.setVisible(False)
+                self.txtX2.setVisible(False)
+                self.txtX2_2.setVisible(False)
+                self.frame_3.setVisible(True)
+                self.frame_4.setVisible(True)
+                self.frame_5.setVisible(True)
+                self.frame_hermite.setVisible(True) 
+                self.frame_trazadores.setVisible(False)
+                self.lbl_mensaje_integracion.setVisible(False)   
+            elif queMetodo >=1 and queMetodo <=14 and queMetodo!=9:
                 self.label_9.setText("¿Usar funcion? o\n¿Usar puntos?")
                 self.cbmSplineGrado.setGeometry(QtCore.QRect(30, 40, 151, 22))
                 self.cbmSplineGrado.clear()
@@ -1126,6 +1155,7 @@ class Ui_Analisis_Numerico(object):
                 self.cbmSplineGrado.setItemText(1, "Usar Puntos")
                 self.frame_trazadores.setVisible(True)
                 self.lbl_mensaje_integracion.setVisible(False)
+                self.frame_hermite.setVisible(False) 
             elif queMetodo ==15: #3/8 simple
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
@@ -1139,6 +1169,7 @@ class Ui_Analisis_Numerico(object):
                 self.txt_limite_a_3.setVisible(False)
                 self.lbl_mensaje_integracion.setVisible(False)
                 self.frame_integrales.setVisible(True)
+                self.frame_hermite.setVisible(False) 
             elif queMetodo == 16 or queMetodo ==18: #3/8 compuesto y cuadratura
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
@@ -1153,6 +1184,7 @@ class Ui_Analisis_Numerico(object):
                 self.lbl_comodin.setVisible(True)
                 self.lbl_mensaje_integracion.setVisible(False)
                 self.frame_integrales.setVisible(True)
+                self.frame_hermite.setVisible(False) 
 
             elif queMetodo == 17:
                 self.frame_trazadores.setVisible(False)
@@ -1168,6 +1200,7 @@ class Ui_Analisis_Numerico(object):
                 self.lbl_comodin.setText("Nivel")
                 self.lbl_comodin.setVisible(True)
                 self.lbl_mensaje_integracion.setVisible(False)
+                self.frame_hermite.setVisible(False) 
             elif queMetodo ==19:
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
@@ -1182,6 +1215,7 @@ class Ui_Analisis_Numerico(object):
                 self.lbl_comodin.setText("Tolerancia")
                 self.lbl_comodin.setVisible(True)
                 self.lbl_mensaje_integracion.setVisible(False)
+                self.frame_hermite.setVisible(False) 
             elif queMetodo == 20:
                 self.frame_trazadores.setVisible(False)
                 self.cbmDerivadas.setVisible(False)
@@ -1194,7 +1228,8 @@ class Ui_Analisis_Numerico(object):
                 self.frame_integrales.setVisible(True)
                 self.txt_comodin.setVisible(False)
                 self.lbl_comodin.setVisible(False)
-                self.lbl_mensaje_integracion.setVisible(False)    
+                self.lbl_mensaje_integracion.setVisible(False) 
+                self.frame_hermite.setVisible(False)    
 
     def Filtrar_Objects_Unidad_4(self):
         unidad = int(self.lblunidad.text())
@@ -1288,6 +1323,7 @@ class Ui_Analisis_Numerico(object):
                         self.cbmDerivadas.setItemText(0,"dx, dy")
                         self.cbmDerivadas.setItemText(1,"dy, dx")
                         self.frame_integrales.setVisible(True)
+                        self.cbmDerivadas.setVisible(False)
                         self.frame_6.setVisible(False)
                         self.frame_3.setVisible(False)
                         self.frame_4.setVisible(False)
@@ -1319,8 +1355,9 @@ class Ui_Analisis_Numerico(object):
                         self.cbmDerivadas.setItemText(4,"dz, dx, dy")
                         self.cbmDerivadas.setItemText(5,"dz, dy, dx")
                         self.frame_integrales.setVisible(True)
+                        self.cbmDerivadas.setVisible(False)
 
-    def Limpiar_Objects(self, MainWindow):
+    def Limpiar_Objects(self):
         #limpiamos campos y reseteamos tablas
         self.txtfuncion.setText("")
         self.txtX1.setText("")
@@ -1361,7 +1398,7 @@ class Ui_Analisis_Numerico(object):
         self.radioButton_2.setChecked(False)
         self.radioButton_2.setAutoExclusive(True)
 
-    def graficar(self, MainWindow):
+    def graficar(self):
         x , y= symbols('x y')
         Es_Unidad_dos = int(self.lblunidad.text())
         if Es_Unidad_dos==1: #Si puede graficar.Es_Unidad_dos
@@ -1542,7 +1579,7 @@ class Ui_Analisis_Numerico(object):
             self.tableWidget_2.removeRow(Numero_filas_Hermite)
             Numero_filas_Hermite = Numero_filas_Hermite - 1
 
-    def Resolverlo(self, MainWindow):
+    def Resolverlo(self):
 
         unidad = int(self.lblunidad.text())
         metodo = self.cmbMetodos.currentIndex()
@@ -2369,9 +2406,7 @@ class Ui_Analisis_Numerico(object):
                     if x == 0:
                         listaX.append(self.tableWidget_2.item(x, y).text())
                     elif x == 1:
-                        listaY.append(self.tableWidget_2.item(x, y).text())
-
-           
+                        listaY.append(self.tableWidget_2.item(x, y).text()) 
 
             for i in listaX:
                 Sub_listaX.append(float(i))
@@ -2389,7 +2424,6 @@ class Ui_Analisis_Numerico(object):
             except:
                 self.lbl_mensaje_cifras_h.setText("Introduzca un valor")
                 self.lbl_mensaje_cifras_h.setVisible(True)
-
 
         if metodo == 1:  # Hacia delante
 
@@ -2492,6 +2526,7 @@ class Ui_Analisis_Numerico(object):
             if control_unidad_4 == 0:
                 a = float(self.txt_limite_a_1.text())
                 b = float(self.txt_limite_b_1.text())
+                funcion = self.lineEdit.text()
                 if b<a:
                     self.lbl_mensaje_integracion.setVisible(True)
                 else:
@@ -2510,6 +2545,7 @@ class Ui_Analisis_Numerico(object):
                 n = int(self.txt_comodin.text())
                 a = float(self.txt_limite_a_1.text())
                 b = float(self.txt_limite_b_1.text())
+                funcion = self.lineEdit.text()
                 if b<a:
                     self.lbl_mensaje_integracion.setVisible(True)
                 else:
@@ -2523,13 +2559,43 @@ class Ui_Analisis_Numerico(object):
                     '', a,b,n, puntos,0)
 
         elif metodo == 12:  # Integrales dobles y triples 
-            self.insertar_datos_a_tabla_unidad4(15)
+            orden=self.cbmSplineGrado.currentIndex()
+            if orden == 0: #doble
+                a = float(self.txt_limite_a_1.text())
+                b = float(self.txt_limite_b_1.text())
+                a2 = float(self.txt_limite_a_2.text())
+                b2 = float(self.txt_limite_b_2.text())
+                funcion = self.lineEdit.text()
+                if b<a or b2<a2:
+                    self.lbl_mensaje_integracion.setVisible(True)
+                else:
+                    self.lbl_mensaje_integracion.setVisible(False)
+                    lista_a=[a,a2]
+                    lista_b=[b,b2]
+                    Listado_Resultante = unidad_cuatro.trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, 5, 2)
+            else:#triple
+                a = float(self.txt_limite_a_1.text())
+                b = float(self.txt_limite_b_1.text())
+                a2 = float(self.txt_limite_a_2.text())
+                b2 = float(self.txt_limite_b_2.text())
+                a3 = float(self.txt_limite_a_3.text())
+                b3 = float(self.txt_limite_b_3.text())
+                funcion = self.lineEdit.text()
+                if b<a or b2<a2 or b3<a3:
+                    self.lbl_mensaje_integracion.setVisible(True)
+                else:
+                    self.lbl_mensaje_integracion.setVisible(False)
+                    lista_a=[a,a2,a3]
+                    lista_b=[b,b2,b3]
+                    Listado_Resultante = unidad_cuatro.trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, 5, 3)
+
 
         elif metodo == 13: # simpson 1/3 simple
                 
             if control_unidad_4 == 0:
                 a = float(self.txt_limite_a_1.text())
                 b = float(self.txt_limite_b_1.text())
+                funcion = self.lineEdit.text()
                 if b<a:
                     self.lbl_mensaje_integracion.setVisible(True)
                 else:
@@ -2546,6 +2612,7 @@ class Ui_Analisis_Numerico(object):
             if control_unidad_4 == 0:
                 a = float(self.txt_limite_a_1.text())
                 b = float(self.txt_limite_b_1.text())
+                funcion = self.lineEdit.text()
                 n = int(self.txtX1.text())
                 if b<a:
                     self.lbl_mensaje_integracion.setVisible(True)
@@ -2562,6 +2629,7 @@ class Ui_Analisis_Numerico(object):
         elif metodo == 15: # simpson 3/8 simple
             a = float(self.txt_limite_a_1.text())
             b = float(self.txt_limite_b_1.text())
+            funcion = self.lineEdit.text()
             if b<a:
                 self.lbl_mensaje_integracion.setVisible(True)
             else:
@@ -2571,7 +2639,8 @@ class Ui_Analisis_Numerico(object):
         elif metodo == 16: # simpson 3/8 compuesto
             a = float(self.txt_limite_a_1.text())
             b = float(self.txt_limite_b_1.text())
-            n = int(self.txtX1.text())
+            funcion = self.lineEdit.text()
+            n = int(self.txt_comodin.text())
             if b<a:
                 self.lbl_mensaje_integracion.setVisible(True)
             else:
@@ -2581,7 +2650,8 @@ class Ui_Analisis_Numerico(object):
         elif metodo == 17: # rosemberg
             a = float(self.txt_limite_a_1.text())
             b = float(self.txt_limite_b_1.text())
-            n = int(self.txtX1.text())
+            funcion = self.lineEdit.text()
+            n = int(self.txt_comodin.text())
             if b<a:
                 self.lbl_mensaje_integracion.setVisible(True)
             else:
@@ -2591,7 +2661,8 @@ class Ui_Analisis_Numerico(object):
         elif metodo == 18: # cuadratura gaussiana
             a = float(self.txt_limite_a_1.text())
             b = float(self.txt_limite_b_1.text())
-            n = int(self.txtX1.text())
+            funcion = self.lineEdit.text()
+            n = int(self.txt_comodin.text())
             if b<a:
                 self.lbl_mensaje_integracion.setVisible(True)
             else:
@@ -2601,7 +2672,8 @@ class Ui_Analisis_Numerico(object):
         elif metodo == 19: # simpson adaptativo
             a = float(self.txt_limite_a_1.text())
             b = float(self.txt_limite_b_1.text())
-            tolerancia = float(self.txtX1.text())
+            funcion = self.lineEdit.text()
+            tolerancia = float(self.txt_comodin.text())
             if b<a:
                 self.lbl_mensaje_integracion.setVisible(True)
             else:
@@ -2611,6 +2683,7 @@ class Ui_Analisis_Numerico(object):
         elif metodo == 20: # boole
             a = float(self.txt_limite_a_1.text())
             b = float(self.txt_limite_b_1.text())
+            funcion = self.lineEdit.text()
             if b<a:
                 self.lbl_mensaje_integracion.setVisible(True)
             else:

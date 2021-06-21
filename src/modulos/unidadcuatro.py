@@ -1,19 +1,19 @@
-import sympy as Sympy
-import numpy as np
-import sympy as sp
-import math
-from numpy.lib.shape_base import column_stack
 import decimal
+from numpy.lib.shape_base import column_stack
+import sympy as sp
+import numpy as np
+import math
 import cmath
 import re
-from fractions import Fraction
 from sympy import cos, sin, tan, cot, sec, csc, sinh, cosh, tanh, csch, sech, coth, ln
 from numpy.polynomial import Polynomial as P
 from sympy.core.function import expand
-from sympy.simplify.radsimp import numer
+from sympy.simplify.radsimp import fraction, numer
+from fractions import Fraction
 
 
-x, e, y, z = Sympy.symbols('x e y z')
+
+x, e, y, z = sp.symbols('x e y z')
 
 #♪-------------------------------------------- FUNCIONES NECESARIAS -----------------------------------------------------------------
 
@@ -23,15 +23,16 @@ def Sustituir_y_Evaluar_Funcion(funcion, valor, seDeriva, ordenDerivada): #Evual
         funcioon = 0
         if seDeriva == 1:
             if ordenDerivada == 1:
-                funcioon = Sympy.sympify(funcion)
-                gxValor = Sympy.diff(funcioon, x).subs([(x, valor), (e, cmath.e)])
+                funcioon = sp.sympify(funcion)
+                gxValor = sp.diff(funcioon, x).subs([(x, valor), (e, cmath.e)])
                 return gxValor
             else:
-                funcioon = Sympy.sympify(funcion)
-                gxValor = Sympy.Derivative(funcion, x, 2).subs([(x, valor), (e, cmath.e)])
+                funcioon = sp.sympify(funcion)
+                gxValor = sp.Derivative(funcion, x, 2).subs(
+                    [(x, valor), (e, cmath.e)])
                 return gxValor
         else:
-            resultado = Sympy.sympify(funcion).subs([(x, valor), (e, cmath.e)])
+            resultado = sp.sympify(funcion).subs([(x, valor), (e, cmath.e)])
             return resultado
     except:
         return "Error"
@@ -924,10 +925,6 @@ def metodo_richardson(funcion, puntoInicial, h, nivel):
 
 # <------------- Integración numérica --------------------->
 
-
-# Si en el parametro formaRespuesta enviamos 0 la respuesta sera con todo el texto
-# Si enviamos 1 como parametro la respuesta sera solamente el numero
-
 def regla_del_trapecio_simple(funcion, a, b, tablaValores, formaRespuesta):
     Listado_Resultante = []
     Listado_Resultante_Final = []  # Lista que se mostrar en el formulario
@@ -965,10 +962,6 @@ def regla_del_trapecio_simple(funcion, a, b, tablaValores, formaRespuesta):
 
         else:
             print("Para resolver mediante el trapecio simple solo se utilizan 2 puntos")
-
-# Si en el parametro formaRespuesta enviamos 0 la respuesta sera con todo el texto
-# Si enviamos 1 como parametro la respuesta sera solamente el numero
-
 
 def regla_del_trapecio_compuesta(funcion, a, b, n, tablaValores, formaRespuesta):
 
@@ -1460,11 +1453,9 @@ def integracion_cuadratura_Gaussiana(funcion, a, b, n):
     listaResultado.append(resultado)
     return Listado_Resultante_Final
 
-# Creo que como funcion aparte es inecesaria pero xd luego se puede integrar al metodo
-
 def evaluar_formula_Simpson_adapatativo(a, b, funcion):
     puntoS = []
-    puntoS = ((b-a)/6)*(Sustituir_y_Evaluar_Funcion(funcion, a, 0, 0)+Sustituir_y_Evaluar_Funcion(funcion,b, 0, 0) + (4 * Sustituir_y_Evaluar_Funcion(funcion, ((a+b)/2), 0, 0)))
+    puntoS = (((b-a)/6)*(Sustituir_y_Evaluar_Funcion(funcion, a, 0, 0)+Sustituir_y_Evaluar_Funcion(funcion,b, 0, 0) + (4 * Sustituir_y_Evaluar_Funcion(funcion, ((a+b)/2), 0, 0))))
     return puntoS
 
 def integracion_simpson_unTercio_adaptativo(tolerancia, a, b, funcion):
@@ -1554,7 +1545,7 @@ def integracion_simpson_unTercio_adaptativo(tolerancia, a, b, funcion):
     return salida
 
 def integracion_Boole(a, b, funcion):
-
+    
     Listado_Resultante = []
     h = (b-a)/4
     puntos = []
@@ -1562,9 +1553,6 @@ def integracion_Boole(a, b, funcion):
     for punto in range(5):
         puntos.append(p)
         p += h
+    Listado_Resultante.append(((2*h)/45)*(((7)*(Sustituir_y_Evaluar_Funcion(funcion, puntos[0], 0, 0)))+((32)*(Sustituir_y_Evaluar_Funcion(funcion, puntos[1], 0, 0)))+((12)*(Sustituir_y_Evaluar_Funcion(funcion, puntos[2], 0, 0)))+((32)*(Sustituir_y_Evaluar_Funcion(funcion, puntos[3], 0, 0)))+((7)*(Sustituir_y_Evaluar_Funcion(funcion, puntos[4], 0, 0)))))
 
-    Listado_Resultante = ((2*h)/45)*((7*Sustituir_y_Evaluar_Funcion(funcion, puntos[0], 0, 0))+(32*Sustituir_y_Evaluar_Funcion(funcion, puntos[1], 0, 0))+(12*Sustituir_y_Evaluar_Funcion(funcion, puntos[2], 0, 0))+(32*Sustituir_y_Evaluar_Funcion(funcion, puntos[3], 0, 0))+(7*Sustituir_y_Evaluar_Funcion(funcion, puntos[4], 0, 0)))
-
-    salida = []
-    salida.append(Listado_Resultante)
-    return salida
+    return Listado_Resultante
