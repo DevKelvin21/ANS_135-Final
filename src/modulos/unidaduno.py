@@ -2,14 +2,65 @@ import cmath
 import math 
 import sympy as Sympy
 
+x, e, y, z = Sympy.symbols('x e y z')
+
 def calcularEa(xr, xrAnterior):
     resultado = (abs(xr-xrAnterior)/xr)*100
     if resultado < 0:
         resultado = resultado*-1
     return resultado
 
+def Sustituir_y_Evaluar_Funcion(funcion, valor, seDeriva, ordenDerivada):
+    try:
+        funcioon = 0
+        if seDeriva == 1:
+            if ordenDerivada == 1:
+                funcioon = Sympy.sympify(funcion)
+                gxValor = Sympy.diff(funcioon, x).subs([(x, valor), (e, cmath.e)])
+                return gxValor
+            else:
+                funcioon = Sympy.sympify(funcion)
+                gxValor = Sympy.Derivative(funcion, x, 2).subs([(x, valor), (e, cmath.e)])
+                return gxValor
+        else:
+            resultado = Sympy.sympify(funcion).subs([(x, valor), (e, cmath.e)])
+            return resultado
+    except:
+        return "Error"
 
 def metodo1(punto,cifras):
+    funcion='ln(e+x)'
+    Listado_Resultante =[]
+    iteracion = 1
+    valor=0
+    es = (10**(2-cifras))/2
+    salida = 0
+    header = ['Iteracion', 'Valor', 'Ea','Es']
+    Listado_Resultante.append(header)
+
+    while salida == 0:
+        if iteracion == 1:
+            valor = 1
+            #Primera iteracion 
+            Listado_Resultante.append([iteracion,valor,'N/A',es])
+            valorAnterior = punto
+            iteracion += 1
+        else:
+            valor+=Sustituir_y_Evaluar_Funcion(funcion,punto,0,0)    
+            
+            ea = calcularEa(valor,valorAnterior)
+            Listado_Resultante.append([iteracion,valor,ea,es])
+
+            valorAnterior = valor
+            iteracion += 1
+            
+            if ea <= es:
+                salida = 1
+
+    return Listado_Resultante
+
+
+def metodo1a(punto,cifras):
     Listado_Resultante = []
     salida = 0
     valorAnterior = 0
