@@ -14,7 +14,6 @@ class Analisis_Numerico(QMainWindow):
         QMainWindow.__init__(self)
         self.ui = Ui_Analisis_Numerico()       
         self.ui.setupUi(self)
-
     
 
 if __name__ == "__main__":

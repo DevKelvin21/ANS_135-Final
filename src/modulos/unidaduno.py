@@ -28,6 +28,7 @@ def Sustituir_y_Evaluar_Funcion(funcion, valor, seDeriva, ordenDerivada):
     except:
         return "Error"
 
+
 def metodo1(punto,cifras):
     funcion='ln(e+x)'
     Listado_Resultante =[]

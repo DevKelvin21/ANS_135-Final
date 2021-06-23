@@ -98,10 +98,10 @@ class Ui_Analisis_Numerico(object):
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
-        self.txtResultados = QtWidgets.QLineEdit(self.frame_2)
+        self.txtResultados = QtWidgets.QLabel(self.frame_2)
         self.txtResultados.setGeometry(QtCore.QRect(9, 9, 920, 260))
         self.txtResultados.setStyleSheet("border:0px;\n"
-"font: 75 9pt \"SpaceMono Nerd Font\";")
+"font: 75 7pt \"SpaceMono Nerd Font\";")
         self.txtResultados.setText("")
         self.txtResultados.setObjectName("txtResultados")
         self.frame_3 = QtWidgets.QFrame(self.frame)
@@ -648,7 +648,7 @@ class Ui_Analisis_Numerico(object):
         self.lbl_grafico_mensaje.setText(_translate("Analisis_Numerico", "*Ocurrio un problema :c"))
         
         self.txtResultados.setVisible(False)
-        self.txtResultados.setReadOnly(True)
+        #self.txtResultados.setReadOnly(True)
         #Asignamos funcion que filtra los objetos respecto al item seleccionado en cmb
         self.cmbMetodos.activated[str].connect(self.Filtrar_Objects)
         self.cbmSplineGrado.activated[str].connect(self.Filtrar_Objects_Unidad_4)
@@ -861,6 +861,7 @@ class Ui_Analisis_Numerico(object):
             self.cmbMetodos.addItem("")
             self.cmbMetodos.addItem("")
             self.cmbMetodos.addItem("")
+            self.cmbMetodos.addItem("")
             self.cmbMetodos.setItemText(0, "> Seleccione un metodo <")
             self.cmbMetodos.setItemText(1,  "- Euler Hacia Adelante")
             self.cmbMetodos.setItemText(2,  "- Euler Hacia Atras")
@@ -868,6 +869,7 @@ class Ui_Analisis_Numerico(object):
             self.cmbMetodos.setItemText(4,  "- Euler Mejorado")
             self.cmbMetodos.setItemText(5,  "- Metodo Taylor")
             self.cmbMetodos.setItemText(6,  "- Runge Kutta")
+            self.cmbMetodos.setItemText(7,  "- Multipasos")
             self.cmbMetodos.setVisible(True)
             self.cmbMetodos.setCurrentIndex(0)
 
@@ -1258,28 +1260,7 @@ class Ui_Analisis_Numerico(object):
                 self.tableWidget.setVisible(True)
                 self.txtResultados.setVisible(False)  
             elif queMetodo == 5:#Taylor
-                self.tableWidget.setVisible(False)
-                self.label_9.setText("Seleccione el Grado")
-                self.cbmSplineGrado.setGeometry(QtCore.QRect(30, 40, 151, 22))
-                self.cbmSplineGrado.clear()
-                self.cbmSplineGrado.addItem("")
-                self.cbmSplineGrado.addItem("")
-                self.cbmSplineGrado.setItemText(0, "Grado Dos")
-                self.cbmSplineGrado.setItemText(1, "Grado Tres")
-                self.frame_trazadores.setVisible(True)
-                self.lbl_cifras_h.setText("h")
-                self.frame_3.setVisible(True)
-                self.frame_4.setVisible(True)
-                self.frame_5.setVisible(True)
-                self.label_4.setVisible(True)
-                self.txtX2.setVisible(True)
-                self.label_3.setText("X0")
-                self.label_4.setText("Y0")
-                self.label_7.setText("X1")
-                self.label_7.setVisible(True)
-                self.txtX2_2.setVisible(True)
-            elif queMetodo == 6: #Kutta
-                self.tableWidget.setVisible(False)
+                self.tableWidget.setVisible(True)
                 self.label_9.setText("Seleccione el Orden")
                 self.cbmSplineGrado.setGeometry(QtCore.QRect(30, 40, 151, 22))
                 self.cbmSplineGrado.clear()
@@ -1288,7 +1269,7 @@ class Ui_Analisis_Numerico(object):
                 self.cbmSplineGrado.addItem("")
                 self.cbmSplineGrado.setItemText(0, "Orden Dos")
                 self.cbmSplineGrado.setItemText(1, "Orden Tres")
-                self.cbmSplineGrado.setItemText(2, "Orden cuatro")
+                self.cbmSplineGrado.setItemText(2, "Orden Cuatro")
                 self.frame_trazadores.setVisible(True)
                 self.lbl_cifras_h.setText("h")
                 self.frame_3.setVisible(True)
@@ -1300,7 +1281,56 @@ class Ui_Analisis_Numerico(object):
                 self.label_4.setText("Y0")
                 self.label_7.setText("X1")
                 self.label_7.setVisible(True)
-                self.txtX2_2.setVisible(True)    
+                self.txtResultados.setVisible(False)
+                self.txtX2_2.setVisible(True)
+            elif queMetodo == 6: #Kutta
+                self.tableWidget.setVisible(True)
+                self.label_9.setText("Seleccione el Orden")
+                self.cbmSplineGrado.setGeometry(QtCore.QRect(30, 40, 151, 22))
+                self.cbmSplineGrado.clear()
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.setItemText(0, "Orden Dos")
+                self.cbmSplineGrado.setItemText(1, "Orden Tres")
+                self.cbmSplineGrado.setItemText(2, "Orden Cuatro")
+                self.frame_trazadores.setVisible(True)
+                self.lbl_cifras_h.setText("N")
+                self.frame_3.setVisible(True)
+                self.frame_4.setVisible(True)
+                self.frame_5.setVisible(True)
+                self.label_4.setVisible(True)
+                self.txtX2.setVisible(True)
+                self.label_3.setText("X0")
+                self.label_4.setText("Y0")
+                self.label_7.setText("X1")
+                self.label_7.setVisible(True)
+                self.txtResultados.setVisible(False)
+                self.txtX2_2.setVisible(True)
+            elif queMetodo == 7: #multipasos
+                self.tableWidget.setVisible(True)
+                self.label_9.setText("Pasos")
+                self.cbmSplineGrado.setGeometry(QtCore.QRect(30, 40, 151, 22))
+                self.cbmSplineGrado.clear()
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.addItem("")
+                self.cbmSplineGrado.setItemText(0, "Dos")
+                self.cbmSplineGrado.setItemText(1, "Tres")
+                self.cbmSplineGrado.setItemText(2, "Cuatro")
+                self.frame_trazadores.setVisible(True)
+                self.lbl_cifras_h.setText("N")
+                self.frame_3.setVisible(True)
+                self.frame_4.setVisible(True)
+                self.frame_5.setVisible(True)
+                self.label_4.setVisible(True)
+                self.txtX2.setVisible(True)
+                self.label_3.setText("X0")
+                self.label_4.setText("Y0")
+                self.label_7.setText("X1")
+                self.label_7.setVisible(True)
+                self.txtResultados.setVisible(False)
+                self.txtX2_2.setVisible(True)        
 
     def Filtrar_Objects_Unidad_4(self):
         unidad = int(self.lblunidad.text())
@@ -1476,7 +1506,7 @@ class Ui_Analisis_Numerico(object):
             try:
                 funcion = str(self.txtfuncion.text())
                 if len(funcion) <1:
-                    print("entro if")
+                    
                     self.lbl_grafico_mensaje.setText("*Digita una funcion")
                     self.lbl_grafico_mensaje.setVisible(True)
                 else:
@@ -2772,7 +2802,7 @@ class Ui_Analisis_Numerico(object):
         salida = ""
 
         for i in Listado_Resultante:
-            salida += "\n"+str(i)+"\n"
+            salida += ""+str(i)+""
 
         self.txtResultados.setText(salida)
 
@@ -2788,6 +2818,7 @@ class Ui_Analisis_Numerico(object):
         y0Prueba = funciones.Validar_Valores_Iniciales(y0)
         x1Prueba = funciones.Validar_Valores_Iniciales(x1)
         n_prueba = funciones.Validar_Cifras_Significativas(n)
+
         funcionPrueba=funciones.Sustituir_y_Evaluar_Funcion(funcion, 3, 0, 0)
 
         if x0Prueba == "Error" or y0Prueba == "Error" or x1Prueba == "Error":
@@ -2814,48 +2845,41 @@ class Ui_Analisis_Numerico(object):
 
             if unidad == 4:
 
-                if metodo ==1 : # Euler Adelante
-                    
-                    Listado_Resultante= unidad_cinco.metodo_Euler_Adelante(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba)
-                elif metodo == 2:
-                    
-                    Listado_Resultante=  unidad_cinco.metodo_Euler_Atras(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba)  
-                elif metodo == 3:
-                    
-                    Listado_Resultante = unidad_cinco.metodo_Euler_Centrado(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba)
-                elif metodo == 4:
-                    
-                    Listado_Resultante= unidad_cinco.metodo_Euler_Mejorado(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba)
-                elif metodo == 5:
-                    
-                    grado=self.cbmSplineGrado.currentIndex()
-                    if grado == 0:
+                if metodo ==1 : # Euler Adelante                    
+                    Listado_Resultante= unidad_cinco.metodo_Euler_Adelante(funcion,x0Prueba,y0Prueba,x1Prueba,n)
 
-                        listaT=[x0Prueba,x1Prueba]
-                        y_inicial=y0Prueba
-                        Listado_Resultante = unidad_cinco.metodo_Taylor_Grado2('',listaT,y_inicial,0)
-                    elif grado == 1:
-                        listaT=[x0Prueba,x1Prueba]
-                        y_inicial=y0Prueba
-                        Listado_Resultante = unidad_cinco.metodo_Taylor_Grado3('',listaT,y_inicial,0)
-                    salida = ""
+                elif metodo == 2:                    
+                    Listado_Resultante=  unidad_cinco.metodo_Euler_Atras(funcion,x0Prueba,y0Prueba,x1Prueba,n)  
                     
-                    for i in Listado_Resultante:
-                        salida += "\n"+str(i)+"\n"
-                        
-                    self.txtResultados.setVisible(True)  
-                    self.txtResultados.setText(salida)
+                elif metodo == 3:                    
+                    Listado_Resultante = unidad_cinco.metodo_Euler_Centrado(funcion,x0Prueba,y0Prueba,x1Prueba,n)
 
-                elif metodo == 6: #-Runge
+                elif metodo == 4:                 
+                    Listado_Resultante= unidad_cinco.metodo_Euler_Mejorado(funcion,x0Prueba,y0Prueba,x1Prueba,n)
+
+                elif metodo == 5:#Taylor    
+                    orden=self.cbmSplineGrado.currentIndex()
+                    if orden == 0 :  
+                        Listado_Resultante = unidad_cinco.metodo_Taylor(funcion,x0Prueba,y0Prueba,x1Prueba,n,2)
+                    elif orden == 1:
+                        Listado_Resultante = unidad_cinco.metodo_Taylor(funcion,x0Prueba,y0Prueba,x1Prueba,n,3)
+                    elif orden == 2:
+                        Listado_Resultante = unidad_cinco.metodo_Taylor(funcion,x0Prueba,y0Prueba,x1Prueba,n,4)     
+                    
+                elif metodo == 6: #-Runge kutta
                     orden=self.cbmSplineGrado.currentIndex()
                     if orden == 0:
-                        Listado_Resultante =unidad_cinco.metodo_Runge_Kutta(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba, 2, 0)
+                        Listado_Resultante =unidad_cinco.metodo_Runge_Kutta(funcion,x0Prueba,y0Prueba,x1Prueba,n, 2, 0)
                     elif orden == 1:
-                        Listado_Resultante =unidad_cinco.metodo_Runge_Kutta(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba, 3, 0)
+                        Listado_Resultante =unidad_cinco.metodo_Runge_Kutta(funcion,x0Prueba,y0Prueba,x1Prueba,n, 3, 0)
                     elif orden == 2:
-                        Listado_Resultante =unidad_cinco.metodo_Runge_Kutta(funcion,x0Prueba,y0Prueba,x1Prueba,n_prueba, 4, 0)
-                               
-                if metodo>=1 and metodo<=6 and metodo !=5: #imprime euler y kutta
+                        Listado_Resultante =unidad_cinco.metodo_Runge_Kutta(funcion,x0Prueba,y0Prueba,x1Prueba,n, 4, 0)
+                        
+                elif metodo == 7:
+                    n=int(self.txtcifras.text())
+                    Listado_Resultante =unidad_cinco.Adam_Bashforth_Moulton(funcion, x0Prueba, y0Prueba, x1Prueba, n, 4)
+
+                if metodo>=1 and metodo<=7: #imprime euler taylor kutta
 
                     self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
                     rows = len(Listado_Resultante)  # Numero de filas

@@ -998,7 +998,7 @@ def metodoBairstow(coeficientes,r,s,cifrasSig):
                             salida = 1
         except:
             print("Surgio un problema")
-        #Lista con todas las raices encontradas
+        
         return Solucion_Listado
 
 def ordenPolinomio(x,lista):

@@ -634,7 +634,7 @@ def diferenciacion_numerica_cinco_puntos(funcion, puntoInicial, h, tablaValores)
 
 # <------------- Derivadas de orden superior --------------------->
 
-# Falta
+
 def diferenciacion_numerica_adelante_orden_superior(funcion, puntoInicial, h, tablaValores):
     Listado_Resultante = []  # lista donde estaran las respuestas
     Listado_Resultante_Final = []  # Lista que se mostrar en el formulario
@@ -1053,7 +1053,7 @@ def trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, n, orden_integral)
 
         funcion_encontrada = (
             (b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados_simplificados + lista_operaciones_de_evaluarX[n])
-        print('primera funcion encontrada:  ------------> ', funcion_encontrada)
+        #print('primera funcion encontrada:  ------------> ', funcion_encontrada)
         Listado_Resultante_Final.append(
             "Primer funcion encontrada: "+str(funcion_encontrada)+"\n")
         funcion_encontrada = sp.expand(funcion_encontrada)
@@ -1172,7 +1172,7 @@ def trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, n, orden_integral)
         resultado = (
             (b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados + lista_operaciones_de_evaluarX[n])
         Listado_Resultante.append(resultado)
-        #print('valor encontrado: ------------> ', resultado)
+        
         Listado_Resultante_Final.append("Respuesta: "+str(resultado))
         return Listado_Resultante_Final
 

@@ -133,18 +133,14 @@ QPushButton:hover {
        <enum>QFrame::NoFrame</enum>
       </property>
      </widget>
-     <widget class="QLineEdit" name="txtResultados">
+     <widget class="QLabel" name="txtResultados">
       <property name="geometry">
        <rect>
-        <x>12</x>
-        <y>9</y>
+        <x>20</x>
+        <y>20</y>
         <width>901</width>
-        <height>111</height>
+        <height>251</height>
        </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border:0px;
-font: 75 12pt &quot;SpaceMono Nerd Font&quot;;</string>
       </property>
       <property name="text">
        <string/>
@@ -1048,11 +1044,11 @@ color: rgb(87, 85, 183);</string>
       </property>
      </widget>
     </widget>
+    <zorder>frame_integrales</zorder>
     <zorder>frame_6</zorder>
     <zorder>frame_5</zorder>
     <zorder>frame_4</zorder>
     <zorder>frame_3</zorder>
-    <zorder>frame_integrales</zorder>
     <zorder>btnResolverlo</zorder>
     <zorder>btnLimpiar</zorder>
     <zorder>frame_2</zorder>

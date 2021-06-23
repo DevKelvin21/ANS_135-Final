@@ -56,6 +56,7 @@ def Sustituir_y_Evaluar_Funcion(funcion, valor, seDeriva, ordenDerivada):
         return "Error"
 
 #Devuelve los coeficientes del polinomio que se pase como parametros, utiliza RegEx para hacerlo
+
 def Obtener_Coeficientes(entrada):
     regexp = r"(-?\d*)(x?)(?:(?:\^|\*\*)(\d))?"
     c = {}

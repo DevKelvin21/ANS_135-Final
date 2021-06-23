@@ -112,8 +112,7 @@ def interpolacionLagrange(puntosX,puntosY,valor):
             if i != j:
                 numerador = numerador * (x-xi[j])
                 denominador = denominador * (xi[i]-xi[j])
-                print(numerador)
-                print(denominador)
+                
             termino = (numerador/denominador)*fi[i]
         polinomio = polinomio + termino 
     polinomioSimple = Sympy.expand(polinomio)
@@ -127,8 +126,7 @@ def interpolacionLagrange(puntosX,puntosY,valor):
 
 def interpolacionNewton(puntosX,puntosY,valor):
     Solucion_Listado = []
-    print(puntosX)
-    print(puntosY)
+   
  
     xi = np.array(puntosX)
     fi = np.array(puntosY)
@@ -288,7 +286,7 @@ def interpolacionHermite(lista_valores, punto_evaluar):
                # Operacion realizada si da 0/0
                 for k in range(0, len(valores_derivadas), 1):
                     if k == (cualColumnaEs-1):
-                        print(k)
+                        
                         valor = valores_derivadas[k][cualXEs[cualFilaEs]] \
                             / math.factorial(cualColumnaEs)
 

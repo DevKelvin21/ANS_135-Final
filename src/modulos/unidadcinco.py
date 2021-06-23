@@ -35,9 +35,19 @@ def Sustituir_y_Evaluar_Funcion(funcion, valor, valor2, seDeriva, ordenDerivada)
         return "Error"
 
 
+
+def evaluarFuncionTaylor(funcion, y_valor, t_valor):
+    resultado = sp.sympify(funcion).subs([(y, y_valor), (t, t_valor)])
+    return resultado
+
 def encontrarDerivada(funcion, queDerivada):
     funcioon = sp.sympify(funcion)
     gxValor = sp.diff(funcioon, x, queDerivada)
+    return gxValor
+
+def encontrarDerivadaTaylor(funcion, queDerivada):
+    funcioon = sp.sympify(funcion)
+    gxValor = sp.diff(funcioon, t, queDerivada)
     return gxValor
 
 # <-------------------------------- METODOS NUMERICOS ------------------------------>
@@ -76,7 +86,6 @@ def metodo_Euler_Adelante(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
     return lista_Salida_Final
 
 
-
 def metodo_Euler_Atras(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
     # Variables a utilizar
@@ -111,7 +120,6 @@ def metodo_Euler_Atras(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
     return(lista_Salida_Final)
 
-
 def metodo_Euler_Centrado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
     # Variables a utilizar
@@ -140,7 +148,6 @@ def metodo_Euler_Centrado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
         lista_Salida_Final.append([str(i+1),str(lista_X[i]),str(lista_Y[i])])
 
     return(lista_Salida_Final)
-
 
 def metodo_Euler_Mejorado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
     # Variables a utilizar
@@ -177,41 +184,55 @@ def metodo_Euler_Mejorado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
 # <-------------------------------- metodo de Taylor ------------------------------>
 
-# Falta
+
+def metodo_Taylor(funcion,x_Inicial,y_inicial,x_Final, h, orden):
+
+    listaResultados = [] #Aqui guardamos las respuesta 
+    header = ['T','Yn']
+    listaResultados.append(header)
+    lista_derivadas = [] #Aqui vamos a guardar las derivadas de orden 1,2,3...
+    derivada_variable = funcion
+    lista_derivadas.append(funcion) #la funcion es la primera derivada por ende devemos agregarla
+
+    for i in range(0,orden-1,1):
+        if i == 0:
+            derivada_variable = sp.simplify(funcion) + encontrarDerivadaTaylor(funcion,i+1)
+            lista_derivadas.append(derivada_variable)
+        else:
+            derivada_variable = derivada_variable + encontrarDerivadaTaylor(funcion,i+1)
+            lista_derivadas.append(derivada_variable)
+
+    #formamos el polinomio para ir evaluando luego
+
+    polinomio_evaluar = ''
+    contador = 1
+
+    for i in range(0,orden+1,1):
+        if i == 0:
+            polinomio_evaluar += str(y_inicial)
+        elif i == 1:
+            polinomio_evaluar +=  ' + (' + str((lista_derivadas[0])) + ')*' + str(h) 
+        else:
+            polinomio_evaluar +=  ' + (' + str(lista_derivadas[contador]) +  ')*' + str((h**contador)/math.factorial(contador))
+            contador += 1
+
+    #Esta variable controla que las evluaciones no sobrepasen el valor de x_Final
+    control_evaluacion = x_Inicial 
+    lista_valores_y = []
+    lista_valores_y.append(y_inicial) #Agregamos el primer valor de y
+    contador_2 = 0
+    listaResultados.append([control_evaluacion,lista_valores_y[0]])
 
 
-def metodo_Taylor_Grado2(funcion,listaT,y_inicial,h):
-
-    salida =[]
-    y = sp.Function('y')
-
-    func = Eq(y(t).diff(),y(t)-t**2) #Creamos la funcion
-    CI = {y(listaT[0]):y_inicial} #condicion inicial
-
-    #resolvemos la edo
-    edo_sol = sp.dsolve(func,y(t),ics=CI)
-    salida.append(edo_sol.subs(t,listaT[1]))
-    
-    return(salida)
-
-def metodo_Taylor_Grado3(funcion,listaT,y_inicial,h):
-
-    salida =[]
-    y = sp.Function('y')
-
-    func = Eq(y(t).diff(),y(t)-t) #Creamos la funcion
-    CI = {y(listaT[0]):y_inicial} #condicion inicial
-
-    #resolvemos la edo
-    edo_sol = sp.dsolve(func,y(t),ics=CI)
-
-    salida.append(edo_sol.subs(t,listaT[1]))
-    
-    return(salida)
+    while control_evaluacion < x_Final:
+        lista_valores_y.append(evaluarFuncionTaylor(polinomio_evaluar,lista_valores_y[contador_2],control_evaluacion))
+        control_evaluacion += h
+        listaResultados.append([control_evaluacion,lista_valores_y[contador_2+1]])
+        contador_2 += 1 
+        
+    return listaResultados
 
 # <-------------------------------- metodo de Runge Kutta ------------------------------>
-
-
 
 def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, orden, tipoRespuesta):
 
@@ -309,7 +330,6 @@ def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, ord
             else:
                 return lista_Y
 
-
 # <-------------------------------- metodos de multipasos ------------------------------>
 
 def Adam_Bashforth_Moulton(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, pasos):
@@ -321,6 +341,7 @@ def Adam_Bashforth_Moulton(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos,
 
         # Variables utilizadas
         lista_Salida_Final = []  # Lista para mostrar la salida final
+        lista_Salida_Final.append(["Iteracion","X","Yn"]) 
         lista_X = []  # Lista con los valores de x
         lista_YRunge = []  # Lista con valores de y sacados con el metodo runge
         lista_YPrima = []  # Lista con valores de y prima
@@ -367,24 +388,16 @@ def Adam_Bashforth_Moulton(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos,
                 yPrediccion = lista_YMultipasos[len(lista_YMultipasos)-1] + \
                     (h/24)*(55*lista_YPrima[len(lista_YPrima)-1]-59*lista_YPrima[len(lista_YPrima)-2] +
                             37*lista_YPrima[len(lista_YPrima)-3]-9*lista_YPrima[len(lista_YPrima)-4])
-
                 lista_YPrima.append(Sustituir_y_Evaluar_Funcion(
                     funcion, lista_X[len(lista_YMultipasos)], yPrediccion, 0, 0))
-
-                # print(lista_YPrima[len(lista_YPrima)-4])
-
                 lista_YMultipasos.append(
                     lista_YMultipasos[len(lista_YMultipasos)-1] + (h/24)*(9*lista_YPrima[len(lista_YPrima)-1]+(19*lista_YPrima[len(lista_YPrima)-2])-(5*lista_YPrima[len(lista_YPrima)-3])+lista_YPrima[len(lista_YPrima)-4]))
 
             # Armamos la salida final
             lista_Salida_Final.append("PASO 4:\n")
             for i in range(0, len(lista_YMultipasos), 1):
-                lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
-                                          "X: "+str(lista_X[i])+"\n" +
-                                          "Yn: "+str(lista_YMultipasos[i])+"\n")
+                lista_Salida_Final.append([str(i+1),str(lista_X[i]),str(lista_YMultipasos[i])])
 
-            for i in lista_Salida_Final:
-                print(i)
 
             return lista_Salida_Final
 
